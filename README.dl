@@ -1,0 +1,93 @@
+PHP_Tuxedo
+README.dl
+
+This document describes how to build PHP_Tuxedo as
+a DL'able module.  Its highly recommended you build PHP_Tuxedo
+as described in the README document.  But this method should
+still work and is good to play with.  Please note however,
+this method of building PHP_Tuxedo has been depreciated and
+is not tested after its initial writeup.
+
+==================================================================
+USING the DL method...
+BUILDING as a DL (Sorry, not a very automated build process yet.)
+
+1.  Extract the contents of this package into a clean
+	directory.
+	
+2.	Obtain and extract the PHP4 source code for the version
+	loaded in your web server in a different directory.
+	If its old, maybe this is a good time to upgrade and
+	get the latest at www.php.net.  I've been using 4.0.4p1.
+	IMPORTANT:  The version running on the web server and 
+	the version you compile against must be the same for a
+	dl load to work.  If they are not the same, you may see
+	an error message like when you try and dl the module.
+	
+	Warning: BEA Tuxedo Module: Unable to initialize module Module 
+	compiled with debug=0, thread-safety=0 module API=20001214 PHP compiled
+	with debug=1, thread-safety=0 module API=20001214 
+	These options need to match in 
+	/home/brian/dev/www/tux_phpinfo.php on line 2
+
+3.	Configure PHP4 according to the instructions for
+	that package.  You don't need to actually make
+	the package, the configure step will create the needed
+	header files.  Definitely you don't need to install a new
+	PHP.  You must use the same configure arguments as you
+	used to build PHP.  If you can't remember the configure
+	options used when PHP was built, they are in
+	the phpinfo() display.  At a minimum the debug option,
+	thread-safety, and PHP versions must match.  Otherwise
+	you may see the error message above.
+	
+4.	cd back to the directory in step 1.  You are now ready to
+	build our software.
+
+5.	The Makefile should work ok for a Linux and gcc combo.
+	If you are on Solaris with Forte, I've included some
+	comments that worked for me there.  Something else you
+	will have to experiment.  Change the Makefile to your
+	individual needs.  Don't forget to set the TUXDIR and PHPDIR
+	values.  It won't compile without them.
+	
+	NOTE:  I highly recommend keeping -DCOMPILE_DL_TUXEDO_MODULE=1.
+		This will create a php "dl" able module and is how
+		I've tested so far, and hence these instructions.
+		If you remove this define, you will have to rebuild
+		all your PHP and alter the make process to get this .so
+		to link permanently in.  I've not gotten this far myself
+		so you are breaking new ground.
+		
+6.	make from within the tuxedo directory, don't remake PHP.
+
+7.	Errors will likely be TUXDIR set wrong or a different compiler
+	environment I haven't tried yet.
+	
+8.	Success if you get php_tuxedo.so.
+
+
+INSTALLING / TESTING
+
+1.	Copy php_tuxedo.so into a directory visible by the web server,
+	make sure it has read/execute permission set for the web server id
+	(755 should be fine).
+2.	Create a file tux_phpinfo.php in this directory with the contents of
+	<?php
+		dl ("./php_tuxedo.so");
+		phpinfo ();
+	?>
+3.	Run this script.  If everything is successful, you should see a
+	section BEA Tuxedo Module with some of the more common environment
+	variables for Tuxedo set (TUXDIR and WSNADDR).
+	If the section is there, congrats you probably
+	built the module correctly.  If some of the environment variables
+	(like WSNADDR) aren't set correctly, now is a good time to
+	make sure your web server has these variables set.  Remember your
+	web server is now a Tuxedo client; all the normal rules 
+	still apply.
+	
+4.	You are ready to go.  See the php_tuxedo.api for a list of functions
+	currently available and their arguments.
+
+===========================================================================

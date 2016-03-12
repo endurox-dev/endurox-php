@@ -1,0 +1,71 @@
+#   This is a Makefile to compile PHP-TUxedo as a DL module,
+#   ie: you must do a dl ("php_tuxedo") in you php script.
+#   This method of building php-tuxedo is being depreciated
+#   in favor of a direct PHP build, but if you want a simple
+#   build, this is probably for you.
+#
+#
+#	Simple Makefile for php-tuxedo.
+#	These libraries are set for a workstation client.  If
+#	you want a direct client they will have to be changed.
+#
+#	So far, I haven't figured out how to get buildclient to
+#	create a .so shared library instead of a fully linked program.
+#	Granted, I haven't spent much time on it yet, but if anyone
+#	knows, I'd sure appreciate the hint.
+#
+#
+#	Set your TUXDIR to where your Tux development (with includes) live.
+
+# $Id: Makefile.dl,v 1.2 2001/12/23 02:19:02 bfoddy Exp $
+
+TUXDIR = /opt/tuxedo/6.5
+PHPDIR = /home/brian/php-4.0.6
+
+# HAVE_TUXEDO will allow compiling of Tux module.
+# COMPILE_DL_TUXEDO_MODULE=1 will create a dl'able module (recommended)
+TUXDEFS = -g -DHAVE_TUXEDO  -DCOMPILE_DL_TUXEDO_MODULE=1
+
+OBJS = 		php_tuxedo_arrayfml.o \
+			php_tuxedo_misc.o \
+			php_tuxedo_fml_api.o
+
+INCLS = -I. -I${PHPDIR} -I${PHPDIR}/ext -I${PHPDIR}/Zend -I${PHPDIR}/TSRM \
+		-I${PHPDIR}/main -I${TUXDIR}/include 
+			
+			
+TUXLIBS = -L${TUXDIR}/lib php_tuxedo.o  -lwsc -lbuft -lwsc  -lnws -lnwi \
+  			-lnws  -lfml -lfml32 -lgp  /usr/lib/libcrypt.a
+
+LIBS = $(TUXLIBS)
+
+#
+#	This line should work for Linux and gcc.
+#	For Solaris and Forte, change "-shared -rdynamic" to "-G"
+#
+php_tuxedo:	php_tuxedo.o ${OBJS}
+	cc  ${TUXLIBS} -shared -rdynamic ${OBJS} -o php_tuxedo.so  
+
+
+#
+#	This line should work for Linux and gcc
+#   On Solaris with Forte compiler, remove -fpic
+#
+php_tuxedo.o:	php_tuxedo.c php_tuxedo.h
+	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo.o -c php_tuxedo.c
+	
+php_tuxedo_arrayfml.o:	php_tuxedo_arrayfml.c php_tuxedo.h
+	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo_arrayfml.o -c php_tuxedo_arrayfml.c
+
+php_tuxedo_misc.o:	php_tuxedo_misc.c php_tuxedo.h
+	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo_misc.o -c php_tuxedo_misc.c
+
+php_tuxedo_fml_api.o:	php_tuxedo_fml_api.c php_tuxedo.h
+	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo_fml_api.o -c php_tuxedo_fml_api.c
+clean:
+	rm -f php_tuxedo.o \
+	php_tuxedo_arrayfml.o \
+	php_tuxedo.so \
+	php_tuxedo_misc.o \
+	php_tuxedo_fml_api.o \
+	core
