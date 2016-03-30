@@ -150,7 +150,7 @@ BUILDING.
 	with the configure.  DIR should be the location of
 	the Endurox package (usually $NDRXDIR).  To check if
 	this step completed successfully, there should now
-	be a Makefile in ext/endurox (not to be confused with
+	be a Makefile in ext/endurox (not to be conbused with
 	Makefile.in).
 	
 5.	Type "make".  If the previous steps worked correctly

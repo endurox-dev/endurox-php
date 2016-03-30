@@ -56,51 +56,38 @@ zend_function_entry endurox_functions[] =
 	ZEND_FE (ndrx_tpabort, NULL)
 	ZEND_FE (ndrx_tpcommit, NULL)
 	ZEND_FE (ndrx_tpbegin, NULL)
-	ZEND_FE (ndrx_ndrxreadenv, NULL)
-	ZEND_FE (ndrx_ndrxgetenv, NULL)
-	ZEND_FE (ndrx_ndrxputenv, NULL)
-/*		Functions in php_endurox_ubfarray.c */
-#if (NDRX_UBF32 || NDRX_UBF)
-	ZEND_FE (ndrx_falloc, NULL)
 	ZEND_FE (ndrx_array2ubf, NULL)
 	ZEND_FE (ndrx_ubf2array, NULL)
 /*		Functions in php_endurox_ubf_api.c */
-	ZEND_FE (ndrx_ffprintf, NULL)
+	ZEND_FE (ndrx_bfprintf, NULL)
 	ZEND_FE (ndrx_get_ferrno, NULL)
-	ZEND_FE (ndrx_fstrerror, NULL)
-	ZEND_FE (ndrx_fldid, NULL)
-	ZEND_FE (ndrx_fldno, NULL)
-	ZEND_FE (ndrx_fldtype, NULL)
-	ZEND_FE (ndrx_fname, NULL)
-	ZEND_FE (ndrx_fadd, NULL)
-	ZEND_FALIAS (ndrx_fchg, ndrx_fadd, NULL)  /* alias for fadd */
-	ZEND_FE (ndrx_fchksum, NULL)
-	ZEND_FE (ndrx_fcmp, NULL)
-	ZEND_FE (ndrx_fconcat, NULL)
-	ZEND_FE (ndrx_fcpy, NULL)
-	ZEND_FE (ndrx_fdelall, NULL)
-	ZEND_FE (ndrx_fdel, NULL)
-	ZEND_FE (ndrx_fidxused, NULL)
-	ZEND_FE (ndrx_fielded, NULL)
-	ZEND_FE (ndrx_findex, NULL)
-	ZEND_FE (ndrx_flen, NULL)
-	ZEND_FE (ndrx_fmkfldid, NULL)
-	ZEND_FE (ndrx_fmove, NULL)
-	ZEND_FE (ndrx_fneeded, NULL)
-	ZEND_FE (ndrx_foccur, NULL)
-	ZEND_FE (ndrx_fjoin, NULL)
-	ZEND_FE (ndrx_fojoin, NULL)
-	ZEND_FE (ndrx_fpres, NULL)
-	ZEND_FE (ndrx_ftype, NULL)
-	ZEND_FE (ndrx_funindex, NULL)
-	ZEND_FE (ndrx_funused, NULL)
-	ZEND_FE (ndrx_fupdate, NULL)
-	ZEND_FE (ndrx_fused, NULL)
-	ZEND_FE (ndrx_frstrindex, NULL)
-	ZEND_FE (ndrx_fsizeof, NULL)
-	ZEND_FE (ndrx_fget, NULL)
-	ZEND_FE (ndrx_ffprint, NULL)
-#endif
+	ZEND_FE (ndrx_bstrerror, NULL)
+	ZEND_FE (ndrx_bfldid, NULL)
+	ZEND_FE (ndrx_bfldno, NULL)
+	ZEND_FE (ndrx_bfldtype, NULL)
+	ZEND_FE (ndrx_bfname, NULL)
+	ZEND_FE (ndrx_badd, NULL)
+	ZEND_FALIAS (ndrx_fchg, ndrx_badd, NULL)  /* alias for badd */
+	ZEND_FE (ndrx_bconcat, NULL)
+	ZEND_FE (ndrx_bcpy, NULL)
+	ZEND_FE (ndrx_bdelall, NULL)
+	ZEND_FE (ndrx_bdel, NULL)
+	ZEND_FE (ndrx_bidxused, NULL)
+	ZEND_FE (ndrx_bisubf, NULL)
+	ZEND_FE (ndrx_blen, NULL)
+	ZEND_FE (ndrx_fmkbfldid, NULL)
+	ZEND_FE (ndrx_boccur, NULL)
+	ZEND_FE (ndrx_bjoin, NULL)
+	ZEND_FE (ndrx_bpres, NULL)
+	ZEND_FE (ndrx_btype, NULL)
+	ZEND_FE (ndrx_bunindex, NULL)
+	ZEND_FE (ndrx_bunused, NULL)
+	ZEND_FE (ndrx_bupdate, NULL)
+	ZEND_FE (ndrx_bused, NULL)
+	ZEND_FE (ndrx_brstrindex, NULL)
+	ZEND_FE (ndrx_bsizeof, NULL)
+	ZEND_FE (ndrx_bget, NULL)
+	ZEND_FE (ndrx_bfprint, NULL)
 	{NULL, NULL, NULL}	/* end of structure marker */
 };
 
@@ -933,7 +920,7 @@ ZEND_FUNCTION (ndrx_tpinit)
 	TPINIT * tpinit_buf;  /* holder for the tpalloc buffer, only for this function*/
 	long return_val;
 	int argc;
-	long buflen;
+	long bublen;
 	long datalen;
 
 	argc = ZEND_NUM_ARGS();
@@ -959,10 +946,10 @@ ZEND_FUNCTION (ndrx_tpinit)
 		Allocate a temp buffer
 */
 	if (argc == 5)
-		buflen = TPINITNEED(Z_STRLEN_PP(arg_data) + 1);
+		bublen = TPINITNEED(Z_STRLEN_PP(arg_data) + 1);
 	else
-		buflen = sizeof(TPINIT);
-	tpinit_buf = (TPINIT*) tpalloc ("TPINIT", NULL, buflen);
+		bublen = sizeof(TPINIT);
+	tpinit_buf = (TPINIT*) tpalloc ("TPINIT", NULL, bublen);
 	if (tpinit_buf == (TPINIT *)NULL)
 	{
 		zend_error (E_ERROR, "tpalloc failed for tpinit");
@@ -1075,119 +1062,6 @@ ZEND_FUNCTION (ndrx_tpbegin)
 	
 	RETURN_LONG (tpbegin ((*arg_timeout)->value.lval, 0l));
 }
-/* }}} */
-
-/* {{{ function ndrx_ndrxreadenv
-	function to add variables to the environment form a file
-	2 arguments:
-		file - absolute path of environment file
-		label - section name
-	return TRUE or FALSE
-	refer to ndrxreadenv() of Endurox ATMI
-
-	by CheolMin Lee <cmlee@kt.co.kr>
-*/
-ZEND_FUNCTION (ndrx_ndrxreadenv)
-{
-	zval **arg_file;
-	zval **arg_label;
-
-	if ((ZEND_NUM_ARGS() != 2) ||
-		(zend_get_parameters_ex(2,
-			&arg_file, 
-			&arg_label) != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	convert_to_string_ex (arg_file);
-	convert_to_string_ex (arg_label);
-
-#if (NDRX_UBF32 || NDRX_UBF)
-    Fnmid_unload ();
-    Fnmid_unload32 ();
-#endif
-	if (ndrxreadenv((*arg_file)->value.str.val, (*arg_label)->value.str.val) != 0 ) {
-		zend_error(E_ERROR, "ndrxreadenv failed: unable to read environment.");
-		RETURN_FALSE;
-	}
-
-	RETURN_TRUE;
-}
-/* ndrx_readenv */
-/* }}} */
-
-
-/* {{{ function ndrx_ndrxgetenv
-	function to return value for environment name
-	1 argument:
-		name - environment variable name
-	return NULL or string value of the environment variable
-	refer to ndrxgetenv() of Endurox ATMI
-
-	by CheolMin Lee <cmlee@kt.co.kr>
-*/
-ZEND_FUNCTION (ndrx_ndrxgetenv)
-{
-	zval **arg_name;
-	char *retval;
-
-	if ((ZEND_NUM_ARGS() != 1) ||
-		(zend_get_parameters_ex(1, &arg_name) != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	convert_to_string_ex (arg_name);
-	
-	retval = ndrxgetenv((*arg_name)->value.str.val);
-
-	if (!retval) {
-		RETURN_NULL();
-	} else {
-		RETURN_STRINGL(retval, strlen(retval), 1);
-	}
-}
-/* ndrx_ndrxgetenv */
-/* }}} */
-
-
-/* {{{ function ndrx_ndrxputenv
-	function to change or add value to environment
-	2 arguments:
-		name - environment variable name
-		value - value of the environment variable
-	return TRUE or FALSE
-	refer to ndrxputenv() of Endurox ATMI
-
-	by CheolMin Lee <cmlee@kt.co.kr>
-*/
-ZEND_FUNCTION (ndrx_ndrxputenv)
-{
-	zval **arg_name;
-	zval **arg_value;
-	char str[256];
-	int rc;
-
-	if ((ZEND_NUM_ARGS() != 2) ||
-		(zend_get_parameters_ex(2, &arg_name, &arg_value) != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	convert_to_string_ex (arg_name);
-	convert_to_string_ex (arg_value);
-
-	sprintf(str, "%s=%s",
-		(*arg_name)->value.str.val, (*arg_value)->value.str.val);
-		
-	if (!(rc=ndrxputenv(str))) {
-		RETURN_TRUE;
-	} else {
-		RETURN_FALSE;
-	}
-}
-/* ndrx_ndrxputenv */
 /* }}} */
 
 

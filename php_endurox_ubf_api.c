@@ -39,16 +39,16 @@ extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handl
 /*
 	This function is a private function that will check
 	an argument to see if the provided value is a string
-	or an integer.  If its a string, it will cal Fldid(32) against
+	or an integer.  If its a string, it will cal Bfldid(32) against
 	the argument to convert it to a true Field ID.
 */
-BFLDID _get_arg_field_id (zval ** arg_field, int is32, int arg_no)
+BFLDID _get_arg_field_id (zval ** arg_field, int arg_no)
 {
 	BFLDID field_id;
 		
 	switch (Z_TYPE_PP (arg_field)) {
 		case IS_STRING:  /* need to convert it to the real Field ID */
-						field_id=Bfldid ((*arg_field)->value.str.val);
+			field_id=Bfldid ((*arg_field)->value.str.val);
 			break;
 			
 		case IS_LONG:  /* everything is ok */
@@ -69,7 +69,7 @@ BFLDID _get_arg_field_id (zval ** arg_field, int is32, int arg_no)
 ***********************************************/
 
 /* {{{ function ndrx_get_ferrno
-	function returns value of Ferror
+	function returns value of Berror
 */
 ZEND_FUNCTION (ndrx_get_ferrno)
 {
@@ -84,11 +84,11 @@ ZEND_FUNCTION (ndrx_get_ferrno)
 
 
 
-/* {{{ function ndrx_fstrerror
+/* {{{ function ndrx_bstrerror
 	Function to return a string containing a endurox error description.
-	Function accepts one argument, ferror.
+	Function accepts one argument, berror.
 */
-ZEND_FUNCTION (ndrx_fstrerror)
+ZEND_FUNCTION (ndrx_bstrerror)
 {
 	zval **arg_ferrno;
 
@@ -100,7 +100,7 @@ ZEND_FUNCTION (ndrx_fstrerror)
 
 	convert_to_long_ex(arg_ferrno);
 
-	RETURN_STRING (Fstrerror32 ((*arg_ferrno)->value.lval), 1);
+	RETURN_STRING (Bstrerror32 ((*arg_ferrno)->value.lval), 1);
 }
 /* }}} */
 
@@ -113,13 +113,13 @@ ZEND_FUNCTION (ndrx_fstrerror)
 		Functions that take only one UBF buffer argument.
 **********************************************************/
 
-/* {{{ function ndrx_Ffprintf
-	function calls Ffprintf
+/* {{{ function ndrx_Bfprintf
+	function calls Bfprintf
 	Accepts 1 argument, UBF Resource#
 	
 	Returns int similar to fprintf.
 */
-ZEND_FUNCTION (ndrx_ffprintf)
+ZEND_FUNCTION (ndrx_bfprintf)
 {	
 	zval ** arg_buf_ref;
 
@@ -156,61 +156,18 @@ ZEND_FUNCTION (ndrx_ffprintf)
 /* }}} */
 
 
-
-/* {{{ function ndrx_fchksum
-	function takes one argument:
-	1.  UBF buffer resource
-	
-	and returns the result from Fchksum(32).
-*/
-ZEND_FUNCTION (ndrx_fchksum)
-{
-	zval ** arg_ubf_ref;
-
-	ndrx_tpalloc_buf_type * ubf_buf_res;
-		
-	
-	if((ZEND_NUM_ARGS() != 1) || 
-		(zend_get_parameters_ex(1, 
-			&arg_ubf_ref)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	/*
-		Now get the buffer from the argument.
-	*/
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-
-	RETURN_LONG (Fchksum ((UBFH*)ubf_buf_res->buf));
-}
-/* }}} */
-
-
-
-/* {{{ function ndrx_fidxused
+/* {{{ function ndrx_bidxused
 	Accepts 1 argument, 
 	1.  UBF Resource#
 	
-	Returns int fidxused
+	Returns int bidxused
 */
-ZEND_FUNCTION (ndrx_fidxused)
+ZEND_FUNCTION (ndrx_bidxused)
 {	
 	zval ** arg_ubf_ref;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
-		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
@@ -235,19 +192,18 @@ ZEND_FUNCTION (ndrx_fidxused)
 
 
 
-/* {{{ function ndrx_fielded
+/* {{{ function ndrx_bisubf
 	Accepts 1 argument, 
 	1.  UBF Resource#
 	
-	Returns int fielded
+	Returns int bisubf
 */
-ZEND_FUNCTION (ndrx_fielded)
+ZEND_FUNCTION (ndrx_bisubf)
 {	
 	zval ** arg_ubf_ref;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
@@ -265,10 +221,6 @@ ZEND_FUNCTION (ndrx_fielded)
 						-1, 
 						"Endurox tpalloc buffer", 
 						ndrx_rh_alloc_buffer);
-
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
 
 
 	RETURN_LONG (Bisubf ((UBFH*)ubf_buf_res->buf));
@@ -277,19 +229,18 @@ ZEND_FUNCTION (ndrx_fielded)
 
 
 
-/* {{{ function ndrx_fsizeof
+/* {{{ function ndrx_bsizeof
 	Accepts 1 argument, 
 	1.  UBF Resource#
 	
-	Returns int fsizeof
+	Returns int bsizeof
 */
-ZEND_FUNCTION (ndrx_fsizeof)
+ZEND_FUNCTION (ndrx_bsizeof)
 {	
 	zval ** arg_ubf_ref;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
@@ -309,30 +260,24 @@ ZEND_FUNCTION (ndrx_fsizeof)
 						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
-
-	RETURN_LONG (IS32 (is32, Fsizeof32 ((UBFH*)ubf_buf_res->buf),
-							 Fsizeof ((UBFH*) ubf_buf_res->buf)));
+	RETURN_LONG (Bsizeof ((UBFH*)ubf_buf_res->buf));
 }
 /* }}} */
 
 
 
-/* {{{ function ndrx_funindex
+/* {{{ function ndrx_bunindex
 	Accepts 1 argument, 
 	1.  UBF Resource#
 	
-	Returns int funindex
+	Returns int bunindex
 */
-ZEND_FUNCTION (ndrx_funindex)
+ZEND_FUNCTION (ndrx_bunindex)
 {	
 	zval ** arg_ubf_ref;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
@@ -352,30 +297,24 @@ ZEND_FUNCTION (ndrx_funindex)
 						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
-
-	RETURN_LONG (IS32 (is32, Funindex32 ((UBFH*)ubf_buf_res->buf),
-							 Funindex ((UBFH*) ubf_buf_res->buf)));
+	RETURN_LONG (Bunindex ((UBFH*)ubf_buf_res->buf));
 }
 /* }}} */
 
 
 
-/* {{{ function ndrx_funused
+/* {{{ function ndrx_bunused
 	Accepts 1 argument, 
 	1.  UBF Resource#
 	
-	Returns int funused
+	Returns int bunused
 */
-ZEND_FUNCTION (ndrx_funused)
+ZEND_FUNCTION (ndrx_bunused)
 {	
 	zval ** arg_ubf_ref;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
@@ -394,33 +333,25 @@ ZEND_FUNCTION (ndrx_funused)
 						"Endurox tpalloc buffer", 
 						ndrx_rh_alloc_buffer);
 
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
-
-	RETURN_LONG (IS32 (is32, Funused32 ((UBFH*)ubf_buf_res->buf),
-							 Funused ((UBFH*) ubf_buf_res->buf)));
+	RETURN_LONG (Bunused((UBFH*)ubf_buf_res->buf));
 }
 /* }}} */
 
 
 
 
-/* {{{ function ndrx_fused
+/* {{{ function ndrx_bused
 	Accepts 1 argument, 
 	1.  UBF Resource#
 	
-	Returns int fused
+	Returns int bused
 */
-ZEND_FUNCTION (ndrx_fused)
+ZEND_FUNCTION (ndrx_bused)
 {	
 	zval ** arg_ubf_ref;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
-		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
@@ -438,13 +369,7 @@ ZEND_FUNCTION (ndrx_fused)
 						"Endurox tpalloc buffer", 
 						ndrx_rh_alloc_buffer);
 
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
-
-	RETURN_LONG (IS32 (is32, Fused32 ((UBFH*)ubf_buf_res->buf),
-							 Fused ((UBFH*) ubf_buf_res->buf)));
+	RETURN_LONG (Bused ((UBFH*)ubf_buf_res->buf));
 }
 /* }}} */
 
@@ -453,28 +378,27 @@ ZEND_FUNCTION (ndrx_fused)
 	Functions that take only 2 UBF arguments
 ************************************************************/
 
-/* {{{ function ndrx_fcmp
+/* {{{ function ndrx_bconcat
 	function takes two argument:
-	1.  UBF buffer resource
-	2.  UBF buffer resource
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
 	
-	and returns the result from Fcmp(32).
+	and returns the result from Bconcat(32).
 */
-ZEND_FUNCTION (ndrx_fcmp)
+ZEND_FUNCTION (ndrx_bconcat)
 {
-	zval ** arg_ubf_ref1;
-	zval ** arg_ubf_ref2;
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
 	
 
-	ndrx_tpalloc_buf_type * ubf_buf_res1;
-	ndrx_tpalloc_buf_type * ubf_buf_res2;
-	int is32_1, is32_2;
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref1,
-			&arg_ubf_ref2)              != SUCCESS))
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -484,50 +408,144 @@ ZEND_FUNCTION (ndrx_fcmp)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						ubf_buf_res1, 
+						ubf_buf_res_d, 
 						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref1, 
+						arg_ubf_ref_d, 
 						-1, 
 						"Endurox tpalloc buffer", 
 						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						ubf_buf_res2, 
+						ubf_buf_res_s, 
 						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref2, 
+						arg_ubf_ref_s, 
+						-1, 
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
+
+	
+	RETURN_LONG (Bconcat ((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf));
+}
+/* }}} */
+
+
+
+
+/* {{{ function ndrx_bcpy
+	function takes two argument:
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
+	
+	and returns the result from Bcpy(32).
+*/
+ZEND_FUNCTION (ndrx_bcpy)
+{
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
+	
+
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
+		
+	
+	if((ZEND_NUM_ARGS() != 2) || 
+		(zend_get_parameters_ex(2, 
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
+	{
+		WRONG_PARAM_COUNT;
+	}
+
+	/*
+		Now get the buffer from the argument.
+	*/
+
+	ZEND_FETCH_RESOURCE(
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
 						-1, 
 						"Endurox tpalloc buffer", 
 						ndrx_rh_alloc_buffer);
 
 
+	ZEND_FETCH_RESOURCE(
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
+						-1, 
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
-	if ((is32_1 = _ndrx_is_ubf_type (ubf_buf_res1->type)) == -1)
-		RETURN_LONG (-1);
-	
-	if ((is32_2 = _ndrx_is_ubf_type (ubf_buf_res2->type)) == -1)
-		RETURN_LONG (-1);
 
-	if (is32_1 != is32_2)
-	{
-		zend_error (E_WARNING, "Attemping to compare different UBF buffer types");
-		RETURN_LONG (-1);
-	}
 	
-	RETURN_LONG (IS32(is32_1, Fcmp32 ((UBFH*)ubf_buf_res1->buf, (UBFH*)ubf_buf_res2->buf), 
-							Fcmp((UBFH*)ubf_buf_res1->buf, (UBFH*)ubf_buf_res2->buf)));
+	RETURN_LONG (Bcpy((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf));
 }
 /* }}} */
 
 
-/* {{{ function ndrx_fconcat
+
+/* {{{ function ndrx_bjoin
 	function takes two argument:
 	1.  UBF buffer resource destination
 	2.  UBF buffer resource source
 	
-	and returns the result from Fconcat(32).
+	and returns the result from Bjoin(32).
 */
-ZEND_FUNCTION (ndrx_fconcat)
+ZEND_FUNCTION (ndrx_bjoin)
+{
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
+	
+
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
+		
+	
+	if((ZEND_NUM_ARGS() != 2) || 
+		(zend_get_parameters_ex(2, 
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
+	{
+		WRONG_PARAM_COUNT;
+	}
+
+	/*
+		Now get the buffer from the argument.
+	*/
+
+	ZEND_FETCH_RESOURCE(
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
+						-1, 
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
+
+
+	ZEND_FETCH_RESOURCE(
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
+						-1, 
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
+
+	
+	RETURN_LONG (Bjoin((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf));
+}
+/* }}} */
+
+
+/* {{{ function ndrx_bupdate
+	function takes two argument:
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
+	
+	and returns the result from Bupdate(32).
+*/
+ZEND_FUNCTION (ndrx_bupdate)
 {
 	zval ** arg_ubf_ref_d;
 	zval ** arg_ubf_ref_s;
@@ -567,361 +585,8 @@ ZEND_FUNCTION (ndrx_fconcat)
 						"Endurox tpalloc buffer", 
 						ndrx_rh_alloc_buffer);
 
-
-
-	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
-		RETURN_LONG (-1);
 	
-	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
-		RETURN_LONG (-1);
-
-	if (is32_d != is32_s)
-	{
-		zend_error (E_WARNING, "Attemping to copy different UBF buffer types");
-		RETURN_LONG (-1);
-	}
-	
-	RETURN_LONG (IS32(is32_d, Fconcat32 ((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf), 
-							Fconcat((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf)));
-}
-/* }}} */
-
-
-
-
-/* {{{ function ndrx_fcpy
-	function takes two argument:
-	1.  UBF buffer resource destination
-	2.  UBF buffer resource source
-	
-	and returns the result from Fcpy(32).
-*/
-ZEND_FUNCTION (ndrx_fcpy)
-{
-	zval ** arg_ubf_ref_d;
-	zval ** arg_ubf_ref_s;
-	
-
-	ndrx_tpalloc_buf_type * ubf_buf_res_d;
-	ndrx_tpalloc_buf_type * ubf_buf_res_s;
-	int is32_d, is32_s;
-		
-	
-	if((ZEND_NUM_ARGS() != 2) || 
-		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref_d,
-			&arg_ubf_ref_s)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	/*
-		Now get the buffer from the argument.
-	*/
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_d, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_d, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_s, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_s, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-
-	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
-		RETURN_LONG (-1);
-	
-	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
-		RETURN_LONG (-1);
-
-	if (is32_d != is32_s)
-	{
-		zend_error (E_WARNING, "Attemping to copy different UBF buffer types");
-		RETURN_LONG (-1);
-	}
-	
-	RETURN_LONG (IS32(is32_d, Fcpy32 ((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf), 
-							Fcpy((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf)));
-}
-/* }}} */
-
-
-
-/* {{{ function ndrx_fjoin
-	function takes two argument:
-	1.  UBF buffer resource destination
-	2.  UBF buffer resource source
-	
-	and returns the result from Fjoin(32).
-*/
-ZEND_FUNCTION (ndrx_fjoin)
-{
-	zval ** arg_ubf_ref_d;
-	zval ** arg_ubf_ref_s;
-	
-
-	ndrx_tpalloc_buf_type * ubf_buf_res_d;
-	ndrx_tpalloc_buf_type * ubf_buf_res_s;
-	int is32_d, is32_s;
-		
-	
-	if((ZEND_NUM_ARGS() != 2) || 
-		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref_d,
-			&arg_ubf_ref_s)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	/*
-		Now get the buffer from the argument.
-	*/
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_d, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_d, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_s, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_s, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-
-	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
-		RETURN_LONG (-1);
-	
-	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
-		RETURN_LONG (-1);
-
-	if (is32_d != is32_s)
-	{
-		zend_error (E_WARNING, "Attemping to join different UBF buffer types");
-		RETURN_LONG (-1);
-	}
-	
-	RETURN_LONG (IS32(is32_d, Fjoin32 ((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf), 
-							Fjoin((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf)));
-}
-/* }}} */
-
-
-
-/* {{{ function ndrx_fmove
-	function takes two argument:
-	1.  UBF buffer resource destination
-	2.  UBF buffer resource source
-	
-	and returns the result from Fmove(32).
-	
-	CAREFULL::  This function has a slight modification to the norm
-	for these args because the destination is not required to be a UBF Buf.
-*/
-ZEND_FUNCTION (ndrx_fmove)
-{
-	zval ** arg_ubf_ref_d;
-	zval ** arg_ubf_ref_s;
-	
-
-	ndrx_tpalloc_buf_type * ubf_buf_res_d;
-	ndrx_tpalloc_buf_type * ubf_buf_res_s;
-	int is32_d, is32_s;
-		
-	
-	if((ZEND_NUM_ARGS() != 2) || 
-		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref_d,
-			&arg_ubf_ref_s)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	/*
-		Now get the buffer from the argument.
-	*/
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_d, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_d, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_s, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_s, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	
-	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
-		RETURN_LONG (-1);
-
-	
-	RETURN_LONG (IS32(is32_d, Fmove32 (ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf), 
-							Fmove(ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf)));
-}
-/* }}} */
-
-
-
-
-
-/* {{{ function ndrx_fojoin
-	function takes two argument:
-	1.  UBF buffer resource destination
-	2.  UBF buffer resource source
-	
-	and returns the result from Fojoin(32).
-*/
-ZEND_FUNCTION (ndrx_fojoin)
-{
-	zval ** arg_ubf_ref_d;
-	zval ** arg_ubf_ref_s;
-	
-
-	ndrx_tpalloc_buf_type * ubf_buf_res_d;
-	ndrx_tpalloc_buf_type * ubf_buf_res_s;
-	int is32_d, is32_s;
-		
-	
-	if((ZEND_NUM_ARGS() != 2) || 
-		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref_d,
-			&arg_ubf_ref_s)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	/*
-		Now get the buffer from the argument.
-	*/
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_d, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_d, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_s, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_s, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-
-	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
-		RETURN_LONG (-1);
-	
-	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
-		RETURN_LONG (-1);
-
-	if (is32_d != is32_s)
-	{
-		zend_error (E_WARNING, "Attemping to outer join different UBF buffer types");
-		RETURN_LONG (-1);
-	}
-	
-	RETURN_LONG (IS32(is32_d, Fojoin32 ((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf), 
-							Fojoin((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf)));
-}
-/* }}} */
-
-
-
-
-/* {{{ function ndrx_fupdate
-	function takes two argument:
-	1.  UBF buffer resource destination
-	2.  UBF buffer resource source
-	
-	and returns the result from Fupdate(32).
-*/
-ZEND_FUNCTION (ndrx_fupdate)
-{
-	zval ** arg_ubf_ref_d;
-	zval ** arg_ubf_ref_s;
-	
-
-	ndrx_tpalloc_buf_type * ubf_buf_res_d;
-	ndrx_tpalloc_buf_type * ubf_buf_res_s;
-	int is32_d, is32_s;
-		
-	
-	if((ZEND_NUM_ARGS() != 2) || 
-		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref_d,
-			&arg_ubf_ref_s)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	/*
-		Now get the buffer from the argument.
-	*/
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_d, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_d, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_s, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_s, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-
-	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
-		RETURN_LONG (-1);
-	
-	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
-		RETURN_LONG (-1);
-
-	if (is32_d != is32_s)
-	{
-		zend_error (E_WARNING, "Attemping to outer join different UBF buffer types");
-		RETURN_LONG (-1);
-	}
-	
-	RETURN_LONG (IS32(is32_d, Fupdate32 ((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf), 
-							Fupdate((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf)));
+	RETURN_LONG (Bupdate((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf));
 }
 /* }}} */
 
@@ -933,21 +598,20 @@ ZEND_FUNCTION (ndrx_fupdate)
 	one other (usually long) arg.
 **********************************************************/
 
-/* {{{ function ndrx_fdelall
+/* {{{ function ndrx_bdelall
 	Accepts 2 argumens, 
 	1.  UBF Resource#
 	2.  Fieldid
 	
-	Returns int fdelall.
+	Returns int bdelall.
 */
-ZEND_FUNCTION (ndrx_fdelall)
+ZEND_FUNCTION (ndrx_bdelall)
 {	
 	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 	BFLDID field_id;
 			
 	
@@ -969,32 +633,27 @@ ZEND_FUNCTION (ndrx_fdelall)
 						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
 /*
 	what type of second argument did they give us?
 	Convert if needed.
 */
-	if ((field_id = _get_arg_field_id (arg_field, is32, 2)) == -1)
+	if ((field_id = _get_arg_field_id (arg_field, 2)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fdelall32 ((UBFH*)ubf_buf_res->buf, (BFLDID) field_id),
-							 Fdelall ((UBFH*) ubf_buf_res->buf, (BFLDID) field_id)));
+	RETURN_LONG (Bdelall((UBFH*)ubf_buf_res->buf, (BFLDID) field_id)));
 }
 /* }}} */
 
 
-
-/* {{{ function ndrx_findex
+/* {{{ function ndrx_brstrindex
 	Accepts 2 argumens, 
 	1.  UBF Resource#
 	2.  Index interval
 	
-	Returns int findex.
+	Returns int brstrindex.
 */
-ZEND_FUNCTION (ndrx_findex)
+ZEND_FUNCTION (ndrx_brstrindex)
 {	
 	zval ** arg_ubf_ref;
 	zval ** arg_index_intvl;
@@ -1024,81 +683,27 @@ ZEND_FUNCTION (ndrx_findex)
 						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
 
-
-	RETURN_LONG (IS32 (is32, Findex32 ((UBFH*)ubf_buf_res->buf, (BFLDOCC32)(*arg_index_intvl)->value.lval),
-							 Findex ((UBFH*) ubf_buf_res->buf, (BFLDOCC)(*arg_index_intvl)->value.lval)));
+	RETURN_LONG (Brstrindex((UBFH*)ubf_buf_res->buf, (BFLDOCC32)(*arg_index_intvl)->value.lval));
 }
 /* }}} */
 
 
 
-
-/* {{{ function ndrx_frstrindex
-	Accepts 2 argumens, 
-	1.  UBF Resource#
-	2.  Index interval
-	
-	Returns int frstrindex.
-*/
-ZEND_FUNCTION (ndrx_frstrindex)
-{	
-	zval ** arg_ubf_ref;
-	zval ** arg_index_intvl;
-	
-
-	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
-		
-	
-	if((ZEND_NUM_ARGS() != 2) || 
-		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref,
-			&arg_index_intvl)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	convert_to_long_ex (arg_index_intvl);
-
-	
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
-
-	RETURN_LONG (IS32 (is32, Frstrindex32 ((UBFH*)ubf_buf_res->buf, (BFLDOCC32)(*arg_index_intvl)->value.lval),
-							 Frstrindex ((UBFH*) ubf_buf_res->buf, (BFLDOCC)(*arg_index_intvl)->value.lval)));
-}
-/* }}} */
-
-
-
-/* {{{ function ndrx_foccur
+/* {{{ function ndrx_boccur
 	Accepts 2 argumens, 
 	1.  UBF Resource#
 	2.  Field ID
 	
 	Returns int findex.
 */
-ZEND_FUNCTION (ndrx_foccur)
+ZEND_FUNCTION (ndrx_boccur)
 {	
 	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 	BFLDID field_id;
 		
 	
@@ -1119,33 +724,29 @@ ZEND_FUNCTION (ndrx_foccur)
 						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
 /*
 	what type of second argument did they give us?
 	Convert if needed.
 */
-	if ((field_id = _get_arg_field_id (arg_field, is32, 2)) == -1)
+	if ((field_id = _get_arg_field_id (arg_field, 2)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Foccur32 ((UBFH*)ubf_buf_res->buf, (BFLDID) field_id),
-							 Foccur ((UBFH*) ubf_buf_res->buf, (BFLDID) field_id)));
+	RETURN_LONG (Boccur ((UBFH*)ubf_buf_res->buf, (BFLDID) field_id));
 }
 /* }}} */
 /***********************************************************
 	Functions that take a FieldID and a special passed buf type.
 ***************************************************************/
 
-/* {{{ function ndrx_fldid
+/* {{{ function ndrx_bfldid
 	function takes two arguments:
 	1.  the field name 
 	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the corresponding Field ID.
 */
-ZEND_FUNCTION (ndrx_fldid)
+ZEND_FUNCTION (ndrx_bfldid)
 {
 	zval ** arg_field_name;
 	zval ** arg_buf_type;
@@ -1169,23 +770,20 @@ ZEND_FUNCTION (ndrx_fldid)
 		RETURN_LONG (-1);
 	}
 
-	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Bfldid ((*arg_field_name)->value.str.val),
-			Fldid ((*arg_field_name)->value.str.val)));
+	RETURN_LONG (Bfldid ((*arg_field_name)->value.str.val));
 }
 /* }}} */
 
 
 
-/* {{{ function ndrx_fldno
+/* {{{ function ndrx_bfldno
 	function takes two arguments:
 	1.  the field id 
 	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the corresponding Field Number.
 */
-ZEND_FUNCTION (ndrx_fldno)
+ZEND_FUNCTION (ndrx_bfldno)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1209,23 +807,20 @@ ZEND_FUNCTION (ndrx_fldno)
 		RETURN_LONG (-1);
 	}
 
-	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fldno32 ((BFLDID) (*arg_field_id)->value.lval),
-			Fldno ((BFLDID) (*arg_field_id)->value.lval)));
+	RETURN_LONG (Bfldno ((BFLDID) (*arg_field_id)->value.lval));
 }
 /* }}} */
 
 
 
-/* {{{ function ndrx_fldtype
+/* {{{ function ndrx_bfldtype
 	function takes two arguments:
 	1.  the field id 
 	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
-	and returns the result from Fldtype(32).
+	and returns the result from Bfldtype(32).
 */
-ZEND_FUNCTION (ndrx_fldtype)
+ZEND_FUNCTION (ndrx_bfldtype)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1249,24 +844,21 @@ ZEND_FUNCTION (ndrx_fldtype)
 		RETURN_LONG (-1);
 	}
 
-	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fldtype32 ((BFLDID) (*arg_field_id)->value.lval),
-			Fldtype ((BFLDID) (*arg_field_id)->value.lval)));
+	RETURN_LONG (Bfldtype ((BFLDID) (*arg_field_id)->value.lval));
 }
 /* }}} */
 
 
 
-/* {{{ function ndrx_fmkfldid
+/* {{{ function ndrx_fmkbfldid
 	function takes three arguments:
 	1.  the data type from ubf.h
 	2.  The Field Number 
 	3.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
-	and returns the result from Fmkfldid(32).
+	and returns the result from Fmkbfldid(32).
 */
-ZEND_FUNCTION (ndrx_fmkfldid)
+ZEND_FUNCTION (ndrx_fmkbfldid)
 {
 	zval ** arg_data_type;
 	zval ** arg_field_num;
@@ -1293,10 +885,7 @@ ZEND_FUNCTION (ndrx_fmkfldid)
 		RETURN_LONG (-1);
 	}
 
-	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fmkbfldid ((int) (*arg_data_type)->value.lval, (BFLDID) (*arg_field_num)->value.lval),
-			Fmkfldid ((int) (*arg_data_type)->value.lval, (BFLDID) (*arg_field_num)->value.lval)));
+	RETURN_LONG (Fmkbfldid ((int) (*arg_data_type)->value.lval, (BFLDID) (*arg_field_num)->value.lval));
 }
 /* }}} */
 
@@ -1304,14 +893,14 @@ ZEND_FUNCTION (ndrx_fmkfldid)
 
 
 
-/* {{{ function ndrx_fname
+/* {{{ function ndrx_bfname
 	function takes two arguments:
 	1.  the field id 
 	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
-	and returns the result from Fname(32).
+	and returns the result from Bfname(32).
 */
-ZEND_FUNCTION (ndrx_fname)
+ZEND_FUNCTION (ndrx_bfname)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1335,66 +924,18 @@ ZEND_FUNCTION (ndrx_fname)
 		RETURN_NULL ();
 	}
 
-	RETURN_STRING (
-		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fname32 ((BFLDID) (*arg_field_id)->value.lval),
-			Fname ((BFLDID) (*arg_field_id)->value.lval)), 1);
+	RETURN_STRING (Bfname ((BFLDID) (*arg_field_id)->value.lval), 1);
 }
 /* }}} */
 
-
-/* {{{ function ndrx_fneeded
-	function takes three arguments:
-	1.  the number of fields
-	2.  Amount of value space 
-	3.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
-	
-	and returns the result from Fneeded(32).
-*/
-ZEND_FUNCTION (ndrx_fneeded)
-{
-	zval ** arg_fields;
-	zval ** arg_value_space;
-	zval ** arg_buf_type;
-	
-
-	if((ZEND_NUM_ARGS() != 3) || 
-		(zend_get_parameters_ex(3, 
-			&arg_fields,
-			&arg_value_space,
-			&arg_buf_type)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	convert_to_long_ex (arg_fields);
-	convert_to_long_ex (arg_value_space);
-	convert_to_long_ex (arg_buf_type);
-	
-	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
-	{
-		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
-		RETURN_LONG (-1);
-	}
-
-	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fneeded32 ((BFLDOCC32) (*arg_fields)->value.lval, (BFLDLEN) (*arg_value_space)->value.lval),
-			Fneeded ((BFLDOCC) (*arg_fields)->value.lval, (BFLDLEN) (*arg_value_space)->value.lval)));
-}
-/* }}} */
-
-
-
-/* {{{ function ndrx_ftype
+/* {{{ function ndrx_btype
 	function takes two arguments:
 	1.  the field id 
 	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
-	and returns the result from Ftype(32).
+	and returns the result from Btype(32).
 */
-ZEND_FUNCTION (ndrx_ftype)
+ZEND_FUNCTION (ndrx_btype)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1418,10 +959,7 @@ ZEND_FUNCTION (ndrx_ftype)
 		RETURN_NULL ();
 	}
 
-	RETURN_STRING (
-		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Ftype32 ((BFLDID) (*arg_field_id)->value.lval),
-			Ftype ((BFLDID) (*arg_field_id)->value.lval)), 1);
+	RETURN_STRING (Btype ((BFLDID) (*arg_field_id)->value.lval), 1);
 }
 /* }}} */
 
@@ -1432,15 +970,15 @@ ZEND_FUNCTION (ndrx_ftype)
 	other arguments.
 *************************************************************/
 
-/* {{{ function ndrx_fdel
+/* {{{ function ndrx_bdel
 	Accepts 3 argumens, 
 	1.  UBF Resource#
 	2.  Fieldid
 	3.  Occurance.
 	
-	Returns int fdel.
+	Returns int bdel.
 */
-ZEND_FUNCTION (ndrx_fdel)
+ZEND_FUNCTION (ndrx_bdel)
 {	
 	zval ** arg_ubf_ref;
 	zval ** arg_field;
@@ -1448,7 +986,6 @@ ZEND_FUNCTION (ndrx_fdel)
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 	BFLDID field_id;
 			
 	
@@ -1472,38 +1009,30 @@ ZEND_FUNCTION (ndrx_fdel)
 						ndrx_rh_alloc_buffer);
 
 
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
 /*
 	what type of second argument did they give us?
 	Convert if needed.
 */
-	if ((field_id = _get_arg_field_id (arg_field, is32, 2)) == -1)
+	if ((field_id = _get_arg_field_id (arg_field, 2)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fdel32 ((UBFH*)ubf_buf_res->buf, 
-									 (BFLDID) field_id,
-									 (BFLDOCC32) (*arg_occ)->value.lval),
-							 Fdel   ((UBFH*) ubf_buf_res->buf, 
-							 		 (BFLDID) field_id,
-									 (BFLDOCC) (*arg_occ)->value.lval)));
+	RETURN_LONG (Bdel   ((UBFH*) ubf_buf_res->buf, (BFLDID) field_id,
+							(BFLDOCC) (*arg_occ)->value.lval));
 }
 /* }}} */
 
 
 
-/* {{{ function ndrx_flen
+/* {{{ function ndrx_blen
 	Accepts 3 argumens, 
 	1.  UBF Resource#
 	2.  Fieldid
 	3.  Occurance.
 	
-	Returns int flen
+	Returns int blen
 */
-ZEND_FUNCTION (ndrx_flen)
+ZEND_FUNCTION (ndrx_blen)
 {	
 	zval ** arg_ubf_ref;
 	zval ** arg_field;
@@ -1511,7 +1040,6 @@ ZEND_FUNCTION (ndrx_flen)
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 	BFLDID field_id;
 		
 	
@@ -1535,38 +1063,30 @@ ZEND_FUNCTION (ndrx_flen)
 						ndrx_rh_alloc_buffer);
 
 
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
 /*
 	what type of second argument did they give us?
 	Convert if needed.
 */
-	if ((field_id = _get_arg_field_id (arg_field, is32, 2)) == -1)
+	if ((field_id = _get_arg_field_id (arg_field, 2)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Flen32 ((UBFH*)ubf_buf_res->buf, 
-									 (BFLDID) field_id,
-									 (BFLDOCC32) (*arg_occ)->value.lval),
-							 Flen   ((UBFH*) ubf_buf_res->buf, 
-							 		 (BFLDID) field_id,
-									 (BFLDOCC) (*arg_occ)->value.lval)));
+	RETURN_LONG (IS32 (Blen   ((UBFH*) ubf_buf_res->buf, (BFLDID) field_id,
+					(BFLDOCC) (*arg_occ)->value.lval)));
 }
 /* }}} */
 
 
 
-/* {{{ function ndrx_fpres
+/* {{{ function ndrx_bpres
 	Accepts 3 argumens, 
 	1.  UBF Resource#
 	2.  Fieldid
 	3.  Occurance.
 	
-	Returns int fpres
+	Returns int bpres
 */
-ZEND_FUNCTION (ndrx_fpres)
+ZEND_FUNCTION (ndrx_bpres)
 {	
 	zval ** arg_ubf_ref;
 	zval ** arg_field;
@@ -1574,7 +1094,6 @@ ZEND_FUNCTION (ndrx_fpres)
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 	BFLDID field_id;
 	
 	if((ZEND_NUM_ARGS() != 3) || 
@@ -1597,38 +1116,31 @@ ZEND_FUNCTION (ndrx_fpres)
 						ndrx_rh_alloc_buffer);
 
 
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
 /*
 	what type of second argument did they give us?
 	Convert if needed.
 */
-	if ((field_id = _get_arg_field_id (arg_field, is32, 2)) == -1)
+	if ((field_id = _get_arg_field_id (arg_field, 2)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fpres32 ((UBFH*)ubf_buf_res->buf, 
-									 (BFLDID) field_id,
-									 (BFLDOCC32) (*arg_occ)->value.lval),
-							 Fpres   ((UBFH*) ubf_buf_res->buf, 
-							 		 (BFLDID) field_id,
-									 (BFLDOCC) (*arg_occ)->value.lval)));
+	RETURN_LONG (Bpres   ((UBFH*) ubf_buf_res->buf, 
+				 (BFLDID) field_id,
+				 (BFLDOCC) (*arg_occ)->value.lval));
 }
 /* }}} */
 
 
-/* {{{ function ndrx_fadd (ALIAS:  ndrx_fchg)
+/* {{{ function ndrx_badd (ALIAS:  ndrx_fchg)
 	function takes three (or four) arguments:
 	1.  UBF buffer resource
 	2.  Field ID
 	3.  data value
 	4.  (optional) the occurance value
 	
-	and returns the result from Fadd(32).
+	and returns the result from Badd(32).
 */
-ZEND_FUNCTION (ndrx_fadd)
+ZEND_FUNCTION (ndrx_badd)
 {
 	zval ** arg_ubf_ref;
 	zval ** arg_field;
@@ -1636,7 +1148,6 @@ ZEND_FUNCTION (ndrx_fadd)
 	zval ** arg_occ_val;
 	
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
 	BFLDOCC32 occ = -1;
 	BFLDID field_id;
 	
@@ -1680,20 +1191,15 @@ ZEND_FUNCTION (ndrx_fadd)
 						"Endurox tpalloc buffer", 
 						ndrx_rh_alloc_buffer);
 
-
-
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
-		RETURN_LONG (-1);
-
 /*
 	what type of second argument did they give us?
 	Convert if needed.
 */
-	if ((field_id = _get_arg_field_id (arg_field, is32, 2)) == -1)
+	if ((field_id = _get_arg_field_id (arg_field, 2)) == -1)
 		RETURN_LONG (-1);
 	
 /*
-		We won't actually call Fadd, but rather a Fchg with an
+		We won't actually call Badd, but rather a Fchg with an
 		occurence of -1.  It should be the same.  If we find
 		its not the same its pretty easy to change it.
 */
@@ -1703,7 +1209,7 @@ ZEND_FUNCTION (ndrx_fadd)
 /* }}} */
 
 
-/* {{{ function ndrx_fget
+/* {{{ function ndrx_bget
 	function takes 2 or 3 arguments:
 	1.  UBF buffer resource
 	2.  Field ID
@@ -1711,19 +1217,18 @@ ZEND_FUNCTION (ndrx_fadd)
 
 	returns the field value(LONG,DOUBLE,STRING, or FALSE)
 */
-ZEND_FUNCTION (ndrx_fget)
+ZEND_FUNCTION (ndrx_bget)
 {
 	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	zval ** arg_occ_val;
 	int argc;
-	BFLDID fldid;
+	BFLDID bfldid;
 	int occ = 0;	/* first occurrence is default */
    
 	ndrx_tpalloc_buf_type *ubf_buf_res;
-	int is32;
 	char *buf;
-	int buflen;
+	int bublen;
 	int rc;
 
 	short short_data;
@@ -1758,7 +1263,7 @@ ZEND_FUNCTION (ndrx_fget)
 	what type of second argument did they give us?
 	Convert if needed.
 */
-	if ((fldid = _get_arg_field_id (arg_field, is32, 2)) == -1)
+	if ((bfldid = _get_arg_field_id (arg_field, 2)) == -1)
 		RETURN_LONG (-1);
 
 /*
@@ -1770,28 +1275,22 @@ ZEND_FUNCTION (ndrx_fget)
 	}
 
 	/* get length of the field value  for memory allocation */
-	buflen = IS32 (is32, Flen32((UBFH *)ubf_buf_res->buf,
-								(BFLDID)fldid, (BFLDOCC32)occ),
-						 Flen  ((UBFH *)ubf_buf_res->buf,
-								(BFLDID)fldid, (BFLDOCC)occ));
+	bublen = Blen  ((UBFH *)ubf_buf_res->buf, (BFLDID)bfldid, (BFLDOCC)occ);
 
-	if (buflen == -1)	/* not found the field occurrence */
+	if (bublen == -1)	/* not found the field occurrence */
 		RETURN_FALSE;
 
-	if ((buf = emalloc(buflen)) == NULL) {
-		zend_error(E_WARNING, "unable to allocate %d bytes of memory", buflen);
+	if ((buf = emalloc(bublen)) == NULL) {
+		zend_error(E_WARNING, "unable to allocate %d bytes of memory", bublen);
 		RETURN_FALSE;
 	}
 
-	rc = IS32 (is32, Fget32((UBFH *)ubf_buf_res->buf,
-							(BFLDID)fldid, (BFLDOCC32)occ, buf, NULL),
-					 Fget  ((UBFH *)ubf_buf_res->buf,
-							(BFLDID)fldid, (BFLDOCC)occ, buf, NULL));
+	rc = Bget  ((UBFH *)ubf_buf_res->buf, (BFLDID)bfldid, (BFLDOCC)occ, buf, NULL);
 
 	if (rc == -1)
 		RETURN_FALSE;
 
-	switch (IS32(is32, Fldtype32((BFLDID) fldid), Fldtype((BFLDID) fldid))) {
+	switch (Bfldtype((BFLDID) bfldid)) {
 	case BFLD_SHORT:
 		memcpy(&short_data, buf, sizeof(short));
 		RETVAL_LONG(short_data);
@@ -1813,7 +1312,7 @@ ZEND_FUNCTION (ndrx_fget)
 		RETVAL_STRING(buf, 1);
 		break;
 	case BFLD_CARRAY:
-		RETVAL_STRINGL(buf, buflen, 1);
+		RETVAL_STRINGL(buf, bublen, 1);
 		break;
 	default:
 		RETVAL_FALSE;
@@ -1824,24 +1323,23 @@ ZEND_FUNCTION (ndrx_fget)
 /* }}} */
 
 
-/* {{{ function ndrx_ffprint
-	function calls Ffprint
+/* {{{ function ndrx_bfprint
+	function calls Bfprint
 	Acceps 2 or 3 arguments,
 		UBF Resource#
 		output file path
 		(optional) file open mode ("a" is default)
-	Returns int similar to Ffprint.
+	Returns int similar to Bfprint.
 
 ZEND_FETCH_RESOURCE(fp, FILE *, zvalue, -1, "File-Handle", php_file_le_fopen());.
 */
-ZEND_FUNCTION (ndrx_ffprint)
+ZEND_FUNCTION (ndrx_bfprint)
 {
 	zval **arg_ubf_ref;
 	zval **arg_file_ref;
 
 	int argc;
 	ndrx_tpalloc_buf_type *ubf_buf_res;
-	int is32;
 	FILE *fp = NULL;
 	int rc, file_type;
 
@@ -1868,7 +1366,7 @@ ZEND_FUNCTION (ndrx_ffprint)
 		
 		Currently, only flat files and pipes seem to work.
 		I tried a fsockopen call and it core dumps inside
-		Ffprint32 so we will leave streams and sockets out for now.
+		Bfprint32 so we will leave streams and sockets out for now.
 */
 	fp = (FILE *) zend_fetch_resource(	/* fetch the file handle resource */
 						arg_file_ref, 
@@ -1881,7 +1379,7 @@ ZEND_FUNCTION (ndrx_ffprint)
 	ZEND_VERIFY_RESOURCE(fp);
 
 
-	if ((is32 = _ndrx_is_ubf_type(ubf_buf_res->type)) == -1) {
+	if (_ndrx_is_ubf_type(ubf_buf_res->type) == -1) {
 		zend_error(E_WARNING, "argument 1 type is wrong.");
 		RETURN_LONG (-1);
 	}
@@ -1896,8 +1394,7 @@ ZEND_FUNCTION (ndrx_ffprint)
 		}
 #endif
 
-	rc = IS32 (is32, Ffprint32((UBFH *)ubf_buf_res->buf, fp),
-					 Ffprint((UBFH *)ubf_buf_res->buf, fp));
+	rc = Bfprint((UBFH *)ubf_buf_res->buf, fp);
 
 	RETURN_LONG (rc);
 }

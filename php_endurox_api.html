@@ -1,9 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-<META name="GENERATOR" content="IBM WebSphere Homepage Builder V5.0.1 (Trial) for Windows">
-<TITLE>PHP Endurox - API</TITLE>
-<STYLE type="text/css">
+<html><head>
+
+
+
+<meta name="GENERATOR" content="IBM WebSphere Homepage Builder V5.0.1 (Trial) for Windows"><title>PHP Endurox - API</title>
+
+<style type="text/css">
 <!--
 TABLE{
   font-family : "Courier New";
@@ -15,52 +17,51 @@ TD{
   font-family : "Courier New";
 }
 -->
-</STYLE>
-</HEAD>
-<BODY>
-<TABLE border="1">
-  <TBODY>
-    <TR>
-      <TD><A href="index.html">Home Page</A></TD>
-      <TD><A href="http://sourceforge.net/projects/php-endurox/">Project Site</A></TD>
-    </TR>
-  </TBODY>
-</TABLE>
-<CENTER>
-<H1>PHP Endurox</H1>
-<H2>Function API</H2>
-</CENTER>
-<P><B>NOTE: At this point in this products development
+</style></head><body>
+<table border="1">
+  <tbody>
+    <tr>
+      <td><a href="index.html">Home Page</a></td>
+      <td><a href="http://sourceforge.net/projects/php-endurox/">Project Site</a></td>
+    </tr>
+  </tbody>
+</table>
+<center>
+<h1>PHP Endurox</h1>
+<h2>Function API</h2>
+</center>
+<p><b>NOTE: At this point in this products development
 cycle, it is assumed users have some understanding
 of basic Endurox client development. Many
 of these functions have a strong relationship
 to the original ATR Baltic Endurox API function.
 I recommend you where necessary refer to
 this documentation for additional information.
-ATR Baltic has their documentation online at:<A href="http://edocs.bea.com/endurox/ndrx65/index.htm" target="_blank">http://edocs.bea.com/endurox/ndrx65/index.htm</A>.</B> <B>The Reference Material and Bookshelf are
-particularly good references.</B></P>
-<TABLE border="1" width="1002">
-  <THEAD>
-    <TR>
-      <TH width="73">Function</TH>
-      <TH>Description</TH>
-      <TH>Version Added</TH>
-      <TH>Status</TH>
-    </TR>
-  </THEAD>
-  <TBODY>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_array2ubf</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Move array values into UBF</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.2.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_array2ubf (buffer #, array)</B></FONT><BR>
+ATR Baltic has their documentation online at:<a href="http://edocs.bea.com/endurox/ndrx65/index.htm" target="_blank">http://edocs.bea.com/endurox/ndrx65/index.htm</a>.</b> <b>The Reference Material and Bookshelf are
+particularly good references.</b></p>
+<table border="1" width="1002">
+  <thead>
+    <tr>
+      <th width="73">Function</th>
+      <th>Description</th>
+      <th>Version Added</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_array2ubf</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Move array values into UBF</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.2.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_array2ubf (buffer #, array)</b></font><br>
       buffer#: The Endurox buffer reference number
       for values to be stored in. Must be a valid
-      UBF/UBF32 Endurox buffer.<BR>
+      UBF/UBF32 Endurox buffer.<br>
       array: a 1 or 2 dimensional array to move
       the values from. The first dimension key
       should be the UBF/UBF32 Field names (a string)
@@ -68,43 +69,44 @@ particularly good references.</B></P>
       second dimmension key (if present) will be
       taken as the FIELDID occurenence values,
       starting with 0. Skipped occurences result
-      in a NULL UBF field id.<BR>
-	  <P>
-      Returns TRUE/FALSE<BR>
-	  <P>
+      in a NULL UBF field id.<br>
+	  <p>
+      Returns TRUE/FALSE<br>
+	  </p><p>
       Stores the values from the provided array
       into the destination UBF/UBF32 buffer. Values
       are placed into the UBF buffer with the Fchg
       Endurox API function. See the examples for
-      a simple usage.<BR>
-	  <P>
+      a simple usage.<br>
+	  </p><p>
       This function has no single equivalent Endurox
-      API function. <BR>
+      API function. <br>
       See Also: ndrx_ubf2array, ATR Baltic Documentation
-      of Fchg and related functions.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ubf2array</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Move UBF values into an array</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.2.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ubf2array (buffer #, flag)</B></FONT><BR>
+      of Fchg and related functions.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_ubf2array</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Move UBF values into an array</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.2.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_ubf2array (buffer #, flag)</b></font><br>
       buffer#: The Endurox buffer reference
       number
       for values to taken from. Must be a
       valid
-      UBF/UBF32 Endurox buffer.<BR>
-      <BR>
+      UBF/UBF32 Endurox buffer.<br>
+      <br>
 	  flag: to indicate whether the primary index should be int or string
-			They are set in a sequence of bits anded together.<P>
-			0 0 0  =  Perform no index translation, multi-occurrence.<BR>
-			0 0 1  =  Store keys as the Field ID, coded same as 0.<BR>
-			0 1 0  =  Store keys as the Endurox Field Number value.<BR>
-			1 0 0  =  Store keys as the Field Name (String) value.<BR>
-	  <P>
+			They are set in a sequence of bits anded together.<p>
+			0 0 0  =  Perform no index translation, multi-occurrence.<br>
+			0 0 1  =  Store keys as the Field ID, coded same as 0.<br>
+			0 1 0  =  Store keys as the Endurox Field Number value.<br>
+			1 0 0  =  Store keys as the Field Name (String) value.<br>
+	  </p><p>
       Returns a new 1 or 2 dimensional array with
       values populated from the UBF/UBF32 buffer.
       The first dimension key should be the Field
@@ -113,1040 +115,920 @@ particularly good references.</B></P>
       second dimmension key (if present) will be
       taken as the FIELDID occurenence values,
       starting with 0. Skipped occurences result
-      in a NULL value.<BR>
-	  <P>
+      in a NULL value.<br>
+	  </p><p>
       This function has no single equivalent Endurox
-      API function. <BR>
+      API function. <br>
       See Also: ndrx_array2ubf, ATR Baltic Documentation
-      of Fnext and related functions.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_get_buf</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve contents of buffer</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_get_buf (buffer #)</B></FONT><BR>
-      buffer#: The Endurox buffer reference number.<BR>
-	  <P>
+      of Fnext and related functions.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_get_buf</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Retrieve contents of buffer</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_get_buf (buffer #)</b></font><br>
+      buffer#: The Endurox buffer reference number.<br>
+	  <p>
       Returns contents of Endurox STRING or CARRAY
-      buffer.	  <P>
+      buffer.	  </p><p>
 
       This function has no equivalent ATR Baltic function
       because raw Endurox functions allow direct
       access to the buffer contents. Call this
       function after ndrx_tpcall (or tpacall) to
-      get the contents in the buffer.<BR>
-      <BR>
-      See Also: ndrx_put_buf.</TD>
-    </TR>
+      get the contents in the buffer.<br>
+      <br>
+      See Also: ndrx_put_buf.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_get_tperrno</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve contents of tperrno</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_get_tperrno ()</B></FONT><BR>
-      <BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_get_tperrno</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Retrieve contents of tperrno</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_get_tperrno ()</b></font><br>
+      <br>
       Returns the value of the Endurox global variable
       tperrno, similar to the UNIX errno. Results
-      are usually used in calls to ndrx_tpstrerror.<BR>
-      <BR>
-      See Also: ndrx_tpstrerror, ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_put_buf</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Store value into Endurox buffer</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_put_buf (buffer #, data)</B></FONT><BR>
-      buffer#: The Endurox buffer reference number.<BR>
+      are usually used in calls to ndrx_tpstrerror.<br>
+      <br>
+      See Also: ndrx_tpstrerror, ATR Baltic documentation.</td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_put_buf</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Store value into Endurox buffer</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_put_buf (buffer #, data)</b></font><br>
+      buffer#: The Endurox buffer reference number.<br>
       data: The contents to be placed into the
       buffer. Data is copied using binary safe
-      memcpy.<BR>
-	  <P>
-      Return value: TRUE/FALSE.<BR>
-	  <P>
+      memcpy.<br>
+	  <p>
+      Return value: TRUE/FALSE.<br>
+	  </p><p>
       Places the contents of data into the Endurox
-      buffer.<BR>
-      <BR>
-      See Also: ndrx_put_buf.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpabort</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Abort a Endurox transaction.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Not Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpabort ()</B></FONT><BR>
-      <BR>
-      Rollback a pending Endurox transaction.<BR>
-      <BR>
+      buffer.<br>
+      <br>
+      See Also: ndrx_put_buf.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpabort</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Abort a Endurox transaction.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Not Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpabort ()</b></font><br>
+      <br>
+      Rollback a pending Endurox transaction.<br>
+      <br>
       See Also: ndrx_tpcommit, ndrx_tpbegin, ATR Baltic
-      Documentation</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpalloc</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Allocate a Endurox Buffer</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpalloc (type, sub_type, size)</B></FONT><BR>
+      Documentation</td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpalloc</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Allocate a Endurox Buffer</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpalloc (type, sub_type, size)</b></font><br>
       type: Predefined constant indicating the
-      type of buffer to create<BR>
+      type of buffer to create<br>
       sub_type: String indicating the subtype of
-      buffer to create. Use &quot;&quot; for NULL
-      value.<BR>
+      buffer to create. Use "" for NULL
+      value.<br>
       size: Long value indicating the total size
-      of the buffer to create.<BR>
- 	  <P>
-     Return Value: Buffer Reference Number.<BR>
-      Error Return: False<BR>
+      of the buffer to create.<br>
+ 	  <p>
+     Return Value: Buffer Reference Number.<br>
+      Error Return: False<br>
       Type Definitions:
-      <DL>
-        <DT>NDRX_STRING:
-        <DD>Create a standard Endurox STRING buffer.
-        <DT>NDRX_CARRAY
-        <DD>Create a standard Endurox CARRAY buffer. Not
+      </p><dl>
+        <dt>NDRX_STRING:
+        </dt><dd>Create a standard Endurox STRING buffer.
+        </dd><dt>NDRX_CARRAY
+        </dt><dd>Create a standard Endurox CARRAY buffer. Not
         fully tested.
-        <DT>NDRX_UBF
-        <DD>Create a Endurox fielded UBF buffer.
-        <DT>NDRX_UBF32
-        <DD>Create a Endurox fielded UBF32 buffer
-        <DT>NDRX_VIEW
-        <DD>Create a Endurox View buffer. Not tested<BR>
-      </DL>
-      See Also: ndrx_falloc, ATR Baltic Documentation</TD>
-    </TR>
-    <TR></TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpacall</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Send an allocated buffer async</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Minimal testing</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpacall (srvc, in_buf, flags)</B></FONT><BR>
+        </dd><dt>NDRX_UBF
+        </dt><dd>Create a Endurox bisubf UBF buffer.
+        </dd><dt>NDRX_UBF32
+        </dt><dd>Create a Endurox bisubf UBF32 buffer
+        </dd><dt>NDRX_VIEW
+        </dt><dd>Create a Endurox View buffer. Not tested<br>
+      </dd></dl>
+      See Also: ndrx_falloc, ATR Baltic Documentation</td>
+    </tr>
+    <tr></tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpacall</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Send an allocated buffer async</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Minimal testing</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpacall (srvc, in_buf, flags)</b></font><br>
       srvc: A string containing the name of the
-      Endurox service to call.<BR>
-      in_buf: Input buffer given to service.<BR>
+      Endurox service to call.<br>
+      in_buf: Input buffer given to service.<br>
       flags: Flags passed on to tpcall, see tpacall
-      documentation.<BR>
-	  <P>
+      documentation.<br>
+	  <p>
       Return Value: Int cd. Value should be used
-      in tpgetrply.<BR>
-      Error Return: -1.<BR>
-	  <P>
+      in tpgetrply.<br>
+      Error Return: -1.<br>
+	  </p><p>
       Just like tpcall except call does not block
-      for reply.<BR>
-      <BR>
-      See Also: ndrx_tpcall, ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpbegin</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Start a Endurox transaction.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Not Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpbegin ()</B></FONT><BR>
-      <BR>
-      Start a Endurox transaction.<BR>
-      <BR>
+      for reply.<br>
+      <br>
+      See Also: ndrx_tpcall, ATR Baltic documentation.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpbegin</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Start a Endurox transaction.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Not Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpbegin ()</b></font><br>
+      <br>
+      Start a Endurox transaction.<br>
+      <br>
       See Also: ndrx_tpcommit, ndrx_tpabort, ATR Baltic
-      Documentation</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpcall</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Send an allocated buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpcall (srvc, in_buf, out_buf, flags)</B></FONT><BR>
+      Documentation</td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpcall</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Send an allocated buffer.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpcall (srvc, in_buf, out_buf, flags)</b></font><br>
       srvc: A string containing the name of the
-      Endurox service to call.<BR>
-      in_buf: Input buffer given to service.<BR>
+      Endurox service to call.<br>
+      in_buf: Input buffer given to service.<br>
       out_buf: Reply buffer service fills after
-      execution.<BR>
+      execution.<br>
       flags: Flags passed on to tpcall, see tpcall
-      documentation.<BR>
-	  <P>
+      documentation.<br>
+	  <p>
       Return Value: Int equaling returns value
-      of raw tpcall function.<BR>
-      Error Return: -1.<BR>
-	  <P>
-      See Also: ndrx_tpacall, ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpclose</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Close a Endurox session.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpclose ()</B></FONT><BR>
-      <BR>
+      of raw tpcall function.<br>
+      Error Return: -1.<br>
+	  </p><p>
+      See Also: ndrx_tpacall, ATR Baltic documentation.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpclose</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Close a Endurox session.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpclose ()</b></font><br>
+      <br>
       Closes current Endurox connection, direct
-      call to Endurox tpclose function.<BR>
-      <BR>
-      See Also: ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpcommit</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Commit a Endurox transaction.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Not Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpcommit ()</B></FONT><BR>
-      <BR>
-      Commit a Endurox transaction.<BR>
-      <BR>
-      See Also: ndrx_tpabort, ndrx_tpbegin, ATR Baltic Documentation</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpfree</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Free a Endurox buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpfree (buffer #)</B></FONT><BR>
-      buffer#: The Endurox buffer reference number.<BR>
-	  <P>
+      call to Endurox tpclose function.<br>
+      <br>
+      See Also: ATR Baltic documentation.</td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpcommit</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Commit a Endurox transaction.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Not Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpcommit ()</b></font><br>
+      <br>
+      Commit a Endurox transaction.<br>
+      <br>
+      See Also: ndrx_tpabort, ndrx_tpbegin, ATR Baltic Documentation</td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpfree</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Free a Endurox buffer.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpfree (buffer #)</b></font><br>
+      buffer#: The Endurox buffer reference number.<br>
+	  <p>
       Release resources and memory associated with
-      a Endurox buffer.<BR>
+      a Endurox buffer.<br>
       Function calls tpfree, then releases internal
-      structure.<BR>
+      structure.<br>
       All Endurox buffers are automatically freed
-      at the end of the page processing.<BR>
-	  <P>
-      See Also: ndrx_tpalloc, ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpgetrply</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve results from tpacall</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Minimal testing</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpgetrply (&amp;cd, out_buf#, flags)</B></FONT><BR>
+      at the end of the page processing.<br>
+	  </p><p>
+      See Also: ndrx_tpalloc, ATR Baltic documentation.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpgetrply</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Retrieve results from tpacall</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Minimal testing</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpgetrply (&amp;cd, out_buf#, flags)</b></font><br>
       &amp;cd: Reference to int cd value. Value
       may be altered on return to contain cd from
-      tpacall.<BR>
+      tpacall.<br>
       out_buf#: Endurox reference number for results
-      to be placed in.<BR>
+      to be placed in.<br>
       flags: Flags to be passed on to tpgetrply
-      function.<BR>
-	  <P>
-      Return value: int return value from tpgetrply<BR>
-	  <P>
+      function.<br>
+	  <p>
+      Return value: int return value from tpgetrply<br>
+	  </p><p>
       Retrieves results from completed tpacall
-      and places results into out_buf..<BR>
-	  <P>
-      See Also: ndrx_tpacall, ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpinit</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Open connection to Endurox</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpinit (username, clientname, password,
-      flags)</B></FONT><BR>
+      and places results into out_buf..<br>
+	  </p><p>
+      See Also: ndrx_tpacall, ATR Baltic documentation.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpinit</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Open connection to Endurox</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpinit (username, clientname, password,
+      flags)</b></font><br>
       username: String containing the Endurox user
-      name for this application.<BR>
+      name for this application.<br>
       clientname: String containing the client
-      identifier name.<BR>
+      identifier name.<br>
       password: String containing the Endurox application
-      password.<BR>
+      password.<br>
       flags: Long containing flags passed to tpinit
-      function.<BR>
-	  <P>
+      function.<br>
+	  <p>
       Return value: return value of Endurox tpinit
-      function.<BR>
-	  <P>
+      function.<br>
+	  </p><p>
       Initializes a Endurox connection. The groupname
-      field passed to tpinit is currently set to<BR>
+      field passed to tpinit is currently set to<br>
       NULL because we are using the Endurox Workstation
-      Listener.<BR>
-	  <P>
-      See Also: ndrx_tpclose, ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpstrerror</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return error string</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Minimal Testing</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpstrerror (tperror)</B></FONT><BR>
+      Listener.<br>
+	  </p><p>
+      See Also: ndrx_tpclose, ATR Baltic documentation.</p></td>
+    </tr>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_tpstrerror</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return error string</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.1.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Minimal Testing</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_tpstrerror (tperror)</b></font><br>
       tperror: Endurox error number usually returned
-      from ndrx_get_tperrno<BR>
-	  <P>
+      from ndrx_get_tperrno<br>
+	  <p>
       Returns a string associated with the provided
-      error number.<BR>
-	  <P>
-      See Also: ndrx_get_tperrno, ATR Baltic documentation.</TD>
-    </TR>
-    <TR>
-      <TD></TD>
-      <TD colspan="3"></TD>
-    </TR>
-
-    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxgetenv</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return Endurox environment variable</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.5</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ndrxgetenv (variable)</B></FONT><BR>
-      variable: A char string of the environment variable to return.<BR>
-	  <P>
-      Returns a binary safe string representing the environment variable.<BR>
- 	  <P>
-      See Also: See Also: ATR Baltic documentation for ndrxgetenv.</TD>
-    </TR>
-
-    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxputenv</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Set Endurox environment variable</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.5</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ndrxputenv (variable, value)</B></FONT><BR>
-      variable: A char string of the environment variable to return.<BR>
-	  value:  A string value to set hte environment variable to.<BR>
-	  <P>
-      Returns TRUE/FALSE.<BR>
-	  <P>
-      See Also: ATR Baltic documentation for ndrxputenv.</TD>
-    </TR>
-
-    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxreadenv</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Set Endurox environment variable from file</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.5</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ndrxgetenv (file, label)</B></FONT><BR>
-      file:  absolute path name of file to extract environment variables from.<BR>
-	  label:  section name.<BR>
-	  <P>
-      Returns TRUE/FALSE.<BR>
-	  <P>
-      See Also: ATR Baltic documentation for ndrxreadenv.</TD>
-    </TR>
-
-
-    <TR><TD><B>Low Level UBF/UBF32 Functions</B>
-	<BR>
+      error number.<br>
+	  </p><p>
+      See Also: ndrx_get_tperrno, ATR Baltic documentation.</p></td>
+    </tr>
+    
+    <tr><td colspan="4"><b>Low Level UBF/UBF32 Functions</b>
+	<br>
 	Most of these UBF functions have one-for-one equivalents to the raw Endurox UBF functions.
-	Where possible, the correct UBF/UBF32 calls are detected; however on some calls this is
+	Where possible, the correct UBF calls are detected; however on some calls this is
 	not possible so you must provide a type argument.
-	  <P>
+	  <p>
 	The list of these functions will likely grow in future releases.  I tried to pick out
 	the functions that were either very commonly used and/or with no equivalent
 	method already created.  If you find a specific function not listed here is needed,
 	they can be created easily.  Send me an email.
-	<P>
-	<B>NOTE:  </B>As of version 0.4.0, the following functions (ndrx_fdelall, ndrx_foccur, ndrx_fdel, 
-	ndrx_flen, ndrx_fpres, ndrx_fadd, and ndrx_fget) can take a Field Name string in place of
+	</p><p>
+	<b>NOTE:  </b>As of version 0.4.0, the following functions (ndrx_bdelall, ndrx_boccur, ndrx_bdel, 
+	ndrx_blen, ndrx_bpres, ndrx_badd, and ndrx_bget) can take a Field Name string in place of
 	the Field ID parameter.  If the provided argument is a string (as defined in PHP) 
-	the fldid function will be called to convert the string to its Field ID before
-	processing.</TD></TR>
+	the bfldid function will be called to convert the string to its Field ID before
+	processing.</p></td></tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fadd</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Add new field occurrence.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fadd (buff#, Field_ID, data, occur)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_badd</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Add new field occurrence.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_badd (buff#, Field_ID, data, occur)</b></font><br>
       buff#:  The buffer reference number for the data value to be added.
-	  <P>
+	  <p>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
-	  <P>
+	  </p><p>
 	  data:  Data value to be added.  The type of data is determined by the Field_ID type given.  The
 	  length of the data value is automatically determined by the type and PHP.
-	  <P>
+	  </p><p>
 	  occur:  An optional field to allow the specification of a Field_ID specific occurrence.  If the
 	  value is not specified, -1 is assumed which means to add the data as the next occurrence.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-	  ndrx_fadd and ndrx_fchg are aliased to the same function code.  The only difference between
-	  the two original functions is Fchg allowed the specification of an occurrence where Fadd did not.
-	  <P>
-      See ATR Baltic documentation for Fadd and Fchg for more information.</TD>
-    </TR>
+      </p><p>
+	  ndrx_badd and ndrx_fchg are aliased to the same function code.  The only difference between
+	  the two original functions is Fchg allowed the specification of an occurrence where Badd did not.
+	  </p><p>
+      See ATR Baltic documentation for Badd and Fchg for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fchg</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Add / change new field occurrence.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1">
-	  See ndrx_fadd.</TD>
-    </TR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_fchg</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Add / change new field occurrence.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1">
+	  See ndrx_badd.</font></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fchksum</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Compute checksum for fielded buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fchksum (buff#)</B></FONT><BR>
-      buff#:  Input UBF/UBF32 buffer to compute checksum against.
-      <P>
-	  Performs a checksum against the input buffer.  The stored checksum may be 
-	  inspected by the receiving process to verify that the entire buffer was received.
-	  <BR>
-	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fchksum for more information.</TD>
-    </TR>
+    
+    
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fcmp</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Compare two fielded UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fcmp (buff1#, buff2#)</B></FONT><BR>
-      buff1#:  Input UBF/UBF32 buffer to compare against.
-	  <br>
-	  buff2#:  Input UBF/UBF32 buffer to compare against.
-      <P>
-	  Compares the field identifiers and then the field values of two UBF buffers.
-	  <P>
-	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fcmp for more information.</TD>
-    </TR>
+    
+    
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fconcat</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Concatenate source and destination UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fconcat (dest_buff#, source_buff#)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bconcat</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Concatenate source and destination UBF/UBF32 buffers.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bconcat (dest_buff#, source_buff#)</b></font><br>
       dest_buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
 	  source_buff#:  Input UBF/UBF32 source buffer.
-      <P>
+      <p>
 	  Adds fields from the source buffer to the fields that already exist in the destination buffer.
-	  <BR>
+	  <br>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fconcat for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bconcat for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fcpy</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Copy source to destination UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fcpy (dest_buff#, source_buff#)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bcpy</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Copy source to destination UBF/UBF32 buffers.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bcpy (dest_buff#, source_buff#)</b></font><br>
       dest_buff#:  Input UBF/UBF32 destination buffer.
-	  <P>
+	  <p>
 	  source_buff#:  Input UBF/UBF32 source buffer.
-      <P>
-	  Copy the contents of one fielded buffer to another fielded buffer
-	  <P>
+      </p><p>
+	  Copy the contents of one bisubf buffer to another bisubf buffer
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fcpy for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bcpy for more information.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fdel</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Delete field occurrence.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fdel (buff#, Field_ID, occur)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bdel</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Delete field occurrence.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bdel (buff#, Field_ID, occur)</b></font><br>
       buff#:  The buffer reference number for the data value to be deleted.
-	  <P>
+	  <p>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
-	  <P>
+	  </p><p>
 	  occur:  The  Field_ID specific occurrence to be deleted.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fdel for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bdel for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fdelall</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Delete all field occurrences from UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fdelall (buff#, Field_ID)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bdelall</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Delete all field occurrences from UBF/UBF32 buffers.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bdelall (buff#, Field_ID)</b></font><br>
       buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
-      <P>
+      <p>
 	  Deletes all occurrences of the specified field in the buffer.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fdelall for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bdelall for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ffprint</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Print fielded buffer to specified stream from UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.4.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ffprint (buff#, fileref#)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bfprint</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Print bisubf buffer to specified stream from UBF/UBF32 buffers.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.4.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bfprint (buff#, fileref#)</b></font><br>
       buff#:  Input UBF/UBF32 destination buffer.
-	  <P>
+	  <p>
 	  fileref#:  A previously open PHP file reference.  This file reference can be of
 	  types File and Pipe.
-	  <P>
+	  </p><p>
 	  Print contents of UBF/UBF buffer to file reference.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Ffprint for more information.
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bfprint for more information.
+    </p></td></tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fget</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve field occurrences from UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.4.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fget (buff#, Field_ID, occur)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bget</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Retrieve field occurrences from UBF/UBF32 buffers.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.4.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bget (buff#, Field_ID, occur)</b></font><br>
       buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
-	  <P>
+	  <p>
 	  occur:  The  Field_ID specific occurrence to be retrieved.
-      <P>
+      </p><p>
 	  Deletes all occurrences of the specified field in the buffer.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fget for more information.
-	  <BR>Also see ndrx_ubf2array to
-	  convert an entire UBF/UBF32 structure into a PHP array.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bget for more information.
+	  <br>Also see ndrx_ubf2array to
+	  convert an entire UBF/UBF32 structure into a PHP array.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fidxused</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return amount of space used by index.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fidxused (buff#)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bidxused</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return amount of space used by index.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bidxused (buff#)</b></font><br>
       buff#:  Input UBF/UBF32 buffer.
-      <P>
+      <p>
 	  Indicates the current amount of space used by the buffer's index.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fidxused for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bidxused for more information.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fielded</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return TRUE if buffer fielded.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fielded (buff#)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bisubf</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return TRUE if buffer bisubf.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bisubf (buff#)</b></font><br>
       buff#:  Input UBF/UBF32 buffer.
-      <P>
-	  Used to test whether the specified buffer is fielded
-	  <P>
+      <p>
+	  Used to test whether the specified buffer is bisubf
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fielded for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bisubf for more information.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_findex</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Index fielded UBF/UBF32 buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_findex (buff#, intval)</B></FONT><BR>
-      buff#:  Input UBF/UBF32 buffer.
-	  <P>
-	  intval:  The indexing interval, that is, the ideal separation of indexed fields.
-      <P>
-	  Explicitly to index a fielded buffer
-	  <P>
-	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Findex for more information.</TD>
-    </TR>
+   
+    
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fjoin</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Join source into destination UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fjoin (dest_buff#, source_buff#)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bjoin</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Join source into destination UBF/UBF32 buffers.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bjoin (dest_buff#, source_buff#)</b></font><br>
       dest_buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
 	  source_buff#:  Input UBF/UBF32 source buffer.
-      <P>
-	  Used to join two fielded buffers based on matching fieldid/occurrence
-	  <P>
+      <p>
+	  Used to join two bisubf buffers based on matching fieldid/occurrence
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fjoin for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bjoin for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fldid</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Map field name to field identifier.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fldid (field_name, type)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bfldid</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Map field name to field identifier.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bfldid (field_name, type)</b></font><br>
       field_name:  string containing field name to be mapped.
-	  <P>
+	  <p>
 	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
 	  whether to perform the mapping using UBF or UBF32 functions.
-      <P>
+      </p><p>
 	  Performs a runtime field mapping of the input field name to a Field ID.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fldid for more information.
-	  <P>
+      </p><p>
+      See ATR Baltic documentation for Bfldid for more information.
+	  </p><p>
 	  The type parameter is required because the function does not take a UBF buffer reference
-	  so it doesn't know how to do the mapping.</TD>
-    </TR>
+	  so it doesn't know how to do the mapping.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fldno</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Map field identifier to field number.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fldno (field_id, type)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bfldno</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Map field identifier to field number.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bfldno (field_id, type)</b></font><br>
       field_id:  numerical field id.
-	  <P>
+	  <p>
 	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
 	  whether to perform the mapping using UBF or UBF32 functions.
-      <P>
+      </p><p>
 	  Performs a runtime field mapping of the input field id to a field number.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fldno for more information.
-	  <P>
+      </p><p>
+      See ATR Baltic documentation for Bfldno for more information.
+	  </p><p>
 	  The type parameter is required because the function does not take a UBF buffer reference
-	  so it doesn't know how to do the mapping.</TD>
-    </TR>
+	  so it doesn't know how to do the mapping.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fldtype</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Map field identifier to field type.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fldtype (field_id, type)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bfldtype</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Map field identifier to field type.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bfldtype (field_id, type)</b></font><br>
       field_id:  numerical field id.
-	  <P>
+	  <p>
 	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
 	  whether to perform the mapping using UBF or UBF32 functions.
-      <P>
+      </p><p>
 	  Performs a runtime field mapping of the input field id to a field type (an integer)
 	  as defined in the endurox ubf.h header file.
-	  <BR>
+	  <br>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for fldtype for more information.
-	  <P>
+      </p><p>
+      See ATR Baltic documentation for bfldtype for more information.
+	  </p><p>
 	  The type parameter is required because the function does not take a UBF buffer reference
-	  so it doesn't know how to do the mapping.</TD>
-    </TR>
+	  so it doesn't know how to do the mapping.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_flen</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return len of field occurrence in buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_flen (buff#, Field_ID, occur)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_blen</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return len of field occurrence in buffer.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_blen (buff#, Field_ID, occur)</b></font><br>
       buff#:  The buffer reference number.
-	  <P>
+	  <p>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
-	  <P>
+	  </p><p>
 	  occur:  The  Field_ID specific occurrence.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Flen for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Blen for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fmkfldid</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Make a field identifier.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fmkfldid (data_type, field_num, type)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_fmkbfldid</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Make a field identifier.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_fmkbfldid (data_type, field_num, type)</b></font><br>
       data_type:  numerical data type in ubf.h.
 	  <br>
       field_num:  numerical field number.
-	  <P>
+	  <p>
 	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
 	  whether to perform the mapping using UBF or UBF32 functions.
-      <P>
+      </p><p>
 	  Creates a Field ID based on input values of data type and field number.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fmkfldid for more information.
-	  <P>
+      </p><p>
+      See ATR Baltic documentation for Fmkbfldid for more information.
+	  </p><p>
 	  The type parameter is required because the function does not take a UBF buffer reference
-	  so it doesn't know how to do the mapping.</TD>
-    </TR>
+	  so it doesn't know how to do the mapping.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fmove</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Move source fielded buffer to destination buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fmove (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Destination buffer, for this function its not required to be a UBF buffer.
-	  <P>
-	  source_buff#:  Input UBF/UBF32 source buffer.
-      <P>
-	  Copy the contents of one fielded buffer to another.
-	  <P>
-	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fmove for more information.</TD>
-    </TR>
+    
+    
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fname</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Map field identifier to field name.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fname (field_id, type)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bfname</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Map field identifier to field name.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bfname (field_id, type)</b></font><br>
       field_id:  numerical field id.
-	  <P>
+	  <p>
 	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
 	  whether to perform the mapping using UBF or UBF32 functions.
-      <P>
+      </p><p>
 	  Performs a runtime field mapping of the input field id to a field name.
-	  <P>
+	  </p><p>
 	  Return value is a string.
-      <P>
-      See ATR Baltic documentation for Fname for more information.
-	  <P>
+      </p><p>
+      See ATR Baltic documentation for Bfname for more information.
+	  </p><p>
 	  The type parameter is required because the function does not take a UBF buffer reference
-	  so it doesn't know how to do the mapping.</TD>
-    </TR>
+	  so it doesn't know how to do the mapping.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fneeded</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Compute size needed for buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fneeded (fields, bytes, type)</B></FONT><BR>
-      fields:  number of fields.
-	  <P>
-      bytes:  bytes of value space.
-	  <P>
-	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
-	  whether to perform the mapping using UBF or UBF32 functions.
-      <P>
-	  Determine the space that must be allocated.
-	  <P>
-	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fneeded for more information.
-	  <P>
-	  The type parameter is required because the function does not take a UBF buffer reference
-	  so it doesn't know how to do the mapping.</TD>
-    </TR>
+    
+    
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_foccur</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return count of field occurrence in buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_foccur (buff#, Field_ID)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_boccur</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return count of field occurrence in buffer.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_boccur (buff#, Field_ID)</b></font><br>
       buff#:  The buffer reference number.
-	  <P>
+	  <p>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-	  <P>
+	  </p><p>
 	  Used to determine the number of occurrences of the field specified by fieldid.
-      <P>
-      See ATR Baltic documentation for Foccur for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Boccur for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fojoin</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Outer join source into destination UBF/UBF32 buffers.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fojoin (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Input UBF/UBF32 destination buffer.
-	  <P>
-	  source_buff#:  Input UBF/UBF32 source buffer.
-      <P>
-	  Similar to ndrx_join, but it keeps fields from the destination buffer, dest, 
-	  that have no corresponding fieldid/occurrence in the source buffer.
-	  <P>
-	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fojoin for more information.</TD>
-    </TR>
+    
+    
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fpres</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return TRUE if field occurrence in buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fpres (buff#, Field_ID, occur)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bpres</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return TRUE if field occurrence in buffer.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bpres (buff#, Field_ID, occur)</b></font><br>
       buff#:  The buffer reference number.
-	  <P>
+	  <p>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
-	  <P>
+	  </p><p>
 	  occur:  The  Field_ID specific occurrence.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fpres for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bpres for more information.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_frstrindex</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Restore index in fielded UBF/UBF32 buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_frstrindex (buff#, numidx)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_brstrindex</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Restore index in bisubf UBF/UBF32 buffer.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_brstrindex (buff#, numidx)</b></font><br>
       buff#:  Input UBF/UBF32 buffer.
-	  <P>
-	  numidx:  The return from the ndrx_funindex function.
-      <P>
-	  A fielded buffer that has been unindexed may be reindexed by either 
+	  <p>
+	  numidx:  The return from the ndrx_bunindex function.
+      </p><p>
+	  A bisubf buffer that has been unindexed may be reindexed by either 
 	  calling ndrx_findex or ndrx_frstrindx
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Frstrindex for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Brstrindex for more information.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fsizeof</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return size of fielded buffer.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fsizeof (buff#)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bsizeof</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return size of bisubf buffer.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bsizeof (buff#)</b></font><br>
       buff#:  Input UBF/UBF32 buffer.
-      <P>
-	  Returns size of the fielded UBF/UBF32 buffer.
-	  <P>
+      <p>
+	  Returns size of the bisubf UBF/UBF32 buffer.
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fsizeof for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bsizeof for more information.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fstrerror</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve UBF error description.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>	
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fstrerror (ferror)</B></FONT><BR>
-      ferror:  Value of internal UBF variable "ferror".
-	  <P>
-	  Returns a string containing the error description for ferror.
-	  ferror can be retrieved from the api function ndrx_get_ferror.
-      <P>
-      This function has no equivalent ATR Baltic function.</TD>
-    </TR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bstrerror</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Retrieve UBF error description.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>	
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bstrerror (berror)</b></font><br>
+      berror:  Value of internal UBF variable "berror".
+	  <p>
+	  Returns a string containing the error description for berror.
+	  berror can be retrieved from the api function ndrx_get_berror.
+      </p><p>
+      This function has no equivalent ATR Baltic function.</p></td>
+    </tr>
 
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ftype</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return string to type of field.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ftype (field_id, type)</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_btype</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return string to type of field.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_btype (field_id, type)</b></font><br>
       field_id:  numerical field id.
-	  <P>
+	  <p>
 	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
 	  whether to perform the mapping using UBF or UBF32 functions.
-      <P>
+      </p><p>
 	  Returns a string containing the name of the type of a field, given a field identifier.
-	  <P>
+	  </p><p>
 	  Return value is a string.
-      <P>
-      See ATR Baltic documentation for ftype for more information.
-	  <P>
+      </p><p>
+      See ATR Baltic documentation for btype for more information.
+	  </p><p>
 	  The type parameter is required because the function does not take a UBF buffer reference
-	  so it doesn't know how to do the mapping.</TD>
-    </TR>
+	  so it doesn't know how to do the mapping.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_funindex</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Discard index to fieded buffer..</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_funindex (buff#)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bunindex</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Discard index to fieded buffer..</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bunindex (buff#)</b></font><br>
       buff#:  Input UBF/UBF32 buffer.
-      <P>
-	  Discards index to UBF/UBF32 fielded buffer.
-	  <P>
+      <p>
+	  Discards index to UBF/UBF32 bisubf buffer.
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Funindex for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bunindex for more information.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_funused</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return number of bytes not used in fieded buffer..</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_funused (buff#)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bunused</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return number of bytes not used in fieded buffer..</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bunused (buff#)</b></font><br>
       buff#:  Input UBF/UBF32 buffer.
-      <P>
-	  Returns the amount of space currently unused in the UBF/UBF32 fielded buffer.
-	  <P>
+      <p>
+	  Returns the amount of space currently unused in the UBF/UBF32 bisubf buffer.
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Funused for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bunused for more information.</p></td>
+    </tr>
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fupdate</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Update destination UBF/UBF32 buffers with source.</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fupdate (dest_buff#, source_buff#)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bupdate</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Update destination UBF/UBF32 buffers with source.</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bupdate (dest_buff#, source_buff#)</b></font><br>
       dest_buff#:  Input UBF/UBF32 destination buffer.
-	  <P>
+	  <p>
 	  source_buff#:  Input UBF/UBF32 source buffer.
-      <P>
+      </p><p>
 	  Updates the destination buffer with the field values in the source buffer. 
 	  For fields that match on fieldid/occurrence, the field value is updated 
 	  in the destination buffer with the value in the source buffer. 
@@ -1154,243 +1036,248 @@ particularly good references.</B></P>
 	  source buffer are left untouched. 
 	  Fields in the source buffer that have no corresponding field in the 
 	  destination buffer are added to the destination buffer.
-	  <P>
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fupdate for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bupdate for more information.</p></td>
+    </tr>
 
 
-   <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fused</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return number of bytes used in fieded buffer..</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fused (buff#)</B></FONT><BR>
+   <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bused</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Return number of bytes used in fieded buffer..</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bused (buff#)</b></font><br>
       buff#:  Input UBF/UBF32 buffer.
-      <P>
-	  Returns the amount of space currently used in the UBF/UBF32 fielded buffer.
-	  <P>
+      <p>
+	  Returns the amount of space currently used in the UBF/UBF32 bisubf buffer.
+	  </p><p>
 	  Return value is a long.
-      <P>
-      See ATR Baltic documentation for Fused for more information.</TD>
-    </TR>
+      </p><p>
+      See ATR Baltic documentation for Bused for more information.</p></td>
+    </tr>
 	
-    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_get_ferror</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve value of internal UBF error variable ferror</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
-    </TR>
-    <TR>
-      <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_get_ferror ()</B></FONT><BR>
+    <tr>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_get_berror</b></td>
+      <td id="API_DEF" bgcolor="#00cccc">Retrieve value of internal UBF error variable berror</td>
+      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
+      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
+    </tr>
+    <tr>
+      <td width="73"><br>
+</td>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_get_berror ()</b></font><br>
       (No arguments)
-	  <P>
-	  Returns the value of the internal Endurox UBF error variable "ferror".
-	  This value is normally used in ndrx_fstrerror to return a string description.
-      <P>
-      This function has no equivalent ATR Baltic function.</TD>
-    </TR>
+	  <p>
+	  Returns the value of the internal Endurox UBF error variable "berror".
+	  This value is normally used in ndrx_bstrerror to return a string description.
+      </p><p>
+      This function has no equivalent ATR Baltic function.</p></td>
+    </tr>
 
-    <TR>
-      <TD><B>Constants</B><BR>
-      (Name)</TD>
-      <TD colspan="3"><B>The following constants are predefine by
+    <tr>
+      <td><b>Constants</b><br>
+      (Name)</td>
+      <td colspan="3"><b>The following constants are predefine by
       the module and should wherever you need the
       value. Using these constants will allow for
-      easier migration as the API is evolving.</B><BR>
+      easier migration as the API is evolving.</b><br>
       (Value as defined in Endurox .h header files
-      or expected by functions)</TD>
-    </TR>
-    <TR>
-      <TD><B>Buffer Types</B></TD>
-      <TD colspan="3"></TD>
-    </TR>
-    <TR>
-      <TD>NDRX_STRING </TD>
-      <TD colspan="3">Numerical value meaning STRING</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_CARRAY </TD>
-      <TD colspan="3">Numerical value meaning CARRAY</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_UBF</TD>
-      <TD colspan="3">Numerical value meaning UBF</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_UBF32</TD>
-      <TD colspan="3">Numerical value meaning UBF32</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_VIEW </TD>
-      <TD colspan="3">Numerical value meaning VIEW</TD>
-    </TR>
-    <TR>
-      <TD><B>Common FLAGS</B></TD>
-      <TD colspan="3"></TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPNOTRAN </TD>
-      <TD colspan="3">TPNOTRAN</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPNOCHANGE </TD>
-      <TD colspan="3">TPNOCHANGE</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPNOBLOCK </TD>
-      <TD colspan="3">TPNOBLOCK</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPNOTIME </TD>
-      <TD colspan="3">TPNOTIME</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPSIGRSTRT </TD>
-      <TD colspan="3">TPSIGRSTRT</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPGETANY </TD>
-      <TD colspan="3">TPGETANY</TD>
-    </TR>
-    <TR>
-      <TD><B>Error Constants</B></TD>
-      <TD colspan="3"></TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPMINVAL </TD>
-      <TD colspan="3">TPMINVAL</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEABORT </TD>
-      <TD colspan="3">TPEABORT</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEBADDESC </TD>
-      <TD colspan="3">TPEBADDESC</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEBLOCK </TD>
-      <TD colspan="3">TPEBLOCK</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEINVAL</TD>
-      <TD colspan="3">TPEINVAL</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPELIMIT</TD>
-      <TD colspan="3">TPELIMIT</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPENOENT</TD>
-      <TD colspan="3">TPENOENT</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEOS</TD>
-      <TD colspan="3">TPEOS</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEPERM</TD>
-      <TD colspan="3">TPEPERM</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEPROTO</TD>
-      <TD colspan="3">TPEPROTO</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPESVCERR</TD>
-      <TD colspan="3">TPESVCERR</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPESVCFAIL</TD>
-      <TD colspan="3">TPESVCFAIL</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPESYSTEM</TD>
-      <TD colspan="3">TPESYSTEM</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPETIME</TD>
-      <TD colspan="3">TPETIME</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPETRAN</TD>
-      <TD colspan="3">TPETRAN</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPGOTSIG</TD>
-      <TD colspan="3">TPGOTSIG</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPERMERR</TD>
-      <TD colspan="3">TPERMERR</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEITYPE</TD>
-      <TD colspan="3">TPEITYPE</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEOTYPE </TD>
-      <TD colspan="3">TPEOTYPE</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPERELEASE</TD>
-      <TD colspan="3">TPERELEASE</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEHAZARD</TD>
-      <TD colspan="3">TPEHAZARD</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEHEURISTIC</TD>
-      <TD colspan="3">TPEHEURISTIC</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEEVENT</TD>
-      <TD colspan="3">TPEEVENT</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEMATCH</TD>
-      <TD colspan="3">TPEMATCH</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEDIAGNOSTIC</TD>
-      <TD colspan="3">TPEDIAGNOSTIC</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPEMIB </TD>
-      <TD colspan="3">TPEMIB</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPMAXVAL</TD>
-      <TD colspan="3">TPMAXVAL</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPU_SIG</TD>
-      <TD colspan="3">TPU_SIG</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPU_DIP</TD>
-      <TD colspan="3">TPU_DIP</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPU_IGN</TD>
-      <TD colspan="3">TPU_IGN</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPSA_FASTPATH</TD>
-      <TD colspan="3">TPSA_FASTPATH</TD>
-    </TR>
-    <TR>
-      <TD>NDRX_TPSA_PROTECTED</TD>
-      <TD colspan="3">TPSA_PROTECTED</TD>
-    </TR>
-  </TBODY>
-</TABLE>
-</BODY>
-</HTML>
+      or expected by functions)</td>
+    </tr>
+    <tr>
+      <td><b>Buffer Types</b></td>
+      <td colspan="3"><br>
+</td>
+    </tr>
+    <tr>
+      <td>NDRX_STRING </td>
+      <td colspan="3">Numerical value meaning STRING</td>
+    </tr>
+    <tr>
+      <td>NDRX_CARRAY </td>
+      <td colspan="3">Numerical value meaning CARRAY</td>
+    </tr>
+    <tr>
+      <td>NDRX_UBF</td>
+      <td colspan="3">Numerical value meaning UBF</td>
+    </tr>
+    <tr>
+      <td>NDRX_UBF32</td>
+      <td colspan="3">Numerical value meaning UBF32</td>
+    </tr>
+    <tr>
+      <td>NDRX_VIEW </td>
+      <td colspan="3">Numerical value meaning VIEW</td>
+    </tr>
+    <tr>
+      <td><b>Common FLAGS</b></td>
+      <td colspan="3"><br>
+</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPNOTRAN </td>
+      <td colspan="3">TPNOTRAN</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPNOCHANGE </td>
+      <td colspan="3">TPNOCHANGE</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPNOBLOCK </td>
+      <td colspan="3">TPNOBLOCK</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPNOTIME </td>
+      <td colspan="3">TPNOTIME</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPSIGRSTRT </td>
+      <td colspan="3">TPSIGRSTRT</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPGETANY </td>
+      <td colspan="3">TPGETANY</td>
+    </tr>
+    <tr>
+      <td><b>Error Constants</b></td>
+      <td colspan="3"><br>
+</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPMINVAL </td>
+      <td colspan="3">TPMINVAL</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEABORT </td>
+      <td colspan="3">TPEABORT</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEBADDESC </td>
+      <td colspan="3">TPEBADDESC</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEBLOCK </td>
+      <td colspan="3">TPEBLOCK</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEINVAL</td>
+      <td colspan="3">TPEINVAL</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPELIMIT</td>
+      <td colspan="3">TPELIMIT</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPENOENT</td>
+      <td colspan="3">TPENOENT</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEOS</td>
+      <td colspan="3">TPEOS</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEPERM</td>
+      <td colspan="3">TPEPERM</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEPROTO</td>
+      <td colspan="3">TPEPROTO</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPESVCERR</td>
+      <td colspan="3">TPESVCERR</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPESVCFAIL</td>
+      <td colspan="3">TPESVCFAIL</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPESYSTEM</td>
+      <td colspan="3">TPESYSTEM</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPETIME</td>
+      <td colspan="3">TPETIME</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPETRAN</td>
+      <td colspan="3">TPETRAN</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPGOTSIG</td>
+      <td colspan="3">TPGOTSIG</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPERMERR</td>
+      <td colspan="3">TPERMERR</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEITYPE</td>
+      <td colspan="3">TPEITYPE</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEOTYPE </td>
+      <td colspan="3">TPEOTYPE</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPERELEASE</td>
+      <td colspan="3">TPERELEASE</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEHAZARD</td>
+      <td colspan="3">TPEHAZARD</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEHEURISTIC</td>
+      <td colspan="3">TPEHEURISTIC</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEEVENT</td>
+      <td colspan="3">TPEEVENT</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEMATCH</td>
+      <td colspan="3">TPEMATCH</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEDIAGNOSTIC</td>
+      <td colspan="3">TPEDIAGNOSTIC</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPEMIB </td>
+      <td colspan="3">TPEMIB</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPMAXVAL</td>
+      <td colspan="3">TPMAXVAL</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPU_SIG</td>
+      <td colspan="3">TPU_SIG</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPU_DIP</td>
+      <td colspan="3">TPU_DIP</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPU_IGN</td>
+      <td colspan="3">TPU_IGN</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPSA_FASTPATH</td>
+      <td colspan="3">TPSA_FASTPATH</td>
+    </tr>
+    <tr>
+      <td>NDRX_TPSA_PROTECTED</td>
+      <td colspan="3">TPSA_PROTECTED</td>
+    </tr>
+  </tbody>
+</table>
+
+</body></html>

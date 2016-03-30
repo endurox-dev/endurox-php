@@ -32,48 +32,6 @@ extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handl
 	ZEND_FUNCTION declarations located in php_endurox.h
 */
 
-/* {{{ function ndrx_falloc
-	Function mimics falloc or falloc32.  Actually calls
-	Fneeded and Feeded32 then calls
-	_ndrx_alloc which does a tpalloc followed by a Finit.
-	
-	Returns reference to buffer.
-*/
-ZEND_FUNCTION (ndrx_falloc)
-{	
-	zval ** arg_buf_type;
-	zval ** arg_buf_fldocc;
-	zval ** arg_buf_fldlen;
-
-	long size_needed;
-
-	if((ZEND_NUM_ARGS() != 3) || 
-		(zend_get_parameters_ex(3, 
-			&arg_buf_type,
-			&arg_buf_fldocc,
-			&arg_buf_fldlen) != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	convert_to_long_ex (arg_buf_type);
-	convert_to_long_ex (arg_buf_fldocc);
-	convert_to_long_ex (arg_buf_fldlen);
-	
-	
-	size_needed = Bneeded ((*arg_buf_fldocc)->value.lval,
-							  	   (*arg_buf_fldlen)->value.lval);
-
-/*
-		Now that we have the right size, call the generic alloc function
-		with the type and size.
-*/
-	RETURN_RESOURCE (_ndrx_alloc ((*arg_buf_type)->value.lval, "", size_needed));
-}
-/* }}} */
-
-
-
 /* {{{ function ndrx_arrary2ubf
 	Function takes 2 arguments:
 		1.  The destination UBF reference number 
@@ -252,8 +210,8 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 			ret_val = num_index;
 			break;
 			
-		case HASH_KEY_IS_STRING:	/* a string, convert with  Fldid*/
-			ret_val = Fldid (str_index);
+		case HASH_KEY_IS_STRING:	/* a string, convert with  Bfldid*/
+			ret_val = Bfldid (str_index);
 			break;
 	
 		default:					/* How did this happen? */
@@ -268,7 +226,7 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 
 
 /*
-	This function takes an long key (FLDID), a pointer to a ndrx_tpalloc_buf_type,
+	This function takes an long key (BFLDID), a pointer to a ndrx_tpalloc_buf_type,
 	and a zval ** and inserts the data into the buffer by calling Fchg(32).
 
 	returns TRUE/FALSE.
@@ -276,9 +234,9 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 	It has to vary exection depending by what type of value data points to,
 	and by what type of UBF buf is.
 
-	We call Fldtype to determine the type of field they gave us, and cast accordingly.
+	We call Bfldtype to determine the type of field they gave us, and cast accordingly.
 
-	Fappend(UBFH *fbfr, FLDID fieldid, char *value, BFLDLEN len)
+	Fappend(UBFH *fbfr, BFLDID fieldid, char *value, BFLDLEN len)
 	
 	UBF field types  -- ubf.h  these are the same for UBF32 also.
 		#define BFLD_SHORT       0        short int 
@@ -294,12 +252,11 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid,
 {
 /*
 		This is a function pointer, its name F_add does not imply it points to
-		Fadd, actually it uses Fchg.
+		Badd, actually it uses Fchg.
 */
-	BFLDID fldid = (BFLDID) bfldid;
 	BFLDOCC occ = (BFLDOCC) occ32;
 
-	int  fldid_type;
+	int  bfldid_type;
 	short short_data;
 	long  long_data;
 	char  char_data;
@@ -310,16 +267,16 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid,
 	int  is32 = ((buffer->type == NDRX_UBF32_BUF_TYPE) ? TRUE : FALSE);	
 
 /*
-		First they passed us a fldid, find out what type it is.
+		First they passed us a bfldid, find out what type it is.
 */
-	fldid_type = Bfldtype (fldid);
+	bfldid_type = Bfldtype (bfldid);
 /*
-		Ok, we know what type the fldid is, we need to make
+		Ok, we know what type the bfldid is, we need to make
 		sure that the type of data they sent us is the same type.
 		If not, we need to convert it.  The Fchg function
 		expects a pointer to exactly the correct length variable.
 */
-	switch (fldid_type)
+	switch (bfldid_type)
 	{
 		case BFLD_SHORT:		/* take a long and make it short */
 			convert_to_long_ex (data);
@@ -407,7 +364,7 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid,
 	2.  Fnext stores info in value.
 	2a. If its too long to fit, we trap the FNOSPACE error and allocate
 	    A bigger space if needed.
-	3.  Use Fldtype to tell us what type of field it is.
+	3.  Use Bfldtype to tell us what type of field it is.
 	4.  Allocate a new zval and add it to the hash.
 	5.  Once we know what type it is, copy the data from value into a permanent spot.
 	6.  On to the next value.
@@ -567,7 +524,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 			if ((cur_fieldid_occ = Boccur ((UBFH*) ubf_buf_res->buf, fieldid32))  <= 0)
 			{
 				zend_error (E_WARNING, 
-					"Error determining number of occurrences for FLDID %d [%s]", 
+					"Error determining number of occurrences for BFLDID %d [%s]", 
 					fieldid32,
 					(char*)Bstrerror(Berror));
 				RETURN_FALSE;
@@ -658,7 +615,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 		
 			/*
 			  Update the hash table with the UBF info 
-			  The conditional assignment overrides the use Fname flag if
+			  The conditional assignment overrides the use Bfname flag if
 			  we are in the multiple occurrence loop
 			*/
 		if (_ndrx_update_ubf_zend_hash (
@@ -704,7 +661,7 @@ long _ndrx_update_ubf_zend_hash (HashTable *ht, BFLDID fieldid32, zval ** data, 
 	{
 		if ((name = Bfname (fieldid32)) == NULL)
 		{
-			zend_error (E_WARNING, "Error converting FIELDID to Fname, returning as FieldID");
+			zend_error (E_WARNING, "Error converting FIELDID to Bfname, returning as FieldID");
 			flag &= ~4;  /* unset the bit for below */
 		}	
 		else
