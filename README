@@ -1,6 +1,6 @@
 # $Id: README,v 1.7 2002/01/10 04:44:41 bfoddy Exp $
 
-PHP-TUXEDO
+PHP-ENDUROX
 
 
 IMPORTANT:  This project is work in progress, so the
@@ -27,11 +27,11 @@ client, it should work by changing the libraries, but I've
 not tried that yet.
 
 What is included?
-This module so far has only been tested on Tuxedo 6.5, but
+This module so far has only been tested on Endurox 6.5, but
 should work with other versions.
 
-Reference the php_tuxedo.api document for a complete list
-of tuxedo function calls included.  Its the core basic
+Reference the php_endurox.api document for a complete list
+of endurox function calls included.  Its the core basic
 functions a client would need.  There are many still not
 done yet.  
 
@@ -41,7 +41,7 @@ No XML buffer functions either (a 7.1 feature).
 
 PRE-BUILDING  (IMPORTANT, please READ carefully).
 
-Before you can build PHP-Tuxedo, you must decide if you 
+Before you can build PHP-Endurox, you must decide if you 
 want to build it as a DL module or directly into PHP.
 A DL module is a dynamic module that is loaded by PHP
 each and every hit, and unloaded at the end of the hit.
@@ -51,7 +51,7 @@ The make process for a DL module is a little more straight
 forward, but more manual in nature.  The DL method is
 documented in README.dl.
 
-The second method to build PHP-Tuxedo is to directly 
+The second method to build PHP-Endurox is to directly 
 build it as a permanent module inside PHP.  Built this way
 you don't need to DL any external files, and performance
 will be faster as PHP doesn't need to do any runtime 
@@ -61,7 +61,7 @@ program with most standard debuggers.  Building in this
 manor is more automated and simplier, but requires more 
 tools before you can begin.  PHP uses the GNU libtool,
 autoconf, automake, and m4 tools to construct its config
-file.  To build PHP-Tuxedo as a permanent extension, you
+file.  To build PHP-Endurox as a permanent extension, you
 need to rebuild these config files.  So these GNU packages
 are required:
 
@@ -87,10 +87,10 @@ document up-to-date on which version to use.  General advise,
 use the latest released version.  PHP sometimes has API changes
 between different releases so our code must make corresponding
 changes.  One such change was between 4.0.4 and 4.0.5.  The 
-latest version of PHP-Tuxedo has been modified for the 4.0.5
+latest version of PHP-Endurox has been modified for the 4.0.5
 changes.  If you must use 4.0.4 you will need to undo these
 changes by applying a patch file provided in
-misc/php_tuxedo_arrayfml.c._4.0.5-4.0.4.patch.
+misc/php_endurox_arrayubf.c._4.0.5-4.0.4.patch.
 
 4.0.6 changes:  The config.m4 file required modification for
 PHP 4.0.6.  Primarily, many of the AC_ macros were redefined
@@ -102,17 +102,17 @@ the changes were able to be #if able in the source code so
 the code should be backward compatable with older versions.
 
 
-Which version of BEA Tuxedo?
-This program has been successfully built on Tuxedo versions
+Which version of BEA Endurox?
+This program has been successfully built on Endurox versions
 from 6.5 up to 8.0.  However some of these version changes
-required a link change to Tuxedo clients; different libraries,
+required a link change to Endurox clients; different libraries,
 etc.  Until we get our build process automated enough to detect
-which version of Tuxedo its being linked against, you may need
+which version of Endurox its being linked against, you may need
 to slightly alter the linking process to match the provided 
-libraries in Tuxedo.  Generally, php-tuxedo must perform the
+libraries in Endurox.  Generally, php-endurox must perform the
 same linking as would be described in a 
 buildclient -v command.  The linking currently in this release
-should work with Tuxedo 6.5 without change.  I know 8.0 requires
+should work with Endurox 6.5 without change.  I know 8.0 requires
 alterations; I'm unsure about 7.1.  If you need help, please
 post messages on the support forumns and we will do our best.
 
@@ -136,26 +136,26 @@ BUILDING.
 	Nothing older than 4.0.4p1 has been tested.
 	
 2.  Create a new directory in the php source of
-	php-4.1.x/ext/tuxedo and copy the contents of the
-	php-tuxedo distribution into this directory.
+	php-4.1.x/ext/endurox and copy the contents of the
+	php-endurox distribution into this directory.
 	
 3.	From the php-4.1.x directory, run
 	./buildconf
 	This will rebuild the configure script to include the
-	new php-tuxedo module.
+	new php-endurox module.
 
 4.	Configure PHP4 according to the instructions for
 	that package (./configure {options})
-	Include a new option of "--with-tuxedo=[DIR]"
+	Include a new option of "--with-endurox=[DIR]"
 	with the configure.  DIR should be the location of
-	the Tuxedo package (usually $TUXDIR).  To check if
+	the Endurox package (usually $NDRXDIR).  To check if
 	this step completed successfully, there should now
-	be a Makefile in ext/tuxedo (not to be confused with
+	be a Makefile in ext/endurox (not to be confused with
 	Makefile.in).
 	
 5.	Type "make".  If the previous steps worked correctly
-	it will automatically build PHP with the new PHP-Tuxedo
-	module included.  You may watch for the tuxedo compile
+	it will automatically build PHP with the new PHP-Endurox
+	module included.  You may watch for the endurox compile
 	steps to be sure.
 		
 6.	Following the normal steps of PHP, "make install".
@@ -163,25 +163,25 @@ BUILDING.
 
 INSTALLING / TESTING
 
-1.	Create a file tux_phpinfo.php in this directory with the contents of
+1.	Create a file ndrx_phpinfo.php in this directory with the contents of
 	<?php
 		phpinfo ();
 	?>
-	NOTE:  DO NOT put a dl ("php-tuxedo.so") statement in this script.
-	Php-tuxedo is already loaded.
+	NOTE:  DO NOT put a dl ("php-endurox.so") statement in this script.
+	Php-endurox is already loaded.
 	
 	
 2.	Run this script.  If everything is successful, you should see a
-	section BEA Tuxedo Module with some of the more common environment
-	variables for Tuxedo set (TUXDIR and WSNADDR).
+	section BEA Endurox Module with some of the more common environment
+	variables for Endurox set (NDRXDIR and WSNADDR).
 	If the section is there, congrats you probably
 	built the module correctly.  If some of the environment variables
 	(like WSNADDR) aren't set correctly, now is a good time to
 	make sure your web server has these variables set.  Remember your
-	web server is now a Tuxedo client; all the normal rules 
+	web server is now a Endurox client; all the normal rules 
 	still apply.
 	
-3.	You are ready to go.  See the php_tuxedo.api for a list of functions
+3.	You are ready to go.  See the php_endurox.api for a list of functions
 	currently available and their arguments.
 
 ==========================================================================

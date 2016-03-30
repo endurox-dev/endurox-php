@@ -1,11 +1,11 @@
 #   This is a Makefile to compile PHP-TUxedo as a DL module,
-#   ie: you must do a dl ("php_tuxedo") in you php script.
-#   This method of building php-tuxedo is being depreciated
+#   ie: you must do a dl ("php_endurox") in you php script.
+#   This method of building php-endurox is being depreciated
 #   in favor of a direct PHP build, but if you want a simple
 #   build, this is probably for you.
 #
 #
-#	Simple Makefile for php-tuxedo.
+#	Simple Makefile for php-endurox.
 #	These libraries are set for a workstation client.  If
 #	you want a direct client they will have to be changed.
 #
@@ -15,57 +15,57 @@
 #	knows, I'd sure appreciate the hint.
 #
 #
-#	Set your TUXDIR to where your Tux development (with includes) live.
+#	Set your NDRXDIR to where your Ndrx development (with includes) live.
 
 # $Id: Makefile.dl,v 1.2 2001/12/23 02:19:02 bfoddy Exp $
 
-TUXDIR = /opt/tuxedo/6.5
+NDRXDIR = /opt/endurox/6.5
 PHPDIR = /home/brian/php-4.0.6
 
-# HAVE_TUXEDO will allow compiling of Tux module.
-# COMPILE_DL_TUXEDO_MODULE=1 will create a dl'able module (recommended)
-TUXDEFS = -g -DHAVE_TUXEDO  -DCOMPILE_DL_TUXEDO_MODULE=1
+# HAVE_ENDUROX will allow compiling of Ndrx module.
+# COMPILE_DL_ENDUROX_MODULE=1 will create a dl'able module (recommended)
+NDRXDEFS = -g -DHAVE_ENDUROX  -DCOMPILE_DL_ENDUROX_MODULE=1
 
-OBJS = 		php_tuxedo_arrayfml.o \
-			php_tuxedo_misc.o \
-			php_tuxedo_fml_api.o
+OBJS = 		php_endurox_arrayubf.o \
+			php_endurox_misc.o \
+			php_endurox_ubf_api.o
 
 INCLS = -I. -I${PHPDIR} -I${PHPDIR}/ext -I${PHPDIR}/Zend -I${PHPDIR}/TSRM \
-		-I${PHPDIR}/main -I${TUXDIR}/include 
+		-I${PHPDIR}/main -I${NDRXDIR}/include 
 			
 			
-TUXLIBS = -L${TUXDIR}/lib php_tuxedo.o  -lwsc -lbuft -lwsc  -lnws -lnwi \
-  			-lnws  -lfml -lfml32 -lgp  /usr/lib/libcrypt.a
+NDRXLIBS = -L${NDRXDIR}/lib php_endurox.o  -lwsc -lbuft -lwsc  -lnws -lnwi \
+  			-lnws  -lubf -lubf32 -lgp  /usr/lib/libcrypt.a
 
-LIBS = $(TUXLIBS)
+LIBS = $(NDRXLIBS)
 
 #
 #	This line should work for Linux and gcc.
 #	For Solaris and Forte, change "-shared -rdynamic" to "-G"
 #
-php_tuxedo:	php_tuxedo.o ${OBJS}
-	cc  ${TUXLIBS} -shared -rdynamic ${OBJS} -o php_tuxedo.so  
+php_endurox:	php_endurox.o ${OBJS}
+	cc  ${NDRXLIBS} -shared -rdynamic ${OBJS} -o php_endurox.so  
 
 
 #
 #	This line should work for Linux and gcc
 #   On Solaris with Forte compiler, remove -fpic
 #
-php_tuxedo.o:	php_tuxedo.c php_tuxedo.h
-	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo.o -c php_tuxedo.c
+php_endurox.o:	php_endurox.c php_endurox.h
+	cc -fpic ${NDRXDEFS} ${INCLS} -o php_endurox.o -c php_endurox.c
 	
-php_tuxedo_arrayfml.o:	php_tuxedo_arrayfml.c php_tuxedo.h
-	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo_arrayfml.o -c php_tuxedo_arrayfml.c
+php_endurox_arrayubf.o:	php_endurox_arrayubf.c php_endurox.h
+	cc -fpic ${NDRXDEFS} ${INCLS} -o php_endurox_arrayubf.o -c php_endurox_arrayubf.c
 
-php_tuxedo_misc.o:	php_tuxedo_misc.c php_tuxedo.h
-	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo_misc.o -c php_tuxedo_misc.c
+php_endurox_misc.o:	php_endurox_misc.c php_endurox.h
+	cc -fpic ${NDRXDEFS} ${INCLS} -o php_endurox_misc.o -c php_endurox_misc.c
 
-php_tuxedo_fml_api.o:	php_tuxedo_fml_api.c php_tuxedo.h
-	cc -fpic ${TUXDEFS} ${INCLS} -o php_tuxedo_fml_api.o -c php_tuxedo_fml_api.c
+php_endurox_ubf_api.o:	php_endurox_ubf_api.c php_endurox.h
+	cc -fpic ${NDRXDEFS} ${INCLS} -o php_endurox_ubf_api.o -c php_endurox_ubf_api.c
 clean:
-	rm -f php_tuxedo.o \
-	php_tuxedo_arrayfml.o \
-	php_tuxedo.so \
-	php_tuxedo_misc.o \
-	php_tuxedo_fml_api.o \
+	rm -f php_endurox.o \
+	php_endurox_arrayubf.o \
+	php_endurox.so \
+	php_endurox_misc.o \
+	php_endurox_ubf_api.o \
 	core

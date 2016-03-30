@@ -5,43 +5,43 @@ Version 0.4.1  -  January 10, 2002
 	
 Version 0.4.0  -  January 9, 2002
 	PHP 4.1.0/4.1.1 API changes (thanks Tixier Alain)
-	New Tuxedo FML functions of tux_fget, tux_ffprint (thanks CMLee)
-	Altered Field ID argument for functions [tux_delall, tux_foccur, tux_fdel,
-	  tux_flen, tux_fpres, tux_fadd, tux_fget].  Argument can be raw 
+	New Endurox UBF functions of ndrx_fget, ndrx_ffprint (thanks CMLee)
+	Altered Field ID argument for functions [ndrx_delall, ndrx_foccur, ndrx_fdel,
+	  ndrx_flen, ndrx_fpres, ndrx_fadd, ndrx_fget].  Argument can be raw 
 	  Field ID (integer) or Field Name (string).
-	Changed Flag argument to tux_fml2array to be a bitmap to determine
+	Changed Flag argument to ndrx_ubf2array to be a bitmap to determine
 	  how array indexes should be returned (Field ID, Field Number, Field Name).
 	
 Version 0.3.5  -  July 23, 2001
 	All changes thanks to CheolMin Lee.
-	Added three tuxedo environment functions to allow easier setting
-	  tuxedo environment variables.
-	Made $TUXDIR the default location for the build process to locate
-	  include and lib directories, it used to be /home/tuxedo.
+	Added three endurox environment functions to allow easier setting
+	  endurox environment variables.
+	Made $NDRXDIR the default location for the build process to locate
+	  include and lib directories, it used to be /home/endurox.
 	  	
 Version 0.3.0  -  June 3, 2001
-	Added numerous raw FML/FML32 API calls.  See API documentation.
+	Added numerous raw UBF/UBF32 API calls.  See API documentation.
 	Changed config.m4 to be compatible with PHP 4.0.6.  They changed
 	  AC_ADD_ macros to PHP_ADD_ in 4.0.6.  If using with older
 	  versions of PHP you will have to change them back.
 	Misc cleanups from 0.2.5.
 	  
 Version 0.2.5  -  May 5, 2001
-	Added capability to build PHP-Tuxedo as permanent PHP module.
-	Bug fixes in FML allocation and freeing processes that
+	Added capability to build PHP-Endurox as permanent PHP module.
+	Bug fixes in UBF allocation and freeing processes that
 	  caused core dumps on module cleanup.
 	Support for PHP 4.0.5 API change.  A backward compatible
 	  patch file for 4.0.4 is also provided.
 	  
 Version 0.2.0  -  April 22, 2001
-	Added new FML / FML32 functions.
-		tux_array2fml creates a FML buffer from an input array.
-		tux_fml2array creates an array from an input FML buffer.
-		tux_falloc allocates and initializes a FML / FML32 buffer.
-		tux_ffprintf prints the contents of a FML/FML32 to /tmp for debugging.
-		Added FML environment variables to PHPINFO report.
+	Added new UBF / UBF32 functions.
+		ndrx_array2ubf creates a UBF buffer from an input array.
+		ndrx_ubf2array creates an array from an input UBF buffer.
+		ndrx_falloc allocates and initializes a UBF / UBF32 buffer.
+		ndrx_ffprintf prints the contents of a UBF/UBF32 to /tmp for debugging.
+		Added UBF environment variables to PHPINFO report.
 
 Version 0.1.0  -  April 7, 2001
 	The first public release of this software.  Just the
-	basics, no FMLs.  See php-tuxedo.api for the full list
+	basics, no UBFs.  See php-endurox.api for the full list
 	of functions included.

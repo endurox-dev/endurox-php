@@ -1,11 +1,11 @@
-PHP_Tuxedo
+PHP_Endurox
 README.dl
 
-This document describes how to build PHP_Tuxedo as
-a DL'able module.  Its highly recommended you build PHP_Tuxedo
+This document describes how to build PHP_Endurox as
+a DL'able module.  Its highly recommended you build PHP_Endurox
 as described in the README document.  But this method should
 still work and is good to play with.  Please note however,
-this method of building PHP_Tuxedo has been depreciated and
+this method of building PHP_Endurox has been depreciated and
 is not tested after its initial writeup.
 
 ==================================================================
@@ -24,11 +24,11 @@ BUILDING as a DL (Sorry, not a very automated build process yet.)
 	dl load to work.  If they are not the same, you may see
 	an error message like when you try and dl the module.
 	
-	Warning: BEA Tuxedo Module: Unable to initialize module Module 
+	Warning: BEA Endurox Module: Unable to initialize module Module 
 	compiled with debug=0, thread-safety=0 module API=20001214 PHP compiled
 	with debug=1, thread-safety=0 module API=20001214 
 	These options need to match in 
-	/home/brian/dev/www/tux_phpinfo.php on line 2
+	/home/brian/dev/www/ndrx_phpinfo.php on line 2
 
 3.	Configure PHP4 according to the instructions for
 	that package.  You don't need to actually make
@@ -48,10 +48,10 @@ BUILDING as a DL (Sorry, not a very automated build process yet.)
 	If you are on Solaris with Forte, I've included some
 	comments that worked for me there.  Something else you
 	will have to experiment.  Change the Makefile to your
-	individual needs.  Don't forget to set the TUXDIR and PHPDIR
+	individual needs.  Don't forget to set the NDRXDIR and PHPDIR
 	values.  It won't compile without them.
 	
-	NOTE:  I highly recommend keeping -DCOMPILE_DL_TUXEDO_MODULE=1.
+	NOTE:  I highly recommend keeping -DCOMPILE_DL_ENDUROX_MODULE=1.
 		This will create a php "dl" able module and is how
 		I've tested so far, and hence these instructions.
 		If you remove this define, you will have to rebuild
@@ -59,35 +59,35 @@ BUILDING as a DL (Sorry, not a very automated build process yet.)
 		to link permanently in.  I've not gotten this far myself
 		so you are breaking new ground.
 		
-6.	make from within the tuxedo directory, don't remake PHP.
+6.	make from within the endurox directory, don't remake PHP.
 
-7.	Errors will likely be TUXDIR set wrong or a different compiler
+7.	Errors will likely be NDRXDIR set wrong or a different compiler
 	environment I haven't tried yet.
 	
-8.	Success if you get php_tuxedo.so.
+8.	Success if you get php_endurox.so.
 
 
 INSTALLING / TESTING
 
-1.	Copy php_tuxedo.so into a directory visible by the web server,
+1.	Copy php_endurox.so into a directory visible by the web server,
 	make sure it has read/execute permission set for the web server id
 	(755 should be fine).
-2.	Create a file tux_phpinfo.php in this directory with the contents of
+2.	Create a file ndrx_phpinfo.php in this directory with the contents of
 	<?php
-		dl ("./php_tuxedo.so");
+		dl ("./php_endurox.so");
 		phpinfo ();
 	?>
 3.	Run this script.  If everything is successful, you should see a
-	section BEA Tuxedo Module with some of the more common environment
-	variables for Tuxedo set (TUXDIR and WSNADDR).
+	section BEA Endurox Module with some of the more common environment
+	variables for Endurox set (NDRXDIR and WSNADDR).
 	If the section is there, congrats you probably
 	built the module correctly.  If some of the environment variables
 	(like WSNADDR) aren't set correctly, now is a good time to
 	make sure your web server has these variables set.  Remember your
-	web server is now a Tuxedo client; all the normal rules 
+	web server is now a Endurox client; all the normal rules 
 	still apply.
 	
-4.	You are ready to go.  See the php_tuxedo.api for a list of functions
+4.	You are ready to go.  See the php_endurox.api for a list of functions
 	currently available and their arguments.
 
 ===========================================================================

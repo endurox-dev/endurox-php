@@ -1,6 +1,6 @@
-# $Source: /cvsroot/php-tuxedo/php-tuxedo/setup.stub,v $
+# $Source: /cvsroot/php-endurox/php-endurox/setup.stub,v $
 # $Id: setup.stub,v 1.1 2001/05/05 16:21:10 bfoddy Exp $
 
-define_option with-tuxedo 'Tuxedo support?' yesnodir \
-    'no /opt/tuxedo/tuxde Tuxedo install' \
-'     Whether to build PHP with Tuxedo support.'
+define_option with-endurox 'Endurox support?' yesnodir \
+    'no /opt/endurox/ndrxde Endurox install' \
+'     Whether to build PHP with Endurox support.'

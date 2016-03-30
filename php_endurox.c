@@ -1,35 +1,34 @@
 /*
 	===============================================================|
-	|   PHP Tuxedo                                                 |
+	|   PHP Endurox                                                 |
 	|--------------------------------------------------------------|
-	|  php_tuxedo.c                                                |
+	|  php_endurox.c                                                |
 	|    Main entry point to external module.                      |
 	===============================================================|
 */
-/* $Id: php_tuxedo.c,v 1.11 2001/12/26 03:50:41 bfoddy Exp $ */
+/* $Id: php_endurox.c,v 1.11 2001/12/26 03:50:41 bfoddy Exp $ */
 
 
 
 #include <stdlib.h>
 #include <string.h>
-/* include the tuxedo headers */
+/* include the endurox headers */
 #include <atmi.h>
-#include <fml.h>
-#include <fml32.h>
-#include <tx.h>
+#include <ubf.h>
+#include <ubf32.h>
 
 /* include standard php header */
 
 #include "php.h"
-#include "php_tuxedo.h"
+#include "php_endurox.h"
 
-#if HAVE_TUXEDO
+#if HAVE_ENDUROX
 
 /* True globals, no need for thread safety */
-int tux_rh_alloc_buffer = 0;  /* tpalloc buffer resource type resource handle*/
+int ndrx_rh_alloc_buffer = 0;  /* tpalloc buffer resource type resource handle*/
 
 /* 
-	ZEND_FUNCTION declarations located in php_tuxedo.h
+	ZEND_FUNCTION declarations located in php_endurox.h
 */
 
 
@@ -39,74 +38,74 @@ int tux_rh_alloc_buffer = 0;  /* tpalloc buffer resource type resource handle*/
 	compiled function list so Zend knows what's in this module.
 	
 	This array must include all the functions including the
-	FML functions in php_tuxedo_fml.c
+	UBF functions in php_endurox_ubf.c
 */
-zend_function_entry tuxedo_functions[] =
+zend_function_entry endurox_functions[] =
 {
-	ZEND_FE (tux_tpstrerror, NULL)
-	ZEND_FE (tux_get_tperrno, NULL)
-	ZEND_FE (tux_tpfree, NULL)
-	ZEND_FE (tux_tpalloc, NULL)
-	ZEND_FE (tux_put_buf, NULL)
-	ZEND_FE (tux_get_buf, NULL)
-	ZEND_FE (tux_tpcall, NULL)
-	ZEND_FE (tux_tpacall, NULL)
+	ZEND_FE (ndrx_tpstrerror, NULL)
+	ZEND_FE (ndrx_get_tperrno, NULL)
+	ZEND_FE (ndrx_tpfree, NULL)
+	ZEND_FE (ndrx_tpalloc, NULL)
+	ZEND_FE (ndrx_put_buf, NULL)
+	ZEND_FE (ndrx_get_buf, NULL)
+	ZEND_FE (ndrx_tpcall, NULL)
+	ZEND_FE (ndrx_tpacall, NULL)
 #if ZEND_MODULE_API_NO >= 20010901
-	ZEND_FE (tux_tpgetrply, first_arg_force_ref)
+	ZEND_FE (ndrx_tpgetrply, first_arg_force_ref)
 #else
-	ZEND_FE (tux_tpgetrply, NULL)
+	ZEND_FE (ndrx_tpgetrply, NULL)
 #endif
-	ZEND_FE (tux_tpclose, NULL)
-	ZEND_FE (tux_tpterm, NULL)
-	ZEND_FE (tux_tpinit, NULL)
-	ZEND_FE (tux_tpabort, NULL)
-	ZEND_FE (tux_tpcommit, NULL)
-	ZEND_FE (tux_tpbegin, NULL)
-	ZEND_FE (tux_tuxreadenv, NULL)
-	ZEND_FE (tux_tuxgetenv, NULL)
-	ZEND_FE (tux_tuxputenv, NULL)
-/*		Functions in php_tuxedo_fmlarray.c */
-#if (TUX_FML32 || TUX_FML)
-	ZEND_FE (tux_falloc, NULL)
-	ZEND_FE (tux_array2fml, NULL)
-	ZEND_FE (tux_fml2array, NULL)
-/*		Functions in php_tuxedo_fml_api.c */
-	ZEND_FE (tux_ffprintf, NULL)
-	ZEND_FE (tux_get_ferrno, NULL)
-	ZEND_FE (tux_fstrerror, NULL)
-	ZEND_FE (tux_fldid, NULL)
-	ZEND_FE (tux_fldno, NULL)
-	ZEND_FE (tux_fldtype, NULL)
-	ZEND_FE (tux_fname, NULL)
-	ZEND_FE (tux_fadd, NULL)
-	ZEND_FALIAS (tux_fchg, tux_fadd, NULL)  /* alias for fadd */
-	ZEND_FE (tux_fchksum, NULL)
-	ZEND_FE (tux_fcmp, NULL)
-	ZEND_FE (tux_fconcat, NULL)
-	ZEND_FE (tux_fcpy, NULL)
-	ZEND_FE (tux_fdelall, NULL)
-	ZEND_FE (tux_fdel, NULL)
-	ZEND_FE (tux_fidxused, NULL)
-	ZEND_FE (tux_fielded, NULL)
-	ZEND_FE (tux_findex, NULL)
-	ZEND_FE (tux_flen, NULL)
-	ZEND_FE (tux_fmkfldid, NULL)
-	ZEND_FE (tux_fmove, NULL)
-	ZEND_FE (tux_fneeded, NULL)
-	ZEND_FE (tux_fnum, NULL)
-	ZEND_FE (tux_foccur, NULL)
-	ZEND_FE (tux_fjoin, NULL)
-	ZEND_FE (tux_fojoin, NULL)
-	ZEND_FE (tux_fpres, NULL)
-	ZEND_FE (tux_ftype, NULL)
-	ZEND_FE (tux_funindex, NULL)
-	ZEND_FE (tux_funused, NULL)
-	ZEND_FE (tux_fupdate, NULL)
-	ZEND_FE (tux_fused, NULL)
-	ZEND_FE (tux_frstrindex, NULL)
-	ZEND_FE (tux_fsizeof, NULL)
-	ZEND_FE (tux_fget, NULL)
-	ZEND_FE (tux_ffprint, NULL)
+	ZEND_FE (ndrx_tpclose, NULL)
+	ZEND_FE (ndrx_tpterm, NULL)
+	ZEND_FE (ndrx_tpinit, NULL)
+	ZEND_FE (ndrx_tpabort, NULL)
+	ZEND_FE (ndrx_tpcommit, NULL)
+	ZEND_FE (ndrx_tpbegin, NULL)
+	ZEND_FE (ndrx_ndrxreadenv, NULL)
+	ZEND_FE (ndrx_ndrxgetenv, NULL)
+	ZEND_FE (ndrx_ndrxputenv, NULL)
+/*		Functions in php_endurox_ubfarray.c */
+#if (NDRX_UBF32 || NDRX_UBF)
+	ZEND_FE (ndrx_falloc, NULL)
+	ZEND_FE (ndrx_array2ubf, NULL)
+	ZEND_FE (ndrx_ubf2array, NULL)
+/*		Functions in php_endurox_ubf_api.c */
+	ZEND_FE (ndrx_ffprintf, NULL)
+	ZEND_FE (ndrx_get_ferrno, NULL)
+	ZEND_FE (ndrx_fstrerror, NULL)
+	ZEND_FE (ndrx_fldid, NULL)
+	ZEND_FE (ndrx_fldno, NULL)
+	ZEND_FE (ndrx_fldtype, NULL)
+	ZEND_FE (ndrx_fname, NULL)
+	ZEND_FE (ndrx_fadd, NULL)
+	ZEND_FALIAS (ndrx_fchg, ndrx_fadd, NULL)  /* alias for fadd */
+	ZEND_FE (ndrx_fchksum, NULL)
+	ZEND_FE (ndrx_fcmp, NULL)
+	ZEND_FE (ndrx_fconcat, NULL)
+	ZEND_FE (ndrx_fcpy, NULL)
+	ZEND_FE (ndrx_fdelall, NULL)
+	ZEND_FE (ndrx_fdel, NULL)
+	ZEND_FE (ndrx_fidxused, NULL)
+	ZEND_FE (ndrx_fielded, NULL)
+	ZEND_FE (ndrx_findex, NULL)
+	ZEND_FE (ndrx_flen, NULL)
+	ZEND_FE (ndrx_fmkfldid, NULL)
+	ZEND_FE (ndrx_fmove, NULL)
+	ZEND_FE (ndrx_fneeded, NULL)
+	ZEND_FE (ndrx_fnum, NULL)
+	ZEND_FE (ndrx_foccur, NULL)
+	ZEND_FE (ndrx_fjoin, NULL)
+	ZEND_FE (ndrx_fojoin, NULL)
+	ZEND_FE (ndrx_fpres, NULL)
+	ZEND_FE (ndrx_ftype, NULL)
+	ZEND_FE (ndrx_funindex, NULL)
+	ZEND_FE (ndrx_funused, NULL)
+	ZEND_FE (ndrx_fupdate, NULL)
+	ZEND_FE (ndrx_fused, NULL)
+	ZEND_FE (ndrx_frstrindex, NULL)
+	ZEND_FE (ndrx_fsizeof, NULL)
+	ZEND_FE (ndrx_fget, NULL)
+	ZEND_FE (ndrx_ffprint, NULL)
 #endif
 	{NULL, NULL, NULL}	/* end of structure marker */
 };
@@ -123,67 +122,67 @@ zend_function_entry tuxedo_functions[] =
 
 	function called on module initialization.
 */
-ZEND_MINIT_FUNCTION (tuxedo)
+ZEND_MINIT_FUNCTION (endurox)
 {
 #define CONSTANT_FLAG (CONST_CS | CONST_PERSISTENT)	
 	
-	tux_rh_alloc_buffer = register_list_destructors(free_tux_tpalloc_buf, NULL);
+	ndrx_rh_alloc_buffer = register_list_destructors(free_ndrx_tpalloc_buf, NULL);
 
 /*
-		Lets register some tuxedo constants.
+		Lets register some endurox constants.
 */
-	REGISTER_LONG_CONSTANT ("TUX_STRING", TUX_STRING_BUF_TYPE, CONSTANT_FLAG );
-	REGISTER_LONG_CONSTANT ("TUX_CARRAY", TUX_CARRAY_BUF_TYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT ("TUX_FML", TUX_FML_BUF_TYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT ("TUX_FML32", TUX_FML32_BUF_TYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT ("TUX_VIEW", TUX_VIEW_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRX_STRING", NDRX_STRING_BUF_TYPE, CONSTANT_FLAG );
+	REGISTER_LONG_CONSTANT ("NDRX_CARRAY", NDRX_CARRAY_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRX_UBF", NDRX_UBF_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRX_UBF32", NDRX_UBF32_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRX_VIEW", NDRX_VIEW_BUF_TYPE, CONSTANT_FLAG);
 	
-	REGISTER_LONG_CONSTANT("TUX_TPNOTRAN", TPNOTRAN, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPNOCHANGE", TPNOCHANGE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPNOBLOCK", TPNOBLOCK, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPNOTIME", TPNOTIME, CONSTANT_FLAG); 
-	REGISTER_LONG_CONSTANT("TUX_TPSIGRSTRT", TPSIGRSTRT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPGETANY", TPGETANY, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPNOTRAN", TPNOTRAN, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPNOCHANGE", TPNOCHANGE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPNOBLOCK", TPNOBLOCK, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPNOTIME", TPNOTIME, CONSTANT_FLAG); 
+	REGISTER_LONG_CONSTANT("NDRX_TPSIGRSTRT", TPSIGRSTRT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPGETANY", TPGETANY, CONSTANT_FLAG);
 /*
 		Error return codes.  In case someone wants to check them.
 */
-	REGISTER_LONG_CONSTANT("TUX_TPMINVAL", TPMINVAL, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEABORT", TPEABORT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEBADDESC", TPEBADDESC, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEBLOCK", TPEBLOCK, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEINVAL", TPEINVAL, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPELIMIT", TPELIMIT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPENOENT", TPENOENT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEOS", TPEOS, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEPERM", TPEPERM, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEPROTO", TPEPROTO, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPESVCERR", TPESVCERR, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPESVCFAIL", TPESVCFAIL, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPESYSTEM", TPESYSTEM, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPETIME", TPETIME, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPETRAN", TPETRAN, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPGOTSIG", TPGOTSIG, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPERMERR", TPERMERR, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEITYPE", TPEITYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEOTYPE", TPEOTYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPERELEASE", TPERELEASE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEHAZARD", TPEHAZARD, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEHEURISTIC", TPEHEURISTIC, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEEVENT", TPEEVENT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEMATCH", TPEMATCH, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEDIAGNOSTIC", TPEDIAGNOSTIC, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPEMIB", TPEMIB, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPMAXVAL", TPMAXVAL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPMINVAL", TPMINVAL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEABORT", TPEABORT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEBADDESC", TPEBADDESC, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEBLOCK", TPEBLOCK, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEINVAL", TPEINVAL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPELIMIT", TPELIMIT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPENOENT", TPENOENT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEOS", TPEOS, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEPERM", TPEPERM, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEPROTO", TPEPROTO, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPESVCERR", TPESVCERR, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPESVCFAIL", TPESVCFAIL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPESYSTEM", TPESYSTEM, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPETIME", TPETIME, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPETRAN", TPETRAN, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPGOTSIG", TPGOTSIG, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPERMERR", TPERMERR, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEITYPE", TPEITYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEOTYPE", TPEOTYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPERELEASE", TPERELEASE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEHAZARD", TPEHAZARD, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEHEURISTIC", TPEHEURISTIC, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEEVENT", TPEEVENT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEMATCH", TPEMATCH, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEDIAGNOSTIC", TPEDIAGNOSTIC, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPEMIB", TPEMIB, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPMAXVAL", TPMAXVAL, CONSTANT_FLAG);
 
 /*
 		These are less frequent used.
 */
 
-	REGISTER_LONG_CONSTANT("TUX_TPU_SIG", TPU_SIG, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPU_DIP", TPU_DIP, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPU_IGN", TPU_IGN, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPSA_FASTPATH", TPSA_FASTPATH, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("TUX_TPSA_PROTECTED", TPSA_PROTECTED, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPU_SIG", TPU_SIG, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPU_DIP", TPU_DIP, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPU_IGN", TPU_IGN, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPSA_FASTPATH", TPSA_FASTPATH, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRX_TPSA_PROTECTED", TPSA_PROTECTED, CONSTANT_FLAG);
 	
 	return SUCCESS;
 }
@@ -194,10 +193,10 @@ ZEND_MINIT_FUNCTION (tuxedo)
 /*
 	function called on module shutdown
 */
-ZEND_MSHUTDOWN_FUNCTION (tuxedo)
+ZEND_MSHUTDOWN_FUNCTION (endurox)
 {
 	tpterm ();
-#if (TUX_FML32 || TUX_FML)
+#if (NDRX_UBF32 || NDRX_UBF)
 	Fnmid_unload ();
 	Fnmid_unload32 ();
 #endif
@@ -208,7 +207,7 @@ ZEND_MSHUTDOWN_FUNCTION (tuxedo)
 /*
 	function called on request startup
 */
-ZEND_RINIT_FUNCTION (tuxedo)
+ZEND_RINIT_FUNCTION (endurox)
 {
 /*
 		In case the previous ended in an error, zero them out.
@@ -223,11 +222,11 @@ ZEND_RINIT_FUNCTION (tuxedo)
 /*
 	function called on request shutdown
 */
-ZEND_RSHUTDOWN_FUNCTION (tuxedo)
+ZEND_RSHUTDOWN_FUNCTION (endurox)
 {
 	tpterm ();
 	tx_close ();
-#if (TUX_FML32 || TUX_FML)
+#if (NDRX_UBF32 || NDRX_UBF)
 	Fnmid_unload ();
 	Fnmid_unload32 ();
 #endif
@@ -238,21 +237,21 @@ ZEND_RSHUTDOWN_FUNCTION (tuxedo)
 /*
 	function called on phpinfo ()
 */
-ZEND_MINFO_FUNCTION (tuxedo)
+ZEND_MINFO_FUNCTION (endurox)
 {
 	char env [1000];
 	
 	php_info_print_table_start();
-	php_info_print_table_header(2, "Tuxedo Variable", "Value");
+	php_info_print_table_header(2, "Endurox Variable", "Value");
 	
-	php_info_print_table_row (2, "PHP-Tuxedo Version", _php_tux_ver);
+	php_info_print_table_row (2, "PHP-Endurox Version", _php_ndrx_ver);
 
-	if (getenv ("TUXDIR") == NULL)
+	if (getenv ("NDRXDIR") == NULL)
 		strcpy (env, "");
 	else
-		strcpy (env, getenv ("TUXDIR"));
+		strcpy (env, getenv ("NDRXDIR"));
 		
-	php_info_print_table_row(2, "TUXDIR", env);
+	php_info_print_table_row(2, "NDRXDIR", env);
 	
 	if (getenv ("WSNADDR") == NULL)
 		strcpy (env, "");
@@ -294,19 +293,19 @@ ZEND_MINFO_FUNCTION (tuxedo)
 
 	php_info_print_table_row (2, "FIELDTBLS32", env);
 
-#if TUX_FML
+#if NDRX_UBF
 	strcpy (env, "Enabled");
 #else
 	strcpy (env, "Disabled");
 #endif
-	php_info_print_table_row (2, "FML Functions", env);
+	php_info_print_table_row (2, "UBF Functions", env);
 	
-#if TUX_FML32
+#if NDRX_UBF32
 	strcpy (env, "Enabled");
 #else
 	strcpy (env, "Disabled");
 #endif
-	php_info_print_table_row (2, "FML32 Functions", env);
+	php_info_print_table_row (2, "UBF32 Functions", env);
 	
 	php_info_print_table_end();
 
@@ -315,18 +314,18 @@ ZEND_MINFO_FUNCTION (tuxedo)
 
 
 
-zend_module_entry tuxedo_module_entry =
+zend_module_entry endurox_module_entry =
 {
 #if ZEND_MODULE_API_NO >= 20010901
 	STANDARD_MODULE_HEADER,
 #endif
-	"BEA Tuxedo Module",				/* the name of these modules */
-	tuxedo_functions,					/* points to zend_function_entry */
-	ZEND_MINIT (tuxedo),				/* module startup function */
-	ZEND_MSHUTDOWN (tuxedo),			/* module shutdown function */
-	ZEND_RINIT (tuxedo),				/* request startup function */
-	ZEND_RSHUTDOWN (tuxedo),			/* request shutdown function */
-	ZEND_MINFO (tuxedo),				/* phpinfo callback function */
+	"BEA Endurox Module",				/* the name of these modules */
+	endurox_functions,					/* points to zend_function_entry */
+	ZEND_MINIT (endurox),				/* module startup function */
+	ZEND_MSHUTDOWN (endurox),			/* module shutdown function */
+	ZEND_RINIT (endurox),				/* request startup function */
+	ZEND_RSHUTDOWN (endurox),			/* request shutdown function */
+	ZEND_MINFO (endurox),				/* phpinfo callback function */
 #if ZEND_MODULE_API_NO >= 20010901
 	NO_VERSION_YET,
 #endif
@@ -338,15 +337,15 @@ zend_module_entry tuxedo_module_entry =
 	the argument must be the xxxx of xxxx_module_entry line above.
 */
 
-#if COMPILE_DL_TUXEDO_MODULE
-ZEND_GET_MODULE(tuxedo)
+#if COMPILE_DL_ENDUROX_MODULE
+ZEND_GET_MODULE(endurox)
 #endif
 
 
 /*
 	Function to free the tpalloc resource buffer.
 */
-static void free_tux_tpalloc_buf(tux_tpalloc_buf_type * res)
+static void free_ndrx_tpalloc_buf(ndrx_tpalloc_buf_type * res)
 {	
 	tpfree (res->buf);		/* free the tpalloc buffer */
 	efree (res);			/* now free the whole structure */
@@ -374,12 +373,12 @@ static void free_tux_tpalloc_buf(tux_tpalloc_buf_type * res)
 	}
 */
 
-/* {{{ function tux_tpstrerror
-	Function to return a string containing a tuxedo error description.
+/* {{{ function ndrx_tpstrerror
+	Function to return a string containing a endurox error description.
 	Function accepts one argument, tperrno.
 
 */
-ZEND_FUNCTION (tux_tpstrerror)
+ZEND_FUNCTION (ndrx_tpstrerror)
 {
 	zval **arg_tperrno;
 
@@ -398,10 +397,10 @@ ZEND_FUNCTION (tux_tpstrerror)
 
 /* {{{ function tp_get_tperrno
 	Function to return the numeric value of tperrno.
-	This value will most likely be used to call tux_tpstrerror.
+	This value will most likely be used to call ndrx_tpstrerror.
 	Function accepts no arguments.
 */
-ZEND_FUNCTION (tux_get_tperrno)
+ZEND_FUNCTION (ndrx_get_tperrno)
 {
 	if (ZEND_NUM_ARGS () != 0)
 	{
@@ -413,16 +412,16 @@ ZEND_FUNCTION (tux_get_tperrno)
 /* }}} */
 
 
-/* {{{ function tux_tpfree
+/* {{{ function ndrx_tpfree
 	Function to free a tpalloc'ed buffer.
 	Function accepts one argument, the buf resource of the buffer to free.
 	Function returns nothing.
 */
-ZEND_FUNCTION (tux_tpfree)
+ZEND_FUNCTION (ndrx_tpfree)
 {
 	zval ** arg_tpalloc_res;
 
-	tux_tpalloc_buf_type * tp_alloc_res;
+	ndrx_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, &arg_tpalloc_res) != SUCCESS))
@@ -432,7 +431,7 @@ ZEND_FUNCTION (tux_tpfree)
 
 	if (((*arg_tpalloc_res)->type != IS_RESOURCE) || ((*arg_tpalloc_res)->value.lval==0))
 	{
-		zend_error (E_WARNING, "tux_tpfree argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrx_tpfree argument not a tpalloc resource");
 		RETURN_FALSE;
 	}
 
@@ -443,7 +442,7 @@ ZEND_FUNCTION (tux_tpfree)
 /* }}} */
 
 
-/* {{{ function tux_tpalloc
+/* {{{ function ndrx_tpalloc
 	Function to tpalloc a typed buffer.
 	Function requires 3 arguments,
 		TYPE = type type of buffer they are requesting.
@@ -451,7 +450,7 @@ ZEND_FUNCTION (tux_tpfree)
 		SIZE = the initial size of the request.
 	Function reutrns a buffer reference number.
 */
-ZEND_FUNCTION (tux_tpalloc)
+ZEND_FUNCTION (ndrx_tpalloc)
 {
 	zval ** arg_buf_type;
 	zval ** arg_buf_subtype;
@@ -472,7 +471,7 @@ ZEND_FUNCTION (tux_tpalloc)
 	convert_to_string_ex (arg_buf_subtype);
 	convert_to_long_ex (arg_buf_size);
 			
-	RETURN_RESOURCE (_tux_alloc ((*arg_buf_type)->value.lval,
+	RETURN_RESOURCE (_ndrx_alloc ((*arg_buf_type)->value.lval,
 								 (*arg_buf_subtype)->value.str.val,
 								 (*arg_buf_size)->value.lval));
 }
@@ -480,38 +479,38 @@ ZEND_FUNCTION (tux_tpalloc)
 
 /*
 	This function actually does the tpalloc for both the
-	tux_tpalloc call and Falloc for FMLs.
+	ndrx_tpalloc call and Falloc for UBFs.
 
 	Returns a resource (value  currently a LONG).
 */
-long _tux_alloc (long type, char * subtype, long size)
+long _ndrx_alloc (long type, char * subtype, long size)
 {
 	char *	buf_ptr;
 	int is32 = 0;
-	tux_tpalloc_buf_type * tp_alloc_res;
+	ndrx_tpalloc_buf_type * tp_alloc_res;
 
 /*
 		Has someone given us an invalid type 
 */
 
-	if ((type < 0) || (type >= TUX_NUM_BUF_TYPES))
+	if ((type < 0) || (type >= NDRX_NUM_BUF_TYPES))
 	{
 		zend_error (E_WARNING, "Invalid buffer type");
 		return 0;
 	}
 
-#if (! TUX_FML)
-	if (type == TUX_FML_BUF_TYPE)
+#if (! NDRX_UBF)
+	if (type == NDRX_UBF_BUF_TYPE)
 	{
-		zend_error (E_ERROR, "FML buffer support not configured.  reconfigure with --enable-tuxedo-fml");
+		zend_error (E_ERROR, "UBF buffer support not configured.  reconfigure with --enable-endurox-ubf");
 		return 0;
 	}
 #endif
 
-#if (! TUX_FML32)
-	if (type == TUX_FML32_BUF_TYPE)
+#if (! NDRX_UBF32)
+	if (type == NDRX_UBF32_BUF_TYPE)
 	{
-		zend_error (E_ERROR, "FML32 buffer support not configured.  reconfigure with  --enable-tuxedo-fml32");
+		zend_error (E_ERROR, "UBF32 buffer support not configured.  reconfigure with  --enable-endurox-ubf32");
 		return 0;
 	}
 #endif
@@ -520,23 +519,23 @@ long _tux_alloc (long type, char * subtype, long size)
 /*
 		Allocate the buffer.
 */	
-	if ((buf_ptr = (char*) tpalloc (_tux_type2string(type), subtype, size)) == NULL)
+	if ((buf_ptr = (char*) tpalloc (_ndrx_type2string(type), subtype, size)) == NULL)
 	{
-		zend_error (E_WARNING, "Tuxedo tpalloc failed [%s]", tpstrerror (tperrno));
+		zend_error (E_WARNING, "Endurox tpalloc failed [%s]", tpstrerror (tperrno));
 		return 0;
 	}
 
 
-	if (type == TUX_FML_BUF_TYPE)
+	if (type == NDRX_UBF_BUF_TYPE)
 		is32 = FALSE;
-	else if (type == TUX_FML32_BUF_TYPE)
+	else if (type == NDRX_UBF32_BUF_TYPE)
 		is32 = TRUE;
 		
 /*
 		Now allocate the resource buffer 
 */
-	tp_alloc_res = (tux_tpalloc_buf_type *) emalloc (sizeof (tux_tpalloc_buf_type));
-	memset (tp_alloc_res, 0, sizeof (tux_tpalloc_buf_type));
+	tp_alloc_res = (ndrx_tpalloc_buf_type *) emalloc (sizeof (ndrx_tpalloc_buf_type));
+	memset (tp_alloc_res, 0, sizeof (ndrx_tpalloc_buf_type));
 
 /*
 		Move the resource values into the res buf.
@@ -547,13 +546,13 @@ long _tux_alloc (long type, char * subtype, long size)
 	tp_alloc_res->type = type; 	/* set the buffer type */
 	
 	strncpy (tp_alloc_res->subtype, subtype, 
-		MIN (strlen(subtype), TUX_TPALLOC_TYPE_LEN));
+		MIN (strlen(subtype), NDRX_TPALLOC_TYPE_LEN));
 
 /*
 		I cant use the RETURN_ macro because I haven't define the return_value
 		structure.
 */
-	return zend_list_insert(tp_alloc_res, tux_rh_alloc_buffer);
+	return zend_list_insert(tp_alloc_res, ndrx_rh_alloc_buffer);
 }
 
 
@@ -565,13 +564,13 @@ long _tux_alloc (long type, char * subtype, long size)
 		Input = The provided text.
 	Function returns BOOL true or false on error.
 */
-ZEND_FUNCTION (tux_put_buf)
+ZEND_FUNCTION (ndrx_put_buf)
 {
 	zval ** arg_tpalloc_res;
 	zval ** arg_buf;
 
 	long arg_length;
-	tux_tpalloc_buf_type * tp_alloc_res;
+	ndrx_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, &arg_tpalloc_res,
@@ -588,11 +587,11 @@ ZEND_FUNCTION (tux_put_buf)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						tux_tpalloc_buf_type *, 
+						ndrx_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 /*
 		We use a memcpy here for the future hopes of being able to
@@ -628,16 +627,16 @@ ZEND_FUNCTION (tux_put_buf)
 /* }}} */
 
 
-/* {{{ function tux_get_buf
+/* {{{ function ndrx_get_buf
 	Function to return a string equivalent to the 
 	reference buffer provided.
 	Function requires 1 argument, the buffer reference number.
 */
-ZEND_FUNCTION (tux_get_buf)
+ZEND_FUNCTION (ndrx_get_buf)
 {
 	zval ** arg_tpalloc_res;
 
-	tux_tpalloc_buf_type * tp_alloc_res;
+	ndrx_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, &arg_tpalloc_res) != SUCCESS))
@@ -648,7 +647,7 @@ ZEND_FUNCTION (tux_get_buf)
 /*
 	if (((*arg_tpalloc_res)->type != IS_RESOURCE) || ((*arg_tpalloc_res)->value.lval==0))
 	{
-		zend_error (E_WARNING, "tux_get_buf argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrx_get_buf argument not a tpalloc resource");
 		RETURN_EMPTY_STRING ();
 	}
 */
@@ -659,11 +658,11 @@ ZEND_FUNCTION (tux_get_buf)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						tux_tpalloc_buf_type *, 
+						ndrx_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 	
 	RETURN_STRINGL (tp_alloc_res->buf, tp_alloc_res->size,  1);  /* binary safe copy */	
@@ -672,8 +671,8 @@ ZEND_FUNCTION (tux_get_buf)
 
 
 
-/* {{{ function tux_tpcall
-	Function to submit via tpcall the tuxedo request.
+/* {{{ function ndrx_tpcall
+	Function to submit via tpcall the endurox request.
 	Requires 4 arguments:
 		String containing the service to call.
 		Buf ref # for the submit.
@@ -682,7 +681,7 @@ ZEND_FUNCTION (tux_get_buf)
 	Function returns a 0 or an error condition in tperrno.
 */
 		
-ZEND_FUNCTION (tux_tpcall)
+ZEND_FUNCTION (ndrx_tpcall)
 {
 	zval ** arg_service;
 	zval ** arg_tpalloc_res_in;
@@ -691,9 +690,9 @@ ZEND_FUNCTION (tux_tpcall)
 	
 	int tpcall_return;
 
-	tux_tpalloc_buf_type * tp_alloc_res_in;
-	tux_tpalloc_buf_type * tp_alloc_res_out;
-	tux_tpalloc_buf_type temp_alloc_buf;		/* not a pointer */
+	ndrx_tpalloc_buf_type * tp_alloc_res_in;
+	ndrx_tpalloc_buf_type * tp_alloc_res_out;
+	ndrx_tpalloc_buf_type temp_alloc_buf;		/* not a pointer */
 	
 	
 	
@@ -710,7 +709,7 @@ ZEND_FUNCTION (tux_tpcall)
 /*
 	if (((*arg_tpalloc_res_in)->type != IS_RESOURCE) || ((*arg_tpalloc_res_in)->value.lval==0))
 	{
-		zend_error (E_WARNING, "tux_tpcall argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrx_tpcall argument not a tpalloc resource");
 		RETURN_FALSE;
 	}
 */
@@ -724,20 +723,20 @@ ZEND_FUNCTION (tux_tpcall)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res_in, 
-						tux_tpalloc_buf_type *, 
+						ndrx_tpalloc_buf_type *, 
 						arg_tpalloc_res_in, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res_out, 
-						tux_tpalloc_buf_type *, 
+						ndrx_tpalloc_buf_type *, 
 						arg_tpalloc_res_out, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 /*
 	We need to copy the output buf to see if the call to tpcall made any changes.
@@ -768,21 +767,21 @@ ZEND_FUNCTION (tux_tpcall)
 /* }}} */
 
 
-/* {{{  function tux_tpacall
-	Function to submit via tpacall the tuxedo request.
+/* {{{  function ndrx_tpacall
+	Function to submit via tpacall the endurox request.
 	Requires 3 arguments:
 		String containing the service to call.
 		Buf ref # for the submit.
 		Flags.
 	Function returns cd reference # or an error condition in tperrno.
 */
-ZEND_FUNCTION (tux_tpacall)
+ZEND_FUNCTION (ndrx_tpacall)
 {
 	zval ** arg_service;
 	zval ** arg_tpalloc_res;
 	zval ** arg_flags;
 
-	tux_tpalloc_buf_type * tp_alloc_res;
+	ndrx_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 3) || 
 		(zend_get_parameters_ex(3,
@@ -796,7 +795,7 @@ ZEND_FUNCTION (tux_tpacall)
 /*
 	if (((*arg_tpalloc_res)->type != IS_RESOURCE) || ((*arg_tpalloc_res)->value.lval==0))
 	{
-		zend_error (E_WARNING, "tux_tpacall argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrx_tpacall argument not a tpalloc resource");
 		RETURN_FALSE;
 	}
 */
@@ -810,11 +809,11 @@ ZEND_FUNCTION (tux_tpacall)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						tux_tpalloc_buf_type *, 
+						ndrx_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 	RETURN_LONG (tpacall ((*arg_service)->value.str.val,
 				  tp_alloc_res->buf,
@@ -826,7 +825,7 @@ ZEND_FUNCTION (tux_tpacall)
 
 
 
-/* {{{  function tux_tpgetreply
+/* {{{  function ndrx_tpgetreply
 	Function to retrieve the results from a previous tpacall
 	Requires 3 arguments:
 		cd reference number returned by tpacall
@@ -834,13 +833,13 @@ ZEND_FUNCTION (tux_tpacall)
 		Flags.
 	Function returns service return value (tpreturn) or an error code
 */
-ZEND_FUNCTION (tux_tpgetrply)
+ZEND_FUNCTION (ndrx_tpgetrply)
 {
 	zval ** arg_tpacall_cd_ref;
 	zval ** arg_tpalloc_res;
 	zval ** arg_flags;
 
-	tux_tpalloc_buf_type * tp_alloc_res;
+	ndrx_tpalloc_buf_type * tp_alloc_res;
 	long ret_val;
 	int cd;
 	
@@ -872,11 +871,11 @@ ZEND_FUNCTION (tux_tpgetrply)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						tux_tpalloc_buf_type *, 
+						ndrx_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 	cd = (*arg_tpacall_cd_ref)->value.lval;
 	ret_val = tpgetrply (&cd, &tp_alloc_res->buf, &tp_alloc_res->size, (*arg_flags)->value.lval);
@@ -890,12 +889,12 @@ ZEND_FUNCTION (tux_tpgetrply)
 
 
 
-/* {{{  function tux_tx_close
-	Function closes current tuxedo connection.
+/* {{{  function ndrx_tx_close
+	Function closes current endurox connection.
 	No arguments.
 	No return value.
 */
-ZEND_FUNCTION (tux_tpclose)
+ZEND_FUNCTION (ndrx_tpclose)
 {
 	if (ZEND_NUM_ARGS () != 0)
 	{
@@ -910,12 +909,12 @@ ZEND_FUNCTION (tux_tpclose)
 
 
 
-/* {{{  function tux_tpterm
-	Function closes current tuxedo connection.
+/* {{{  function ndrx_tpterm
+	Function closes current endurox connection.
 	No arguments.
 	No return value.
 */
-ZEND_FUNCTION (tux_tpterm)
+ZEND_FUNCTION (ndrx_tpterm)
 {
 	if (ZEND_NUM_ARGS () != 0)
 	{
@@ -928,17 +927,17 @@ ZEND_FUNCTION (tux_tpterm)
 
 
 
-/* {{{  function tux_tpinit
-	Function opens a tux connection and populates connection fields
+/* {{{  function ndrx_tpinit
+	Function opens a ndrx connection and populates connection fields
 	4 or 5 arguments:
 		username
 		client name
 		password
 		flags	
-		(optional) data -  user password for Tuxedo Security level(USER_AUTH,ACL)
+		(optional) data -  user password for Endurox Security level(USER_AUTH,ACL)
 	Return TRUE FALSE.
 */
-ZEND_FUNCTION (tux_tpinit)
+ZEND_FUNCTION (ndrx_tpinit)
 {
 	zval ** arg_username;
 	zval ** arg_clientname;
@@ -1026,13 +1025,13 @@ ZEND_FUNCTION (tux_tpinit)
 
 
 
-/* {{{ function tux_tpabort
-	function to call the tpabort tux function
+/* {{{ function ndrx_tpabort
+	function to call the tpabort ndrx function
 	
 	function takes 0 args
 	function returns long.
 */
-ZEND_FUNCTION (tux_tpabort)
+ZEND_FUNCTION (ndrx_tpabort)
 {
 	if(ZEND_NUM_ARGS() != 0) 
 	{
@@ -1045,13 +1044,13 @@ ZEND_FUNCTION (tux_tpabort)
 
 
 
-/* {{{ function tux_tpcommit
-	function to call the tpcommit tux function
+/* {{{ function ndrx_tpcommit
+	function to call the tpcommit ndrx function
 	
 	function takes 0 args
 	function returns long.
 */
-ZEND_FUNCTION (tux_tpcommit)
+ZEND_FUNCTION (ndrx_tpcommit)
 {
 	if(ZEND_NUM_ARGS() != 0) 
 	{
@@ -1064,13 +1063,13 @@ ZEND_FUNCTION (tux_tpcommit)
 
 
 
-/* {{{ function tux_tpbegin
-	function to call the tpbegin tux function
+/* {{{ function ndrx_tpbegin
+	function to call the tpbegin ndrx function
 
 	function takes 1 args, the timeout, must not be 0.
 	function returns long.
 */
-ZEND_FUNCTION (tux_tpbegin)
+ZEND_FUNCTION (ndrx_tpbegin)
 {
 	zval ** arg_timeout;
 
@@ -1085,7 +1084,7 @@ ZEND_FUNCTION (tux_tpbegin)
 	if ((*arg_timeout)->value.lval == 0)
 	{
 		zend_error (E_WARNING, 
-			"tux_commit:  timeout argument cannot be zero,  using 30.");
+			"ndrx_commit:  timeout argument cannot be zero,  using 30.");
 		(*arg_timeout)->value.lval = 30;
 	}
 	
@@ -1093,17 +1092,17 @@ ZEND_FUNCTION (tux_tpbegin)
 }
 /* }}} */
 
-/* {{{ function tux_tuxreadenv
+/* {{{ function ndrx_ndrxreadenv
 	function to add variables to the environment form a file
 	2 arguments:
 		file - absolute path of environment file
 		label - section name
 	return TRUE or FALSE
-	refer to tuxreadenv() of Tuxedo ATMI
+	refer to ndrxreadenv() of Endurox ATMI
 
 	by CheolMin Lee <cmlee@kt.co.kr>
 */
-ZEND_FUNCTION (tux_tuxreadenv)
+ZEND_FUNCTION (ndrx_ndrxreadenv)
 {
 	zval **arg_file;
 	zval **arg_label;
@@ -1119,31 +1118,31 @@ ZEND_FUNCTION (tux_tuxreadenv)
 	convert_to_string_ex (arg_file);
 	convert_to_string_ex (arg_label);
 
-#if (TUX_FML32 || TUX_FML)
+#if (NDRX_UBF32 || NDRX_UBF)
     Fnmid_unload ();
     Fnmid_unload32 ();
 #endif
-	if (tuxreadenv((*arg_file)->value.str.val, (*arg_label)->value.str.val) != 0 ) {
-		zend_error(E_ERROR, "tuxreadenv failed: unable to read environment.");
+	if (ndrxreadenv((*arg_file)->value.str.val, (*arg_label)->value.str.val) != 0 ) {
+		zend_error(E_ERROR, "ndrxreadenv failed: unable to read environment.");
 		RETURN_FALSE;
 	}
 
 	RETURN_TRUE;
 }
-/* tux_readenv */
+/* ndrx_readenv */
 /* }}} */
 
 
-/* {{{ function tux_tuxgetenv
+/* {{{ function ndrx_ndrxgetenv
 	function to return value for environment name
 	1 argument:
 		name - environment variable name
 	return NULL or string value of the environment variable
-	refer to tuxgetenv() of Tuxedo ATMI
+	refer to ndrxgetenv() of Endurox ATMI
 
 	by CheolMin Lee <cmlee@kt.co.kr>
 */
-ZEND_FUNCTION (tux_tuxgetenv)
+ZEND_FUNCTION (ndrx_ndrxgetenv)
 {
 	zval **arg_name;
 	char *retval;
@@ -1156,7 +1155,7 @@ ZEND_FUNCTION (tux_tuxgetenv)
 
 	convert_to_string_ex (arg_name);
 	
-	retval = tuxgetenv((*arg_name)->value.str.val);
+	retval = ndrxgetenv((*arg_name)->value.str.val);
 
 	if (!retval) {
 		RETURN_NULL();
@@ -1164,21 +1163,21 @@ ZEND_FUNCTION (tux_tuxgetenv)
 		RETURN_STRINGL(retval, strlen(retval), 1);
 	}
 }
-/* tux_tuxgetenv */
+/* ndrx_ndrxgetenv */
 /* }}} */
 
 
-/* {{{ function tux_tuxputenv
+/* {{{ function ndrx_ndrxputenv
 	function to change or add value to environment
 	2 arguments:
 		name - environment variable name
 		value - value of the environment variable
 	return TRUE or FALSE
-	refer to tuxputenv() of Tuxedo ATMI
+	refer to ndrxputenv() of Endurox ATMI
 
 	by CheolMin Lee <cmlee@kt.co.kr>
 */
-ZEND_FUNCTION (tux_tuxputenv)
+ZEND_FUNCTION (ndrx_ndrxputenv)
 {
 	zval **arg_name;
 	zval **arg_value;
@@ -1197,15 +1196,15 @@ ZEND_FUNCTION (tux_tuxputenv)
 	sprintf(str, "%s=%s",
 		(*arg_name)->value.str.val, (*arg_value)->value.str.val);
 		
-	if (!(rc=tuxputenv(str))) {
+	if (!(rc=ndrxputenv(str))) {
 		RETURN_TRUE;
 	} else {
 		RETURN_FALSE;
 	}
 }
-/* tux_tuxputenv */
+/* ndrx_ndrxputenv */
 /* }}} */
 
 
-/*	end #if HAVE_TUXEDO */
+/*	end #if HAVE_ENDUROX */
 #endif

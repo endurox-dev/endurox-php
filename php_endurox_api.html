@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <META name="GENERATOR" content="IBM WebSphere Homepage Builder V5.0.1 (Trial) for Windows">
-<TITLE>PHP Tuxedo - API</TITLE>
+<TITLE>PHP Endurox - API</TITLE>
 <STYLE type="text/css">
 <!--
 TABLE{
@@ -22,22 +22,22 @@ TD{
   <TBODY>
     <TR>
       <TD><A href="index.html">Home Page</A></TD>
-      <TD><A href="http://sourceforge.net/projects/php-tuxedo/">Project Site</A></TD>
+      <TD><A href="http://sourceforge.net/projects/php-endurox/">Project Site</A></TD>
     </TR>
   </TBODY>
 </TABLE>
 <CENTER>
-<H1>PHP Tuxedo</H1>
+<H1>PHP Endurox</H1>
 <H2>Function API</H2>
 </CENTER>
 <P><B>NOTE: At this point in this products development
 cycle, it is assumed users have some understanding
-of basic Tuxedo client development. Many
+of basic Endurox client development. Many
 of these functions have a strong relationship
-to the original BEA Tuxedo API function.
+to the original BEA Endurox API function.
 I recommend you where necessary refer to
 this documentation for additional information.
-BEA has their documentation online at:<A href="http://edocs.bea.com/tuxedo/tux65/index.htm" target="_blank">http://edocs.bea.com/tuxedo/tux65/index.htm</A>.</B> <B>The Reference Material and Bookshelf are
+BEA has their documentation online at:<A href="http://edocs.bea.com/endurox/ndrx65/index.htm" target="_blank">http://edocs.bea.com/endurox/ndrx65/index.htm</A>.</B> <B>The Reference Material and Bookshelf are
 particularly good references.</B></P>
 <TABLE border="1" width="1002">
   <THEAD>
@@ -50,160 +50,160 @@ particularly good references.</B></P>
   </THEAD>
   <TBODY>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_array2fml</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Move array values into FML</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_array2ubf</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Move array values into UBF</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.2.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_array2fml (buffer #, array)</B></FONT><BR>
-      buffer#: The Tuxedo buffer reference number
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_array2ubf (buffer #, array)</B></FONT><BR>
+      buffer#: The Endurox buffer reference number
       for values to be stored in. Must be a valid
-      FML/FML32 Tuxedo buffer.<BR>
+      UBF/UBF32 Endurox buffer.<BR>
       array: a 1 or 2 dimensional array to move
       the values from. The first dimension key
-      should be the FML/FML32 Field names (a string)
+      should be the UBF/UBF32 Field names (a string)
       according to the Field Definition file. The
       second dimmension key (if present) will be
       taken as the FIELDID occurenence values,
       starting with 0. Skipped occurences result
-      in a NULL FML field id.<BR>
+      in a NULL UBF field id.<BR>
 	  <P>
       Returns TRUE/FALSE<BR>
 	  <P>
       Stores the values from the provided array
-      into the destination FML/FML32 buffer. Values
-      are placed into the FML buffer with the Fchg
-      Tuxedo API function. See the examples for
+      into the destination UBF/UBF32 buffer. Values
+      are placed into the UBF buffer with the Fchg
+      Endurox API function. See the examples for
       a simple usage.<BR>
 	  <P>
-      This function has no single equivalent Tuxedo
+      This function has no single equivalent Endurox
       API function. <BR>
-      See Also: tux_fml2array, BEA Documentation
+      See Also: ndrx_ubf2array, BEA Documentation
       of Fchg and related functions.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fml2array</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Move FML values into an array</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ubf2array</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Move UBF values into an array</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.2.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fml2array (buffer #, flag)</B></FONT><BR>
-      buffer#: The Tuxedo buffer reference
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ubf2array (buffer #, flag)</B></FONT><BR>
+      buffer#: The Endurox buffer reference
       number
       for values to taken from. Must be a
       valid
-      FML/FML32 Tuxedo buffer.<BR>
+      UBF/UBF32 Endurox buffer.<BR>
       <BR>
 	  flag: to indicate whether the primary index should be int or string
 			They are set in a sequence of bits anded together.<P>
 			0 0 0  =  Perform no index translation, multi-occurrence.<BR>
 			0 0 1  =  Store keys as the Field ID, coded same as 0.<BR>
-			0 1 0  =  Store keys as the Tuxedo Field Number value.<BR>
+			0 1 0  =  Store keys as the Endurox Field Number value.<BR>
 			1 0 0  =  Store keys as the Field Name (String) value.<BR>
 	  <P>
       Returns a new 1 or 2 dimensional array with
-      values populated from the FML/FML32 buffer.
+      values populated from the UBF/UBF32 buffer.
       The first dimension key should be the Field
-      Number or FML/FML32 Field names (a string)
+      Number or UBF/UBF32 Field names (a string)
       according to the Field Definition file. The
       second dimmension key (if present) will be
       taken as the FIELDID occurenence values,
       starting with 0. Skipped occurences result
       in a NULL value.<BR>
 	  <P>
-      This function has no single equivalent Tuxedo
+      This function has no single equivalent Endurox
       API function. <BR>
-      See Also: tux_array2fml, BEA Documentation
+      See Also: ndrx_array2ubf, BEA Documentation
       of Fnext and related functions.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_get_buf</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_get_buf</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Retrieve contents of buffer</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_get_buf (buffer #)</B></FONT><BR>
-      buffer#: The Tuxedo buffer reference number.<BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_get_buf (buffer #)</B></FONT><BR>
+      buffer#: The Endurox buffer reference number.<BR>
 	  <P>
-      Returns contents of Tuxedo STRING or CARRAY
+      Returns contents of Endurox STRING or CARRAY
       buffer.	  <P>
 
       This function has no equivalent BEA function
-      because raw Tuxedo functions allow direct
+      because raw Endurox functions allow direct
       access to the buffer contents. Call this
-      function after tux_tpcall (or tpacall) to
+      function after ndrx_tpcall (or tpacall) to
       get the contents in the buffer.<BR>
       <BR>
-      See Also: tux_put_buf.</TD>
+      See Also: ndrx_put_buf.</TD>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_get_tperrno</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_get_tperrno</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Retrieve contents of tperrno</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_get_tperrno ()</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_get_tperrno ()</B></FONT><BR>
       <BR>
-      Returns the value of the Tuxedo global variable
+      Returns the value of the Endurox global variable
       tperrno, similar to the UNIX errno. Results
-      are usually used in calls to tux_tpstrerror.<BR>
+      are usually used in calls to ndrx_tpstrerror.<BR>
       <BR>
-      See Also: tux_tpstrerror, BEA documentation.</TD>
+      See Also: ndrx_tpstrerror, BEA documentation.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_put_buf</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Store value into Tuxedo buffer</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_put_buf</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Store value into Endurox buffer</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_put_buf (buffer #, data)</B></FONT><BR>
-      buffer#: The Tuxedo buffer reference number.<BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_put_buf (buffer #, data)</B></FONT><BR>
+      buffer#: The Endurox buffer reference number.<BR>
       data: The contents to be placed into the
       buffer. Data is copied using binary safe
       memcpy.<BR>
 	  <P>
       Return value: TRUE/FALSE.<BR>
 	  <P>
-      Places the contents of data into the Tuxedo
+      Places the contents of data into the Endurox
       buffer.<BR>
       <BR>
-      See Also: tux_put_buf.</TD>
+      See Also: ndrx_put_buf.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpabort</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Abort a Tuxedo transaction.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpabort</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Abort a Endurox transaction.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Not Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpabort ()</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpabort ()</B></FONT><BR>
       <BR>
-      Rollback a pending Tuxedo transaction.<BR>
+      Rollback a pending Endurox transaction.<BR>
       <BR>
-      See Also: tux_tpcommit, tux_tpbegin, BEA
+      See Also: ndrx_tpcommit, ndrx_tpbegin, BEA
       Documentation</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpalloc</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Allocate a Tuxedo Buffer</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpalloc</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Allocate a Endurox Buffer</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpalloc (type, sub_type, size)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpalloc (type, sub_type, size)</B></FONT><BR>
       type: Predefined constant indicating the
       type of buffer to create<BR>
       sub_type: String indicating the subtype of
@@ -216,32 +216,32 @@ particularly good references.</B></P>
       Error Return: False<BR>
       Type Definitions:
       <DL>
-        <DT>TUX_STRING:
-        <DD>Create a standard Tuxedo STRING buffer.
-        <DT>TUX_CARRAY
-        <DD>Create a standard Tuxedo CARRAY buffer. Not
+        <DT>NDRX_STRING:
+        <DD>Create a standard Endurox STRING buffer.
+        <DT>NDRX_CARRAY
+        <DD>Create a standard Endurox CARRAY buffer. Not
         fully tested.
-        <DT>TUX_FML
-        <DD>Create a Tuxedo fielded FML buffer.
-        <DT>TUX_FML32
-        <DD>Create a Tuxedo fielded FML32 buffer
-        <DT>TUX_VIEW
-        <DD>Create a Tuxedo View buffer. Not tested<BR>
+        <DT>NDRX_UBF
+        <DD>Create a Endurox fielded UBF buffer.
+        <DT>NDRX_UBF32
+        <DD>Create a Endurox fielded UBF32 buffer
+        <DT>NDRX_VIEW
+        <DD>Create a Endurox View buffer. Not tested<BR>
       </DL>
-      See Also: tux_falloc, BEA Documentation</TD>
+      See Also: ndrx_falloc, BEA Documentation</TD>
     </TR>
     <TR></TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpacall</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpacall</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Send an allocated buffer async</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Minimal testing</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpacall (srvc, in_buf, flags)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpacall (srvc, in_buf, flags)</B></FONT><BR>
       srvc: A string containing the name of the
-      Tuxedo service to call.<BR>
+      Endurox service to call.<BR>
       in_buf: Input buffer given to service.<BR>
       flags: Flags passed on to tpcall, see tpacall
       documentation.<BR>
@@ -253,34 +253,34 @@ particularly good references.</B></P>
       Just like tpcall except call does not block
       for reply.<BR>
       <BR>
-      See Also: tux_tpcall, BEA documentation.</TD>
+      See Also: ndrx_tpcall, BEA documentation.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpbegin</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Start a Tuxedo transaction.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpbegin</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Start a Endurox transaction.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Not Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpbegin ()</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpbegin ()</B></FONT><BR>
       <BR>
-      Start a Tuxedo transaction.<BR>
+      Start a Endurox transaction.<BR>
       <BR>
-      See Also: tux_tpcommit, tux_tpabort, BEA
+      See Also: ndrx_tpcommit, ndrx_tpabort, BEA
       Documentation</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpcall</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpcall</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Send an allocated buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpcall (srvc, in_buf, out_buf, flags)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpcall (srvc, in_buf, out_buf, flags)</B></FONT><BR>
       srvc: A string containing the name of the
-      Tuxedo service to call.<BR>
+      Endurox service to call.<BR>
       in_buf: Input buffer given to service.<BR>
       out_buf: Reply buffer service fills after
       execution.<BR>
@@ -291,70 +291,70 @@ particularly good references.</B></P>
       of raw tpcall function.<BR>
       Error Return: -1.<BR>
 	  <P>
-      See Also: tux_tpacall, BEA documentation.</TD>
+      See Also: ndrx_tpacall, BEA documentation.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpclose</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Close a Tuxedo session.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpclose</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Close a Endurox session.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpclose ()</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpclose ()</B></FONT><BR>
       <BR>
-      Closes current Tuxedo connection, direct
-      call to Tuxedo tpclose function.<BR>
+      Closes current Endurox connection, direct
+      call to Endurox tpclose function.<BR>
       <BR>
       See Also: BEA documentation.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpcommit</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Commit a Tuxedo transaction.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpcommit</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Commit a Endurox transaction.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Not Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpcommit ()</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpcommit ()</B></FONT><BR>
       <BR>
-      Commit a Tuxedo transaction.<BR>
+      Commit a Endurox transaction.<BR>
       <BR>
-      See Also: tux_tpabort, tux_tpbegin, BEA Documentation</TD>
+      See Also: ndrx_tpabort, ndrx_tpbegin, BEA Documentation</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpfree</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Free a Tuxedo buffer.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpfree</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Free a Endurox buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpfree (buffer #)</B></FONT><BR>
-      buffer#: The Tuxedo buffer reference number.<BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpfree (buffer #)</B></FONT><BR>
+      buffer#: The Endurox buffer reference number.<BR>
 	  <P>
       Release resources and memory associated with
-      a Tuxedo buffer.<BR>
+      a Endurox buffer.<BR>
       Function calls tpfree, then releases internal
       structure.<BR>
-      All Tuxedo buffers are automatically freed
+      All Endurox buffers are automatically freed
       at the end of the page processing.<BR>
 	  <P>
-      See Also: tux_tpalloc, BEA documentation.</TD>
+      See Also: ndrx_tpalloc, BEA documentation.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpgetrply</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpgetrply</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Retrieve results from tpacall</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Minimal testing</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpgetrply (&amp;cd, out_buf#, flags)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpgetrply (&amp;cd, out_buf#, flags)</B></FONT><BR>
       &amp;cd: Reference to int cd value. Value
       may be altered on return to contain cd from
       tpacall.<BR>
-      out_buf#: Tuxedo reference number for results
+      out_buf#: Endurox reference number for results
       to be placed in.<BR>
       flags: Flags to be passed on to tpgetrply
       function.<BR>
@@ -364,111 +364,111 @@ particularly good references.</B></P>
       Retrieves results from completed tpacall
       and places results into out_buf..<BR>
 	  <P>
-      See Also: tux_tpacall, BEA documentation.</TD>
+      See Also: ndrx_tpacall, BEA documentation.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpinit</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Open connection to Tuxedo</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpinit</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Open connection to Endurox</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpinit (username, clientname, password,
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpinit (username, clientname, password,
       flags)</B></FONT><BR>
-      username: String containing the Tuxedo user
+      username: String containing the Endurox user
       name for this application.<BR>
       clientname: String containing the client
       identifier name.<BR>
-      password: String containing the Tuxedo application
+      password: String containing the Endurox application
       password.<BR>
       flags: Long containing flags passed to tpinit
       function.<BR>
 	  <P>
-      Return value: return value of Tuxedo tpinit
+      Return value: return value of Endurox tpinit
       function.<BR>
 	  <P>
-      Initializes a Tuxedo connection. The groupname
+      Initializes a Endurox connection. The groupname
       field passed to tpinit is currently set to<BR>
-      NULL because we are using the Tuxedo Workstation
+      NULL because we are using the Endurox Workstation
       Listener.<BR>
 	  <P>
-      See Also: tux_tpclose, BEA documentation.</TD>
+      See Also: ndrx_tpclose, BEA documentation.</TD>
     </TR>
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tpstrerror</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpstrerror</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return error string</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.1.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Minimal Testing</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tpstrerror (tperror)</B></FONT><BR>
-      tperror: Tuxedo error number usually returned
-      from tux_get_tperrno<BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_tpstrerror (tperror)</B></FONT><BR>
+      tperror: Endurox error number usually returned
+      from ndrx_get_tperrno<BR>
 	  <P>
       Returns a string associated with the provided
       error number.<BR>
 	  <P>
-      See Also: tux_get_tperrno, BEA documentation.</TD>
+      See Also: ndrx_get_tperrno, BEA documentation.</TD>
     </TR>
     <TR>
       <TD></TD>
       <TD colspan="3"></TD>
     </TR>
 
-    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tuxgetenv</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return Tuxedo environment variable</TD>
+    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxgetenv</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Return Endurox environment variable</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.5</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tuxgetenv (variable)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ndrxgetenv (variable)</B></FONT><BR>
       variable: A char string of the environment variable to return.<BR>
 	  <P>
       Returns a binary safe string representing the environment variable.<BR>
  	  <P>
-      See Also: See Also: BEA documentation for tuxgetenv.</TD>
+      See Also: See Also: BEA documentation for ndrxgetenv.</TD>
     </TR>
 
-    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tuxputenv</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Set Tuxedo environment variable</TD>
+    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxputenv</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Set Endurox environment variable</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.5</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tuxputenv (variable, value)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ndrxputenv (variable, value)</B></FONT><BR>
       variable: A char string of the environment variable to return.<BR>
 	  value:  A string value to set hte environment variable to.<BR>
 	  <P>
       Returns TRUE/FALSE.<BR>
 	  <P>
-      See Also: BEA documentation for tuxputenv.</TD>
+      See Also: BEA documentation for ndrxputenv.</TD>
     </TR>
 
-    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_tuxreadenv</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Set Tuxedo environment variable from file</TD>
+    <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxreadenv</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Set Endurox environment variable from file</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.5</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_tuxgetenv (file, label)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ndrxgetenv (file, label)</B></FONT><BR>
       file:  absolute path name of file to extract environment variables from.<BR>
 	  label:  section name.<BR>
 	  <P>
       Returns TRUE/FALSE.<BR>
 	  <P>
-      See Also: BEA documentation for tuxreadenv.</TD>
+      See Also: BEA documentation for ndrxreadenv.</TD>
     </TR>
 
 
-    <TR><TD><B>Low Level FML/FML32 Functions</B>
+    <TR><TD><B>Low Level UBF/UBF32 Functions</B>
 	<BR>
-	Most of these FML functions have one-for-one equivalents to the raw Tuxedo FML functions.
-	Where possible, the correct FML/FML32 calls are detected; however on some calls this is
+	Most of these UBF functions have one-for-one equivalents to the raw Endurox UBF functions.
+	Where possible, the correct UBF/UBF32 calls are detected; however on some calls this is
 	not possible so you must provide a type argument.
 	  <P>
 	The list of these functions will likely grow in future releases.  I tried to pick out
@@ -476,21 +476,21 @@ particularly good references.</B></P>
 	method already created.  If you find a specific function not listed here is needed,
 	they can be created easily.  Send me an email.
 	<P>
-	<B>NOTE:  </B>As of version 0.4.0, the following functions (tux_fdelall, tux_foccur, tux_fdel, 
-	tux_flen, tux_fpres, tux_fadd, and tux_fget) can take a Field Name string in place of
+	<B>NOTE:  </B>As of version 0.4.0, the following functions (ndrx_fdelall, ndrx_foccur, ndrx_fdel, 
+	ndrx_flen, ndrx_fpres, ndrx_fadd, and ndrx_fget) can take a Field Name string in place of
 	the Field ID parameter.  If the provided argument is a string (as defined in PHP) 
 	the fldid function will be called to convert the string to its Field ID before
 	processing.</TD></TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fadd</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fadd</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Add new field occurrence.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fadd (buff#, Field_ID, data, occur)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fadd (buff#, Field_ID, data, occur)</B></FONT><BR>
       buff#:  The buffer reference number for the data value to be added.
 	  <P>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
@@ -504,14 +504,14 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-	  tux_fadd and tux_fchg are aliased to the same function code.  The only difference between
+	  ndrx_fadd and ndrx_fchg are aliased to the same function code.  The only difference between
 	  the two original functions is Fchg allowed the specification of an occurrence where Fadd did not.
 	  <P>
       See BEA documentation for Fadd and Fchg for more information.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fchg</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fchg</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Add / change new field occurrence.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
@@ -519,19 +519,19 @@ particularly good references.</B></P>
     <TR>
       <TD width="73"></TD>
       <TD colspan="3" width="740"><FONT size="+1">
-	  See tux_fadd.</TD>
+	  See ndrx_fadd.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fchksum</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fchksum</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Compute checksum for fielded buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fchksum (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer to compute checksum against.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fchksum (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer to compute checksum against.
       <P>
 	  Performs a checksum against the input buffer.  The stored checksum may be 
 	  inspected by the receiving process to verify that the entire buffer was received.
@@ -542,19 +542,19 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fcmp</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Compare two fielded FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fcmp</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Compare two fielded UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fcmp (buff1#, buff2#)</B></FONT><BR>
-      buff1#:  Input FML/FML32 buffer to compare against.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fcmp (buff1#, buff2#)</B></FONT><BR>
+      buff1#:  Input UBF/UBF32 buffer to compare against.
 	  <br>
-	  buff2#:  Input FML/FML32 buffer to compare against.
+	  buff2#:  Input UBF/UBF32 buffer to compare against.
       <P>
-	  Compares the field identifiers and then the field values of two FML buffers.
+	  Compares the field identifiers and then the field values of two UBF buffers.
 	  <P>
 	  Return value is a long.
       <P>
@@ -562,17 +562,17 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fconcat</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Concatenate source and destination FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fconcat</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Concatenate source and destination UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fconcat (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fconcat (dest_buff#, source_buff#)</B></FONT><BR>
+      dest_buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
-	  source_buff#:  Input FML/FML32 source buffer.
+	  source_buff#:  Input UBF/UBF32 source buffer.
       <P>
 	  Adds fields from the source buffer to the fields that already exist in the destination buffer.
 	  <BR>
@@ -582,17 +582,17 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fcpy</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Copy source to destination FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fcpy</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Copy source to destination UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fcpy (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fcpy (dest_buff#, source_buff#)</B></FONT><BR>
+      dest_buff#:  Input UBF/UBF32 destination buffer.
 	  <P>
-	  source_buff#:  Input FML/FML32 source buffer.
+	  source_buff#:  Input UBF/UBF32 source buffer.
       <P>
 	  Copy the contents of one fielded buffer to another fielded buffer
 	  <P>
@@ -602,14 +602,14 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fdel</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fdel</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Delete field occurrence.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fdel (buff#, Field_ID, occur)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fdel (buff#, Field_ID, occur)</B></FONT><BR>
       buff#:  The buffer reference number for the data value to be deleted.
 	  <P>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
@@ -623,15 +623,15 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fdelall</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Delete all field occurrences from FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fdelall</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Delete all field occurrences from UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fdelall (buff#, Field_ID)</B></FONT><BR>
-      buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fdelall (buff#, Field_ID)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
@@ -644,20 +644,20 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_ffprint</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Print fielded buffer to specified stream from FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ffprint</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Print fielded buffer to specified stream from UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.4.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_ffprint (buff#, fileref#)</B></FONT><BR>
-      buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ffprint (buff#, fileref#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 destination buffer.
 	  <P>
 	  fileref#:  A previously open PHP file reference.  This file reference can be of
 	  types File and Pipe.
 	  <P>
-	  Print contents of FML/FML buffer to file reference.
+	  Print contents of UBF/UBF buffer to file reference.
 	  <P>
 	  Return value is a long.
       <P>
@@ -665,15 +665,15 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fget</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve field occurrences from FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fget</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Retrieve field occurrences from UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.4.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fget (buff#, Field_ID, occur)</B></FONT><BR>
-      buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fget (buff#, Field_ID, occur)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
 	  for the corresponding Field ID.  The conversion is automatic.
@@ -685,20 +685,20 @@ particularly good references.</B></P>
 	  Return value is a long.
       <P>
       See BEA documentation for Fget for more information.
-	  <BR>Also see tux_fml2array to
-	  convert an entire FML/FML32 structure into a PHP array.</TD>
+	  <BR>Also see ndrx_ubf2array to
+	  convert an entire UBF/UBF32 structure into a PHP array.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fidxused</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fidxused</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return amount of space used by index.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fidxused (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fidxused (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
       <P>
 	  Indicates the current amount of space used by the buffer's index.
 	  <P>
@@ -708,15 +708,15 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fielded</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fielded</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return TRUE if buffer fielded.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fielded (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fielded (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
       <P>
 	  Used to test whether the specified buffer is fielded
 	  <P>
@@ -726,15 +726,15 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_findex</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Index fielded FML/FML32 buffer.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_findex</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Index fielded UBF/UBF32 buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_findex (buff#, intval)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_findex (buff#, intval)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
 	  <P>
 	  intval:  The indexing interval, that is, the ideal separation of indexed fields.
       <P>
@@ -746,17 +746,17 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fjoin</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Join source into destination FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fjoin</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Join source into destination UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fjoin (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fjoin (dest_buff#, source_buff#)</B></FONT><BR>
+      dest_buff#:  Input UBF/UBF32 destination buffer.
 	  <br>
-	  source_buff#:  Input FML/FML32 source buffer.
+	  source_buff#:  Input UBF/UBF32 source buffer.
       <P>
 	  Used to join two fielded buffers based on matching fieldid/occurrence
 	  <P>
@@ -766,18 +766,18 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fldid</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fldid</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Map field name to field identifier.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fldid (field_name, type)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fldid (field_name, type)</B></FONT><BR>
       field_name:  string containing field name to be mapped.
 	  <P>
-	  type:  one of two pre-defined constants (TUX_FML, or TUX_FML32) to indicate
-	  whether to perform the mapping using FML or FML32 functions.
+	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
+	  whether to perform the mapping using UBF or UBF32 functions.
       <P>
 	  Performs a runtime field mapping of the input field name to a Field ID.
 	  <P>
@@ -785,23 +785,23 @@ particularly good references.</B></P>
       <P>
       See BEA documentation for Fldid for more information.
 	  <P>
-	  The type parameter is required because the function does not take a FML buffer reference
+	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fldno</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fldno</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Map field identifier to field number.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fldno (field_id, type)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fldno (field_id, type)</B></FONT><BR>
       field_id:  numerical field id.
 	  <P>
-	  type:  one of two pre-defined constants (TUX_FML, or TUX_FML32) to indicate
-	  whether to perform the mapping using FML or FML32 functions.
+	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
+	  whether to perform the mapping using UBF or UBF32 functions.
       <P>
 	  Performs a runtime field mapping of the input field id to a field number.
 	  <P>
@@ -809,44 +809,44 @@ particularly good references.</B></P>
       <P>
       See BEA documentation for Fldno for more information.
 	  <P>
-	  The type parameter is required because the function does not take a FML buffer reference
+	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fldtype</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fldtype</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Map field identifier to field type.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fldtype (field_id, type)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fldtype (field_id, type)</B></FONT><BR>
       field_id:  numerical field id.
 	  <P>
-	  type:  one of two pre-defined constants (TUX_FML, or TUX_FML32) to indicate
-	  whether to perform the mapping using FML or FML32 functions.
+	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
+	  whether to perform the mapping using UBF or UBF32 functions.
       <P>
 	  Performs a runtime field mapping of the input field id to a field type (an integer)
-	  as defined in the tuxedo fml.h header file.
+	  as defined in the endurox ubf.h header file.
 	  <BR>
 	  Return value is a long.
       <P>
       See BEA documentation for fldtype for more information.
 	  <P>
-	  The type parameter is required because the function does not take a FML buffer reference
+	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_flen</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_flen</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return len of field occurrence in buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_flen (buff#, Field_ID, occur)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_flen (buff#, Field_ID, occur)</B></FONT><BR>
       buff#:  The buffer reference number.
 	  <P>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
@@ -860,20 +860,20 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fmkfldid</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fmkfldid</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Make a field identifier.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fmkfldid (data_type, field_num, type)</B></FONT><BR>
-      data_type:  numerical data type in fml.h.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fmkfldid (data_type, field_num, type)</B></FONT><BR>
+      data_type:  numerical data type in ubf.h.
 	  <br>
       field_num:  numerical field number.
 	  <P>
-	  type:  one of two pre-defined constants (TUX_FML, or TUX_FML32) to indicate
-	  whether to perform the mapping using FML or FML32 functions.
+	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
+	  whether to perform the mapping using UBF or UBF32 functions.
       <P>
 	  Creates a Field ID based on input values of data type and field number.
 	  <P>
@@ -881,22 +881,22 @@ particularly good references.</B></P>
       <P>
       See BEA documentation for Fmkfldid for more information.
 	  <P>
-	  The type parameter is required because the function does not take a FML buffer reference
+	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fmove</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fmove</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Move source fielded buffer to destination buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fmove (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Destination buffer, for this function its not required to be a FML buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fmove (dest_buff#, source_buff#)</B></FONT><BR>
+      dest_buff#:  Destination buffer, for this function its not required to be a UBF buffer.
 	  <P>
-	  source_buff#:  Input FML/FML32 source buffer.
+	  source_buff#:  Input UBF/UBF32 source buffer.
       <P>
 	  Copy the contents of one fielded buffer to another.
 	  <P>
@@ -906,18 +906,18 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fname</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fname</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Map field identifier to field name.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fname (field_id, type)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fname (field_id, type)</B></FONT><BR>
       field_id:  numerical field id.
 	  <P>
-	  type:  one of two pre-defined constants (TUX_FML, or TUX_FML32) to indicate
-	  whether to perform the mapping using FML or FML32 functions.
+	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
+	  whether to perform the mapping using UBF or UBF32 functions.
       <P>
 	  Performs a runtime field mapping of the input field id to a field name.
 	  <P>
@@ -925,25 +925,25 @@ particularly good references.</B></P>
       <P>
       See BEA documentation for Fname for more information.
 	  <P>
-	  The type parameter is required because the function does not take a FML buffer reference
+	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fneeded</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fneeded</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Compute size needed for buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fneeded (fields, bytes, type)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fneeded (fields, bytes, type)</B></FONT><BR>
       fields:  number of fields.
 	  <P>
       bytes:  bytes of value space.
 	  <P>
-	  type:  one of two pre-defined constants (TUX_FML, or TUX_FML32) to indicate
-	  whether to perform the mapping using FML or FML32 functions.
+	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
+	  whether to perform the mapping using UBF or UBF32 functions.
       <P>
 	  Determine the space that must be allocated.
 	  <P>
@@ -951,20 +951,20 @@ particularly good references.</B></P>
       <P>
       See BEA documentation for Fneeded for more information.
 	  <P>
-	  The type parameter is required because the function does not take a FML buffer reference
+	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fnum</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Return count of all occurrences in FML/FML32 buffer.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fnum</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Return count of all occurrences in UBF/UBF32 buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fnum (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fnum (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
       <P>
       Returns the number of fields contained in the specified buffer.
 	  <P>
@@ -974,14 +974,14 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_foccur</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_foccur</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return count of field occurrence in buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_foccur (buff#, Field_ID)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_foccur (buff#, Field_ID)</B></FONT><BR>
       buff#:  The buffer reference number.
 	  <P>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
@@ -995,19 +995,19 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fojoin</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Outer join source into destination FML/FML32 buffers.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fojoin</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Outer join source into destination UBF/UBF32 buffers.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fojoin (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fojoin (dest_buff#, source_buff#)</B></FONT><BR>
+      dest_buff#:  Input UBF/UBF32 destination buffer.
 	  <P>
-	  source_buff#:  Input FML/FML32 source buffer.
+	  source_buff#:  Input UBF/UBF32 source buffer.
       <P>
-	  Similar to tux_join, but it keeps fields from the destination buffer, dest, 
+	  Similar to ndrx_join, but it keeps fields from the destination buffer, dest, 
 	  that have no corresponding fieldid/occurrence in the source buffer.
 	  <P>
 	  Return value is a long.
@@ -1016,14 +1016,14 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fpres</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fpres</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return TRUE if field occurrence in buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fpres (buff#, Field_ID, occur)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fpres (buff#, Field_ID, occur)</B></FONT><BR>
       buff#:  The buffer reference number.
 	  <P>
 	  field_id:  If numeric, the numerical field id for data to be added.  If string, the Field Name
@@ -1037,20 +1037,20 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_frstrindex</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Restore index in fielded FML/FML32 buffer.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_frstrindex</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Restore index in fielded UBF/UBF32 buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_frstrindex (buff#, numidx)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_frstrindex (buff#, numidx)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
 	  <P>
-	  numidx:  The return from the tux_funindex function.
+	  numidx:  The return from the ndrx_funindex function.
       <P>
 	  A fielded buffer that has been unindexed may be reindexed by either 
-	  calling tux_findex or tux_frstrindx
+	  calling ndrx_findex or ndrx_frstrindx
 	  <P>
 	  Return value is a long.
       <P>
@@ -1058,17 +1058,17 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fsizeof</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fsizeof</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return size of fielded buffer.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fsizeof (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fsizeof (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
       <P>
-	  Returns size of the fielded FML/FML32 buffer.
+	  Returns size of the fielded UBF/UBF32 buffer.
 	  <P>
 	  Return value is a long.
       <P>
@@ -1076,35 +1076,35 @@ particularly good references.</B></P>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fstrerror</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve FML error description.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fstrerror</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Retrieve UBF error description.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>	
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fstrerror (ferror)</B></FONT><BR>
-      ferror:  Value of internal FML variable "ferror".
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fstrerror (ferror)</B></FONT><BR>
+      ferror:  Value of internal UBF variable "ferror".
 	  <P>
 	  Returns a string containing the error description for ferror.
-	  ferror can be retrieved from the api function tux_get_ferror.
+	  ferror can be retrieved from the api function ndrx_get_ferror.
       <P>
       This function has no equivalent BEA function.</TD>
     </TR>
 
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_ftype</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ftype</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return string to type of field.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_ftype (field_id, type)</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_ftype (field_id, type)</B></FONT><BR>
       field_id:  numerical field id.
 	  <P>
-	  type:  one of two pre-defined constants (TUX_FML, or TUX_FML32) to indicate
-	  whether to perform the mapping using FML or FML32 functions.
+	  type:  one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to indicate
+	  whether to perform the mapping using UBF or UBF32 functions.
       <P>
 	  Returns a string containing the name of the type of a field, given a field identifier.
 	  <P>
@@ -1112,22 +1112,22 @@ particularly good references.</B></P>
       <P>
       See BEA documentation for ftype for more information.
 	  <P>
-	  The type parameter is required because the function does not take a FML buffer reference
+	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_funindex</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_funindex</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Discard index to fieded buffer..</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_funindex (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_funindex (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
       <P>
-	  Discards index to FML/FML32 fielded buffer.
+	  Discards index to UBF/UBF32 fielded buffer.
 	  <P>
 	  Return value is a long.
       <P>
@@ -1135,17 +1135,17 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_funused</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_funused</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return number of bytes not used in fieded buffer..</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_funused (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_funused (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
       <P>
-	  Returns the amount of space currently unused in the FML/FML32 fielded buffer.
+	  Returns the amount of space currently unused in the UBF/UBF32 fielded buffer.
 	  <P>
 	  Return value is a long.
       <P>
@@ -1153,17 +1153,17 @@ particularly good references.</B></P>
     </TR>
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fupdate</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Update destination FML/FML32 buffers with source.</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fupdate</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Update destination UBF/UBF32 buffers with source.</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fupdate (dest_buff#, source_buff#)</B></FONT><BR>
-      dest_buff#:  Input FML/FML32 destination buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fupdate (dest_buff#, source_buff#)</B></FONT><BR>
+      dest_buff#:  Input UBF/UBF32 destination buffer.
 	  <P>
-	  source_buff#:  Input FML/FML32 source buffer.
+	  source_buff#:  Input UBF/UBF32 source buffer.
       <P>
 	  Updates the destination buffer with the field values in the source buffer. 
 	  For fields that match on fieldid/occurrence, the field value is updated 
@@ -1180,17 +1180,17 @@ particularly good references.</B></P>
 
 
    <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_fused</B></TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_fused</B></TD>
       <TD bgcolor="#00cccc" id="API_DEF">Return number of bytes used in fieded buffer..</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_fused (buff#)</B></FONT><BR>
-      buff#:  Input FML/FML32 buffer.
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_fused (buff#)</B></FONT><BR>
+      buff#:  Input UBF/UBF32 buffer.
       <P>
-	  Returns the amount of space currently used in the FML/FML32 fielded buffer.
+	  Returns the amount of space currently used in the UBF/UBF32 fielded buffer.
 	  <P>
 	  Return value is a long.
       <P>
@@ -1198,18 +1198,18 @@ particularly good references.</B></P>
     </TR>
 	
     <TR>
-      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>tux_get_ferror</B></TD>
-      <TD bgcolor="#00cccc" id="API_DEF">Retrieve value of internal FML error variable ferror</TD>
+      <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_get_ferror</B></TD>
+      <TD bgcolor="#00cccc" id="API_DEF">Retrieve value of internal UBF error variable ferror</TD>
       <TD bgcolor="#00cccc" id="API_DEF">0.3.0</TD>
       <TD bgcolor="#00cccc" id="API_DEF">Tested</TD>
     </TR>
     <TR>
       <TD width="73"></TD>
-      <TD colspan="3" width="740"><FONT size="+1"><B>tux_get_ferror ()</B></FONT><BR>
+      <TD colspan="3" width="740"><FONT size="+1"><B>ndrx_get_ferror ()</B></FONT><BR>
       (No arguments)
 	  <P>
-	  Returns the value of the internal Tuxedo FML error variable "ferror".
-	  This value is normally used in tux_fstrerror to return a string description.
+	  Returns the value of the internal Endurox UBF error variable "ferror".
+	  This value is normally used in ndrx_fstrerror to return a string description.
       <P>
       This function has no equivalent BEA function.</TD>
     </TR>
@@ -1221,7 +1221,7 @@ particularly good references.</B></P>
       the module and should wherever you need the
       value. Using these constants will allow for
       easier migration as the API is evolving.</B><BR>
-      (Value as defined in Tuxedo .h header files
+      (Value as defined in Endurox .h header files
       or expected by functions)</TD>
     </TR>
     <TR>
@@ -1229,23 +1229,23 @@ particularly good references.</B></P>
       <TD colspan="3"></TD>
     </TR>
     <TR>
-      <TD>TUX_STRING </TD>
+      <TD>NDRX_STRING </TD>
       <TD colspan="3">Numerical value meaning STRING</TD>
     </TR>
     <TR>
-      <TD>TUX_CARRAY </TD>
+      <TD>NDRX_CARRAY </TD>
       <TD colspan="3">Numerical value meaning CARRAY</TD>
     </TR>
     <TR>
-      <TD>TUX_FML</TD>
-      <TD colspan="3">Numerical value meaning FML</TD>
+      <TD>NDRX_UBF</TD>
+      <TD colspan="3">Numerical value meaning UBF</TD>
     </TR>
     <TR>
-      <TD>TUX_FML32</TD>
-      <TD colspan="3">Numerical value meaning FML32</TD>
+      <TD>NDRX_UBF32</TD>
+      <TD colspan="3">Numerical value meaning UBF32</TD>
     </TR>
     <TR>
-      <TD>TUX_VIEW </TD>
+      <TD>NDRX_VIEW </TD>
       <TD colspan="3">Numerical value meaning VIEW</TD>
     </TR>
     <TR>
@@ -1253,27 +1253,27 @@ particularly good references.</B></P>
       <TD colspan="3"></TD>
     </TR>
     <TR>
-      <TD>TUX_TPNOTRAN </TD>
+      <TD>NDRX_TPNOTRAN </TD>
       <TD colspan="3">TPNOTRAN</TD>
     </TR>
     <TR>
-      <TD>TUX_TPNOCHANGE </TD>
+      <TD>NDRX_TPNOCHANGE </TD>
       <TD colspan="3">TPNOCHANGE</TD>
     </TR>
     <TR>
-      <TD>TUX_TPNOBLOCK </TD>
+      <TD>NDRX_TPNOBLOCK </TD>
       <TD colspan="3">TPNOBLOCK</TD>
     </TR>
     <TR>
-      <TD>TUX_TPNOTIME </TD>
+      <TD>NDRX_TPNOTIME </TD>
       <TD colspan="3">TPNOTIME</TD>
     </TR>
     <TR>
-      <TD>TUX_TPSIGRSTRT </TD>
+      <TD>NDRX_TPSIGRSTRT </TD>
       <TD colspan="3">TPSIGRSTRT</TD>
     </TR>
     <TR>
-      <TD>TUX_TPGETANY </TD>
+      <TD>NDRX_TPGETANY </TD>
       <TD colspan="3">TPGETANY</TD>
     </TR>
     <TR>
@@ -1281,131 +1281,131 @@ particularly good references.</B></P>
       <TD colspan="3"></TD>
     </TR>
     <TR>
-      <TD>TUX_TPMINVAL </TD>
+      <TD>NDRX_TPMINVAL </TD>
       <TD colspan="3">TPMINVAL</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEABORT </TD>
+      <TD>NDRX_TPEABORT </TD>
       <TD colspan="3">TPEABORT</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEBADDESC </TD>
+      <TD>NDRX_TPEBADDESC </TD>
       <TD colspan="3">TPEBADDESC</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEBLOCK </TD>
+      <TD>NDRX_TPEBLOCK </TD>
       <TD colspan="3">TPEBLOCK</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEINVAL</TD>
+      <TD>NDRX_TPEINVAL</TD>
       <TD colspan="3">TPEINVAL</TD>
     </TR>
     <TR>
-      <TD>TUX_TPELIMIT</TD>
+      <TD>NDRX_TPELIMIT</TD>
       <TD colspan="3">TPELIMIT</TD>
     </TR>
     <TR>
-      <TD>TUX_TPENOENT</TD>
+      <TD>NDRX_TPENOENT</TD>
       <TD colspan="3">TPENOENT</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEOS</TD>
+      <TD>NDRX_TPEOS</TD>
       <TD colspan="3">TPEOS</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEPERM</TD>
+      <TD>NDRX_TPEPERM</TD>
       <TD colspan="3">TPEPERM</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEPROTO</TD>
+      <TD>NDRX_TPEPROTO</TD>
       <TD colspan="3">TPEPROTO</TD>
     </TR>
     <TR>
-      <TD>TUX_TPESVCERR</TD>
+      <TD>NDRX_TPESVCERR</TD>
       <TD colspan="3">TPESVCERR</TD>
     </TR>
     <TR>
-      <TD>TUX_TPESVCFAIL</TD>
+      <TD>NDRX_TPESVCFAIL</TD>
       <TD colspan="3">TPESVCFAIL</TD>
     </TR>
     <TR>
-      <TD>TUX_TPESYSTEM</TD>
+      <TD>NDRX_TPESYSTEM</TD>
       <TD colspan="3">TPESYSTEM</TD>
     </TR>
     <TR>
-      <TD>TUX_TPETIME</TD>
+      <TD>NDRX_TPETIME</TD>
       <TD colspan="3">TPETIME</TD>
     </TR>
     <TR>
-      <TD>TUX_TPETRAN</TD>
+      <TD>NDRX_TPETRAN</TD>
       <TD colspan="3">TPETRAN</TD>
     </TR>
     <TR>
-      <TD>TUX_TPGOTSIG</TD>
+      <TD>NDRX_TPGOTSIG</TD>
       <TD colspan="3">TPGOTSIG</TD>
     </TR>
     <TR>
-      <TD>TUX_TPERMERR</TD>
+      <TD>NDRX_TPERMERR</TD>
       <TD colspan="3">TPERMERR</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEITYPE</TD>
+      <TD>NDRX_TPEITYPE</TD>
       <TD colspan="3">TPEITYPE</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEOTYPE </TD>
+      <TD>NDRX_TPEOTYPE </TD>
       <TD colspan="3">TPEOTYPE</TD>
     </TR>
     <TR>
-      <TD>TUX_TPERELEASE</TD>
+      <TD>NDRX_TPERELEASE</TD>
       <TD colspan="3">TPERELEASE</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEHAZARD</TD>
+      <TD>NDRX_TPEHAZARD</TD>
       <TD colspan="3">TPEHAZARD</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEHEURISTIC</TD>
+      <TD>NDRX_TPEHEURISTIC</TD>
       <TD colspan="3">TPEHEURISTIC</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEEVENT</TD>
+      <TD>NDRX_TPEEVENT</TD>
       <TD colspan="3">TPEEVENT</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEMATCH</TD>
+      <TD>NDRX_TPEMATCH</TD>
       <TD colspan="3">TPEMATCH</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEDIAGNOSTIC</TD>
+      <TD>NDRX_TPEDIAGNOSTIC</TD>
       <TD colspan="3">TPEDIAGNOSTIC</TD>
     </TR>
     <TR>
-      <TD>TUX_TPEMIB </TD>
+      <TD>NDRX_TPEMIB </TD>
       <TD colspan="3">TPEMIB</TD>
     </TR>
     <TR>
-      <TD>TUX_TPMAXVAL</TD>
+      <TD>NDRX_TPMAXVAL</TD>
       <TD colspan="3">TPMAXVAL</TD>
     </TR>
     <TR>
-      <TD>TUX_TPU_SIG</TD>
+      <TD>NDRX_TPU_SIG</TD>
       <TD colspan="3">TPU_SIG</TD>
     </TR>
     <TR>
-      <TD>TUX_TPU_DIP</TD>
+      <TD>NDRX_TPU_DIP</TD>
       <TD colspan="3">TPU_DIP</TD>
     </TR>
     <TR>
-      <TD>TUX_TPU_IGN</TD>
+      <TD>NDRX_TPU_IGN</TD>
       <TD colspan="3">TPU_IGN</TD>
     </TR>
     <TR>
-      <TD>TUX_TPSA_FASTPATH</TD>
+      <TD>NDRX_TPSA_FASTPATH</TD>
       <TD colspan="3">TPSA_FASTPATH</TD>
     </TR>
     <TR>
-      <TD>TUX_TPSA_PROTECTED</TD>
+      <TD>NDRX_TPSA_PROTECTED</TD>
       <TD colspan="3">TPSA_PROTECTED</TD>
     </TR>
   </TBODY>

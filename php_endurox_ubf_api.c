@@ -1,18 +1,18 @@
 /*
 	===============================================================|
-	|   PHP Tuxedo                                                 |
+	|   PHP Endurox                                                 |
 	|--------------------------------------------------------------|
-	|  php_tuxedo_fml_api.c                                        |
-	|    Raw Tuxedo FML entry points                               |
+	|  php_endurox_ubf_api.c                                        |
+	|    Raw Endurox UBF entry points                               |
 	===============================================================|
 */
-/* $Id: php_tuxedo_fml_api.c,v 1.12 2002/01/11 00:19:04 bfoddy Exp $ */
+/* $Id: php_endurox_ubf_api.c,v 1.12 2002/01/11 00:19:04 bfoddy Exp $ */
 
 
 /*
-	This file contains all the raw fml api function calls.
+	This file contains all the raw ubf api function calls.
 	
-	Most of these functions map 1 for 1 with the raw FML function calls.
+	Most of these functions map 1 for 1 with the raw UBF function calls.
 	Many of these functions can be categorized by the arguments they take.
 	Functions with the same or similar arguments often look very similar and
 	are grouped together to make it simplier to duplicate for the next function.
@@ -20,22 +20,21 @@
 */
 #include <stdlib.h>
 #include <string.h>
-/* include the tuxedo headers */
+/* include the endurox headers */
 #include <atmi.h>
-#include <fml.h>
-#include <fml32.h>
-#include <tx.h>
+#include <ubf.h>
+#include <ubf32.h>
 
 /* include standard php header */
 
 #include "php.h"
-#include "php_tuxedo.h"
+#include "php_endurox.h"
 #include "ext/standard/file.h"
 
-#if HAVE_TUXEDO
-#if (TUX_FML32 || TUX_FML)
+#if HAVE_ENDUROX
+#if (NDRX_UBF32 || NDRX_UBF)
 /* True globals, no need for thread safety */
-extern int tux_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
+extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
 
 
 /*
@@ -73,10 +72,10 @@ FLDID32 _get_arg_field_id (zval ** arg_field, int is32, int arg_no)
 	and don't offer much copy opportunity.
 ***********************************************/
 
-/* {{{ function tux_get_ferrno
+/* {{{ function ndrx_get_ferrno
 	function returns value of Ferror
 */
-ZEND_FUNCTION (tux_get_ferrno)
+ZEND_FUNCTION (ndrx_get_ferrno)
 {
 	if (ZEND_NUM_ARGS () != 0)
 	{
@@ -89,11 +88,11 @@ ZEND_FUNCTION (tux_get_ferrno)
 
 
 
-/* {{{ function tux_fstrerror
-	Function to return a string containing a tuxedo error description.
+/* {{{ function ndrx_fstrerror
+	Function to return a string containing a endurox error description.
 	Function accepts one argument, ferror.
 */
-ZEND_FUNCTION (tux_fstrerror)
+ZEND_FUNCTION (ndrx_fstrerror)
 {
 	zval **arg_ferrno;
 
@@ -115,20 +114,20 @@ ZEND_FUNCTION (tux_fstrerror)
 
 
 /*********************************************************
-		Functions that take only one FML buffer argument.
+		Functions that take only one UBF buffer argument.
 **********************************************************/
 
-/* {{{ function tux_Ffprintf
+/* {{{ function ndrx_Ffprintf
 	function calls Ffprintf
-	Accepts 1 argument, FML Resource#
+	Accepts 1 argument, UBF Resource#
 	
 	Returns int similar to fprintf.
 */
-ZEND_FUNCTION (tux_ffprintf)
+ZEND_FUNCTION (ndrx_ffprintf)
 {	
 	zval ** arg_buf_ref;
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	FILE * fp;
 	long ret_val;
 	int is32;
@@ -144,20 +143,20 @@ ZEND_FUNCTION (tux_ffprintf)
 	
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
 						arg_buf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 		
-	fp = fopen ("/tmp/php_tux.out", "a");
+	fp = fopen ("/tmp/php_ndrx.out", "a");
 
-	ret_val = IS32 (is32, Ffprint32 ((FBFR32*)fml_buf_res->buf, fp),
-						  Ffprint ((FBFR*)fml_buf_res->buf, fp));
+	ret_val = IS32 (is32, Ffprint32 ((FBFR32*)ubf_buf_res->buf, fp),
+						  Ffprint ((FBFR*)ubf_buf_res->buf, fp));
 						  
 	fclose (fp);
 
@@ -167,23 +166,23 @@ ZEND_FUNCTION (tux_ffprintf)
 
 
 
-/* {{{ function tux_fchksum
+/* {{{ function ndrx_fchksum
 	function takes one argument:
-	1.  FML buffer resource
+	1.  UBF buffer resource
 	
 	and returns the result from Fchksum(32).
 */
-ZEND_FUNCTION (tux_fchksum)
+ZEND_FUNCTION (ndrx_fchksum)
 {
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -193,352 +192,352 @@ ZEND_FUNCTION (tux_fchksum)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 	
-	RETURN_LONG (IS32(is32, Fchksum32 ((FBFR32*)fml_buf_res->buf), 
-							Fchksum((FBFR*)fml_buf_res->buf)));
+	RETURN_LONG (IS32(is32, Fchksum32 ((FBFR32*)ubf_buf_res->buf), 
+							Fchksum((FBFR*)ubf_buf_res->buf)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_fidxused
+/* {{{ function ndrx_fidxused
 	Accepts 1 argument, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	
 	Returns int fidxused
 */
-ZEND_FUNCTION (tux_fidxused)
+ZEND_FUNCTION (ndrx_fidxused)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fidxused32 ((FBFR32*)fml_buf_res->buf),
-							 Fidxused ((FBFR*) fml_buf_res->buf)));
+	RETURN_LONG (IS32 (is32, Fidxused32 ((FBFR32*)ubf_buf_res->buf),
+							 Fidxused ((FBFR*) ubf_buf_res->buf)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_fielded
+/* {{{ function ndrx_fielded
 	Accepts 1 argument, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	
 	Returns int fielded
 */
-ZEND_FUNCTION (tux_fielded)
+ZEND_FUNCTION (ndrx_fielded)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fielded32 ((FBFR32*)fml_buf_res->buf),
-							 Fielded ((FBFR*) fml_buf_res->buf)));
+	RETURN_LONG (IS32 (is32, Fielded32 ((FBFR32*)ubf_buf_res->buf),
+							 Fielded ((FBFR*) ubf_buf_res->buf)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_fnum
+/* {{{ function ndrx_fnum
 	Accepts 1 argument, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	
 	Returns int fnum
 */
-ZEND_FUNCTION (tux_fnum)
+ZEND_FUNCTION (ndrx_fnum)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fnum32 ((FBFR32*)fml_buf_res->buf),
-							 Fnum ((FBFR*) fml_buf_res->buf)));
+	RETURN_LONG (IS32 (is32, Fnum32 ((FBFR32*)ubf_buf_res->buf),
+							 Fnum ((FBFR*) ubf_buf_res->buf)));
 }
 /* }}} */
 
 
-/* {{{ function tux_fsizeof
+/* {{{ function ndrx_fsizeof
 	Accepts 1 argument, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	
 	Returns int fsizeof
 */
-ZEND_FUNCTION (tux_fsizeof)
+ZEND_FUNCTION (ndrx_fsizeof)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fsizeof32 ((FBFR32*)fml_buf_res->buf),
-							 Fsizeof ((FBFR*) fml_buf_res->buf)));
+	RETURN_LONG (IS32 (is32, Fsizeof32 ((FBFR32*)ubf_buf_res->buf),
+							 Fsizeof ((FBFR*) ubf_buf_res->buf)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_funindex
+/* {{{ function ndrx_funindex
 	Accepts 1 argument, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	
 	Returns int funindex
 */
-ZEND_FUNCTION (tux_funindex)
+ZEND_FUNCTION (ndrx_funindex)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Funindex32 ((FBFR32*)fml_buf_res->buf),
-							 Funindex ((FBFR*) fml_buf_res->buf)));
+	RETURN_LONG (IS32 (is32, Funindex32 ((FBFR32*)ubf_buf_res->buf),
+							 Funindex ((FBFR*) ubf_buf_res->buf)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_funused
+/* {{{ function ndrx_funused
 	Accepts 1 argument, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	
 	Returns int funused
 */
-ZEND_FUNCTION (tux_funused)
+ZEND_FUNCTION (ndrx_funused)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Funused32 ((FBFR32*)fml_buf_res->buf),
-							 Funused ((FBFR*) fml_buf_res->buf)));
+	RETURN_LONG (IS32 (is32, Funused32 ((FBFR32*)ubf_buf_res->buf),
+							 Funused ((FBFR*) ubf_buf_res->buf)));
 }
 /* }}} */
 
 
 
 
-/* {{{ function tux_fused
+/* {{{ function ndrx_fused
 	Accepts 1 argument, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	
 	Returns int fused
 */
-ZEND_FUNCTION (tux_fused)
+ZEND_FUNCTION (ndrx_fused)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, 
-			&arg_fml_ref)              != SUCCESS))
+			&arg_ubf_ref)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fused32 ((FBFR32*)fml_buf_res->buf),
-							 Fused ((FBFR*) fml_buf_res->buf)));
+	RETURN_LONG (IS32 (is32, Fused32 ((FBFR32*)ubf_buf_res->buf),
+							 Fused ((FBFR*) ubf_buf_res->buf)));
 }
 /* }}} */
 
 
 /***********************************************************
-	Functions that take only 2 FML arguments
+	Functions that take only 2 UBF arguments
 ************************************************************/
 
-/* {{{ function tux_fcmp
+/* {{{ function ndrx_fcmp
 	function takes two argument:
-	1.  FML buffer resource
-	2.  FML buffer resource
+	1.  UBF buffer resource
+	2.  UBF buffer resource
 	
 	and returns the result from Fcmp(32).
 */
-ZEND_FUNCTION (tux_fcmp)
+ZEND_FUNCTION (ndrx_fcmp)
 {
-	zval ** arg_fml_ref1;
-	zval ** arg_fml_ref2;
+	zval ** arg_ubf_ref1;
+	zval ** arg_ubf_ref2;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res1;
-	tux_tpalloc_buf_type * fml_buf_res2;
+	ndrx_tpalloc_buf_type * ubf_buf_res1;
+	ndrx_tpalloc_buf_type * ubf_buf_res2;
 	int is32_1, is32_2;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref1,
-			&arg_fml_ref2)              != SUCCESS))
+			&arg_ubf_ref1,
+			&arg_ubf_ref2)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -548,64 +547,64 @@ ZEND_FUNCTION (tux_fcmp)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res1, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref1, 
+						ubf_buf_res1, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref1, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res2, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref2, 
+						ubf_buf_res2, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref2, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32_1 = _tux_is_fml_type (fml_buf_res1->type)) == -1)
+	if ((is32_1 = _ndrx_is_ubf_type (ubf_buf_res1->type)) == -1)
 		RETURN_LONG (-1);
 	
-	if ((is32_2 = _tux_is_fml_type (fml_buf_res2->type)) == -1)
+	if ((is32_2 = _ndrx_is_ubf_type (ubf_buf_res2->type)) == -1)
 		RETURN_LONG (-1);
 
 	if (is32_1 != is32_2)
 	{
-		zend_error (E_WARNING, "Attemping to compare different FML buffer types");
+		zend_error (E_WARNING, "Attemping to compare different UBF buffer types");
 		RETURN_LONG (-1);
 	}
 	
-	RETURN_LONG (IS32(is32_1, Fcmp32 ((FBFR32*)fml_buf_res1->buf, (FBFR32*)fml_buf_res2->buf), 
-							Fcmp((FBFR*)fml_buf_res1->buf, (FBFR*)fml_buf_res2->buf)));
+	RETURN_LONG (IS32(is32_1, Fcmp32 ((FBFR32*)ubf_buf_res1->buf, (FBFR32*)ubf_buf_res2->buf), 
+							Fcmp((FBFR*)ubf_buf_res1->buf, (FBFR*)ubf_buf_res2->buf)));
 }
 /* }}} */
 
 
-/* {{{ function tux_fconcat
+/* {{{ function ndrx_fconcat
 	function takes two argument:
-	1.  FML buffer resource destination
-	2.  FML buffer resource source
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
 	
 	and returns the result from Fconcat(32).
 */
-ZEND_FUNCTION (tux_fconcat)
+ZEND_FUNCTION (ndrx_fconcat)
 {
-	zval ** arg_fml_ref_d;
-	zval ** arg_fml_ref_s;
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res_d;
-	tux_tpalloc_buf_type * fml_buf_res_s;
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
 	int is32_d, is32_s;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref_d,
-			&arg_fml_ref_s)              != SUCCESS))
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -615,66 +614,66 @@ ZEND_FUNCTION (tux_fconcat)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_d, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_d, 
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_s, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_s, 
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32_d = _tux_is_fml_type (fml_buf_res_d->type)) == -1)
+	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
 		RETURN_LONG (-1);
 	
-	if ((is32_s = _tux_is_fml_type (fml_buf_res_s->type)) == -1)
+	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
 		RETURN_LONG (-1);
 
 	if (is32_d != is32_s)
 	{
-		zend_error (E_WARNING, "Attemping to copy different FML buffer types");
+		zend_error (E_WARNING, "Attemping to copy different UBF buffer types");
 		RETURN_LONG (-1);
 	}
 	
-	RETURN_LONG (IS32(is32_d, Fconcat32 ((FBFR32*)fml_buf_res_d->buf, (FBFR32*)fml_buf_res_s->buf), 
-							Fconcat((FBFR*)fml_buf_res_d->buf, (FBFR*)fml_buf_res_s->buf)));
+	RETURN_LONG (IS32(is32_d, Fconcat32 ((FBFR32*)ubf_buf_res_d->buf, (FBFR32*)ubf_buf_res_s->buf), 
+							Fconcat((FBFR*)ubf_buf_res_d->buf, (FBFR*)ubf_buf_res_s->buf)));
 }
 /* }}} */
 
 
 
 
-/* {{{ function tux_fcpy
+/* {{{ function ndrx_fcpy
 	function takes two argument:
-	1.  FML buffer resource destination
-	2.  FML buffer resource source
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
 	
 	and returns the result from Fcpy(32).
 */
-ZEND_FUNCTION (tux_fcpy)
+ZEND_FUNCTION (ndrx_fcpy)
 {
-	zval ** arg_fml_ref_d;
-	zval ** arg_fml_ref_s;
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res_d;
-	tux_tpalloc_buf_type * fml_buf_res_s;
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
 	int is32_d, is32_s;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref_d,
-			&arg_fml_ref_s)              != SUCCESS))
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -684,65 +683,65 @@ ZEND_FUNCTION (tux_fcpy)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_d, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_d, 
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_s, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_s, 
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32_d = _tux_is_fml_type (fml_buf_res_d->type)) == -1)
+	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
 		RETURN_LONG (-1);
 	
-	if ((is32_s = _tux_is_fml_type (fml_buf_res_s->type)) == -1)
+	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
 		RETURN_LONG (-1);
 
 	if (is32_d != is32_s)
 	{
-		zend_error (E_WARNING, "Attemping to copy different FML buffer types");
+		zend_error (E_WARNING, "Attemping to copy different UBF buffer types");
 		RETURN_LONG (-1);
 	}
 	
-	RETURN_LONG (IS32(is32_d, Fcpy32 ((FBFR32*)fml_buf_res_d->buf, (FBFR32*)fml_buf_res_s->buf), 
-							Fcpy((FBFR*)fml_buf_res_d->buf, (FBFR*)fml_buf_res_s->buf)));
+	RETURN_LONG (IS32(is32_d, Fcpy32 ((FBFR32*)ubf_buf_res_d->buf, (FBFR32*)ubf_buf_res_s->buf), 
+							Fcpy((FBFR*)ubf_buf_res_d->buf, (FBFR*)ubf_buf_res_s->buf)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_fjoin
+/* {{{ function ndrx_fjoin
 	function takes two argument:
-	1.  FML buffer resource destination
-	2.  FML buffer resource source
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
 	
 	and returns the result from Fjoin(32).
 */
-ZEND_FUNCTION (tux_fjoin)
+ZEND_FUNCTION (ndrx_fjoin)
 {
-	zval ** arg_fml_ref_d;
-	zval ** arg_fml_ref_s;
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res_d;
-	tux_tpalloc_buf_type * fml_buf_res_s;
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
 	int is32_d, is32_s;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref_d,
-			&arg_fml_ref_s)              != SUCCESS))
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -752,68 +751,68 @@ ZEND_FUNCTION (tux_fjoin)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_d, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_d, 
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_s, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_s, 
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32_d = _tux_is_fml_type (fml_buf_res_d->type)) == -1)
+	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
 		RETURN_LONG (-1);
 	
-	if ((is32_s = _tux_is_fml_type (fml_buf_res_s->type)) == -1)
+	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
 		RETURN_LONG (-1);
 
 	if (is32_d != is32_s)
 	{
-		zend_error (E_WARNING, "Attemping to join different FML buffer types");
+		zend_error (E_WARNING, "Attemping to join different UBF buffer types");
 		RETURN_LONG (-1);
 	}
 	
-	RETURN_LONG (IS32(is32_d, Fjoin32 ((FBFR32*)fml_buf_res_d->buf, (FBFR32*)fml_buf_res_s->buf), 
-							Fjoin((FBFR*)fml_buf_res_d->buf, (FBFR*)fml_buf_res_s->buf)));
+	RETURN_LONG (IS32(is32_d, Fjoin32 ((FBFR32*)ubf_buf_res_d->buf, (FBFR32*)ubf_buf_res_s->buf), 
+							Fjoin((FBFR*)ubf_buf_res_d->buf, (FBFR*)ubf_buf_res_s->buf)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_fmove
+/* {{{ function ndrx_fmove
 	function takes two argument:
-	1.  FML buffer resource destination
-	2.  FML buffer resource source
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
 	
 	and returns the result from Fmove(32).
 	
 	CAREFULL::  This function has a slight modification to the norm
-	for these args because the destination is not required to be a FML Buf.
+	for these args because the destination is not required to be a UBF Buf.
 */
-ZEND_FUNCTION (tux_fmove)
+ZEND_FUNCTION (ndrx_fmove)
 {
-	zval ** arg_fml_ref_d;
-	zval ** arg_fml_ref_s;
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res_d;
-	tux_tpalloc_buf_type * fml_buf_res_s;
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
 	int is32_d, is32_s;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref_d,
-			&arg_fml_ref_s)              != SUCCESS))
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -823,30 +822,30 @@ ZEND_FUNCTION (tux_fmove)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_d, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_d, 
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_s, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_s, 
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	
-	if ((is32_s = _tux_is_fml_type (fml_buf_res_s->type)) == -1)
+	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
 		RETURN_LONG (-1);
 
 	
-	RETURN_LONG (IS32(is32_d, Fmove32 (fml_buf_res_d->buf, (FBFR32*)fml_buf_res_s->buf), 
-							Fmove(fml_buf_res_d->buf, (FBFR*)fml_buf_res_s->buf)));
+	RETURN_LONG (IS32(is32_d, Fmove32 (ubf_buf_res_d->buf, (FBFR32*)ubf_buf_res_s->buf), 
+							Fmove(ubf_buf_res_d->buf, (FBFR*)ubf_buf_res_s->buf)));
 }
 /* }}} */
 
@@ -854,28 +853,28 @@ ZEND_FUNCTION (tux_fmove)
 
 
 
-/* {{{ function tux_fojoin
+/* {{{ function ndrx_fojoin
 	function takes two argument:
-	1.  FML buffer resource destination
-	2.  FML buffer resource source
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
 	
 	and returns the result from Fojoin(32).
 */
-ZEND_FUNCTION (tux_fojoin)
+ZEND_FUNCTION (ndrx_fojoin)
 {
-	zval ** arg_fml_ref_d;
-	zval ** arg_fml_ref_s;
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res_d;
-	tux_tpalloc_buf_type * fml_buf_res_s;
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
 	int is32_d, is32_s;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref_d,
-			&arg_fml_ref_s)              != SUCCESS))
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -885,66 +884,66 @@ ZEND_FUNCTION (tux_fojoin)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_d, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_d, 
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_s, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_s, 
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32_d = _tux_is_fml_type (fml_buf_res_d->type)) == -1)
+	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
 		RETURN_LONG (-1);
 	
-	if ((is32_s = _tux_is_fml_type (fml_buf_res_s->type)) == -1)
+	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
 		RETURN_LONG (-1);
 
 	if (is32_d != is32_s)
 	{
-		zend_error (E_WARNING, "Attemping to outer join different FML buffer types");
+		zend_error (E_WARNING, "Attemping to outer join different UBF buffer types");
 		RETURN_LONG (-1);
 	}
 	
-	RETURN_LONG (IS32(is32_d, Fojoin32 ((FBFR32*)fml_buf_res_d->buf, (FBFR32*)fml_buf_res_s->buf), 
-							Fojoin((FBFR*)fml_buf_res_d->buf, (FBFR*)fml_buf_res_s->buf)));
+	RETURN_LONG (IS32(is32_d, Fojoin32 ((FBFR32*)ubf_buf_res_d->buf, (FBFR32*)ubf_buf_res_s->buf), 
+							Fojoin((FBFR*)ubf_buf_res_d->buf, (FBFR*)ubf_buf_res_s->buf)));
 }
 /* }}} */
 
 
 
 
-/* {{{ function tux_fupdate
+/* {{{ function ndrx_fupdate
 	function takes two argument:
-	1.  FML buffer resource destination
-	2.  FML buffer resource source
+	1.  UBF buffer resource destination
+	2.  UBF buffer resource source
 	
 	and returns the result from Fupdate(32).
 */
-ZEND_FUNCTION (tux_fupdate)
+ZEND_FUNCTION (ndrx_fupdate)
 {
-	zval ** arg_fml_ref_d;
-	zval ** arg_fml_ref_s;
+	zval ** arg_ubf_ref_d;
+	zval ** arg_ubf_ref_s;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res_d;
-	tux_tpalloc_buf_type * fml_buf_res_s;
+	ndrx_tpalloc_buf_type * ubf_buf_res_d;
+	ndrx_tpalloc_buf_type * ubf_buf_res_s;
 	int is32_d, is32_s;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref_d,
-			&arg_fml_ref_s)              != SUCCESS))
+			&arg_ubf_ref_d,
+			&arg_ubf_ref_s)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
@@ -954,38 +953,38 @@ ZEND_FUNCTION (tux_fupdate)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_d, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_d, 
+						ubf_buf_res_d, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_d, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res_s, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref_s, 
+						ubf_buf_res_s, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref_s, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32_d = _tux_is_fml_type (fml_buf_res_d->type)) == -1)
+	if ((is32_d = _ndrx_is_ubf_type (ubf_buf_res_d->type)) == -1)
 		RETURN_LONG (-1);
 	
-	if ((is32_s = _tux_is_fml_type (fml_buf_res_s->type)) == -1)
+	if ((is32_s = _ndrx_is_ubf_type (ubf_buf_res_s->type)) == -1)
 		RETURN_LONG (-1);
 
 	if (is32_d != is32_s)
 	{
-		zend_error (E_WARNING, "Attemping to outer join different FML buffer types");
+		zend_error (E_WARNING, "Attemping to outer join different UBF buffer types");
 		RETURN_LONG (-1);
 	}
 	
-	RETURN_LONG (IS32(is32_d, Fupdate32 ((FBFR32*)fml_buf_res_d->buf, (FBFR32*)fml_buf_res_s->buf), 
-							Fupdate((FBFR*)fml_buf_res_d->buf, (FBFR*)fml_buf_res_s->buf)));
+	RETURN_LONG (IS32(is32_d, Fupdate32 ((FBFR32*)ubf_buf_res_d->buf, (FBFR32*)ubf_buf_res_s->buf), 
+							Fupdate((FBFR*)ubf_buf_res_d->buf, (FBFR*)ubf_buf_res_s->buf)));
 }
 /* }}} */
 
@@ -993,31 +992,31 @@ ZEND_FUNCTION (tux_fupdate)
 
 
 /*********************************************************
-	Functions that take 2 args, an FML buffer and 
+	Functions that take 2 args, an UBF buffer and 
 	one other (usually long) arg.
 **********************************************************/
 
-/* {{{ function tux_fdelall
+/* {{{ function ndrx_fdelall
 	Accepts 2 argumens, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	2.  Fieldid
 	
 	Returns int fdelall.
 */
-ZEND_FUNCTION (tux_fdelall)
+ZEND_FUNCTION (ndrx_fdelall)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 	FLDID32 field_id;
 			
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_field)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
@@ -1025,15 +1024,15 @@ ZEND_FUNCTION (tux_fdelall)
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 /*
@@ -1044,33 +1043,33 @@ ZEND_FUNCTION (tux_fdelall)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fdelall32 ((FBFR32*)fml_buf_res->buf, (FLDID32) field_id),
-							 Fdelall ((FBFR*) fml_buf_res->buf, (FLDID) field_id)));
+	RETURN_LONG (IS32 (is32, Fdelall32 ((FBFR32*)ubf_buf_res->buf, (FLDID32) field_id),
+							 Fdelall ((FBFR*) ubf_buf_res->buf, (FLDID) field_id)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_findex
+/* {{{ function ndrx_findex
 	Accepts 2 argumens, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	2.  Index interval
 	
 	Returns int findex.
 */
-ZEND_FUNCTION (tux_findex)
+ZEND_FUNCTION (ndrx_findex)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_index_intvl;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_index_intvl)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
@@ -1080,46 +1079,46 @@ ZEND_FUNCTION (tux_findex)
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Findex32 ((FBFR32*)fml_buf_res->buf, (FLDOCC32)(*arg_index_intvl)->value.lval),
-							 Findex ((FBFR*) fml_buf_res->buf, (FLDOCC)(*arg_index_intvl)->value.lval)));
+	RETURN_LONG (IS32 (is32, Findex32 ((FBFR32*)ubf_buf_res->buf, (FLDOCC32)(*arg_index_intvl)->value.lval),
+							 Findex ((FBFR*) ubf_buf_res->buf, (FLDOCC)(*arg_index_intvl)->value.lval)));
 }
 /* }}} */
 
 
 
 
-/* {{{ function tux_frstrindex
+/* {{{ function ndrx_frstrindex
 	Accepts 2 argumens, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	2.  Index interval
 	
 	Returns int frstrindex.
 */
-ZEND_FUNCTION (tux_frstrindex)
+ZEND_FUNCTION (ndrx_frstrindex)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_index_intvl;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_index_intvl)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
@@ -1129,61 +1128,61 @@ ZEND_FUNCTION (tux_frstrindex)
 
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Frstrindex32 ((FBFR32*)fml_buf_res->buf, (FLDOCC32)(*arg_index_intvl)->value.lval),
-							 Frstrindex ((FBFR*) fml_buf_res->buf, (FLDOCC)(*arg_index_intvl)->value.lval)));
+	RETURN_LONG (IS32 (is32, Frstrindex32 ((FBFR32*)ubf_buf_res->buf, (FLDOCC32)(*arg_index_intvl)->value.lval),
+							 Frstrindex ((FBFR*) ubf_buf_res->buf, (FLDOCC)(*arg_index_intvl)->value.lval)));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_foccur
+/* {{{ function ndrx_foccur
 	Accepts 2 argumens, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	2.  Field ID
 	
 	Returns int findex.
 */
-ZEND_FUNCTION (tux_foccur)
+ZEND_FUNCTION (ndrx_foccur)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 	FLDID32 field_id;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_field)              != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 /*
@@ -1194,22 +1193,22 @@ ZEND_FUNCTION (tux_foccur)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Foccur32 ((FBFR32*)fml_buf_res->buf, (FLDID32) field_id),
-							 Foccur ((FBFR*) fml_buf_res->buf, (FLDID) field_id)));
+	RETURN_LONG (IS32 (is32, Foccur32 ((FBFR32*)ubf_buf_res->buf, (FLDID32) field_id),
+							 Foccur ((FBFR*) ubf_buf_res->buf, (FLDID) field_id)));
 }
 /* }}} */
 /***********************************************************
 	Functions that take a FieldID and a special passed buf type.
 ***************************************************************/
 
-/* {{{ function tux_fldid
+/* {{{ function ndrx_fldid
 	function takes two arguments:
 	1.  the field name 
-	2.  The FML / FML32 type (TUX_FML_BUF_TYPE, TUX_FML32_BUF_TYPE)
+	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the corresponding Field ID.
 */
-ZEND_FUNCTION (tux_fldid)
+ZEND_FUNCTION (ndrx_fldid)
 {
 	zval ** arg_field_name;
 	zval ** arg_buf_type;
@@ -1226,15 +1225,15 @@ ZEND_FUNCTION (tux_fldid)
 	convert_to_string_ex(arg_field_name);
 	convert_to_long_ex (arg_buf_type);
 	
-	if (((*arg_buf_type)->value.lval != TUX_FML_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != TUX_FML32_BUF_TYPE))
+	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
+		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
 	{
-		zend_error (E_WARNING, "Buffer type not a FML/FML32");
+		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
 		RETURN_LONG (-1);
 	}
 
 	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == TUX_FML32_BUF_TYPE),
+		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
 			Fldid32 ((*arg_field_name)->value.str.val),
 			Fldid ((*arg_field_name)->value.str.val)));
 }
@@ -1242,14 +1241,14 @@ ZEND_FUNCTION (tux_fldid)
 
 
 
-/* {{{ function tux_fldno
+/* {{{ function ndrx_fldno
 	function takes two arguments:
 	1.  the field id 
-	2.  The FML / FML32 type (TUX_FML_BUF_TYPE, TUX_FML32_BUF_TYPE)
+	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the corresponding Field Number.
 */
-ZEND_FUNCTION (tux_fldno)
+ZEND_FUNCTION (ndrx_fldno)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1266,15 +1265,15 @@ ZEND_FUNCTION (tux_fldno)
 	convert_to_long_ex (arg_field_id);
 	convert_to_long_ex (arg_buf_type);
 	
-	if (((*arg_buf_type)->value.lval != TUX_FML_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != TUX_FML32_BUF_TYPE))
+	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
+		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
 	{
-		zend_error (E_WARNING, "Buffer type not a FML/FML32");
+		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
 		RETURN_LONG (-1);
 	}
 
 	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == TUX_FML32_BUF_TYPE),
+		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
 			Fldno32 ((FLDID32) (*arg_field_id)->value.lval),
 			Fldno ((FLDID) (*arg_field_id)->value.lval)));
 }
@@ -1282,14 +1281,14 @@ ZEND_FUNCTION (tux_fldno)
 
 
 
-/* {{{ function tux_fldtype
+/* {{{ function ndrx_fldtype
 	function takes two arguments:
 	1.  the field id 
-	2.  The FML / FML32 type (TUX_FML_BUF_TYPE, TUX_FML32_BUF_TYPE)
+	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the result from Fldtype(32).
 */
-ZEND_FUNCTION (tux_fldtype)
+ZEND_FUNCTION (ndrx_fldtype)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1306,15 +1305,15 @@ ZEND_FUNCTION (tux_fldtype)
 	convert_to_long_ex (arg_field_id);
 	convert_to_long_ex (arg_buf_type);
 	
-	if (((*arg_buf_type)->value.lval != TUX_FML_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != TUX_FML32_BUF_TYPE))
+	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
+		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
 	{
-		zend_error (E_WARNING, "Buffer type not a FML/FML32");
+		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
 		RETURN_LONG (-1);
 	}
 
 	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == TUX_FML32_BUF_TYPE),
+		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
 			Fldtype32 ((FLDID32) (*arg_field_id)->value.lval),
 			Fldtype ((FLDID) (*arg_field_id)->value.lval)));
 }
@@ -1322,15 +1321,15 @@ ZEND_FUNCTION (tux_fldtype)
 
 
 
-/* {{{ function tux_fmkfldid
+/* {{{ function ndrx_fmkfldid
 	function takes three arguments:
-	1.  the data type from fml.h
+	1.  the data type from ubf.h
 	2.  The Field Number 
-	3.  The FML / FML32 type (TUX_FML_BUF_TYPE, TUX_FML32_BUF_TYPE)
+	3.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the result from Fmkfldid(32).
 */
-ZEND_FUNCTION (tux_fmkfldid)
+ZEND_FUNCTION (ndrx_fmkfldid)
 {
 	zval ** arg_data_type;
 	zval ** arg_field_num;
@@ -1350,15 +1349,15 @@ ZEND_FUNCTION (tux_fmkfldid)
 	convert_to_long_ex (arg_field_num);
 	convert_to_long_ex (arg_buf_type);
 	
-	if (((*arg_buf_type)->value.lval != TUX_FML_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != TUX_FML32_BUF_TYPE))
+	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
+		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
 	{
-		zend_error (E_WARNING, "Buffer type not a FML/FML32");
+		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
 		RETURN_LONG (-1);
 	}
 
 	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == TUX_FML32_BUF_TYPE),
+		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
 			Fmkfldid32 ((int) (*arg_data_type)->value.lval, (FLDID32) (*arg_field_num)->value.lval),
 			Fmkfldid ((int) (*arg_data_type)->value.lval, (FLDID) (*arg_field_num)->value.lval)));
 }
@@ -1368,14 +1367,14 @@ ZEND_FUNCTION (tux_fmkfldid)
 
 
 
-/* {{{ function tux_fname
+/* {{{ function ndrx_fname
 	function takes two arguments:
 	1.  the field id 
-	2.  The FML / FML32 type (TUX_FML_BUF_TYPE, TUX_FML32_BUF_TYPE)
+	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the result from Fname(32).
 */
-ZEND_FUNCTION (tux_fname)
+ZEND_FUNCTION (ndrx_fname)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1392,30 +1391,30 @@ ZEND_FUNCTION (tux_fname)
 	convert_to_long_ex (arg_field_id);
 	convert_to_long_ex (arg_buf_type);
 	
-	if (((*arg_buf_type)->value.lval != TUX_FML_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != TUX_FML32_BUF_TYPE))
+	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
+		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
 	{
-		zend_error (E_WARNING, "Buffer type not a FML/FML32");
+		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
 		RETURN_NULL ();
 	}
 
 	RETURN_STRING (
-		IS32 (((*arg_buf_type)->value.lval == TUX_FML32_BUF_TYPE),
+		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
 			Fname32 ((FLDID32) (*arg_field_id)->value.lval),
 			Fname ((FLDID) (*arg_field_id)->value.lval)), 1);
 }
 /* }}} */
 
 
-/* {{{ function tux_fneeded
+/* {{{ function ndrx_fneeded
 	function takes three arguments:
 	1.  the number of fields
 	2.  Amount of value space 
-	3.  The FML / FML32 type (TUX_FML_BUF_TYPE, TUX_FML32_BUF_TYPE)
+	3.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the result from Fneeded(32).
 */
-ZEND_FUNCTION (tux_fneeded)
+ZEND_FUNCTION (ndrx_fneeded)
 {
 	zval ** arg_fields;
 	zval ** arg_value_space;
@@ -1435,15 +1434,15 @@ ZEND_FUNCTION (tux_fneeded)
 	convert_to_long_ex (arg_value_space);
 	convert_to_long_ex (arg_buf_type);
 	
-	if (((*arg_buf_type)->value.lval != TUX_FML_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != TUX_FML32_BUF_TYPE))
+	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
+		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
 	{
-		zend_error (E_WARNING, "Buffer type not a FML/FML32");
+		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
 		RETURN_LONG (-1);
 	}
 
 	RETURN_LONG (
-		IS32 (((*arg_buf_type)->value.lval == TUX_FML32_BUF_TYPE),
+		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
 			Fneeded32 ((FLDOCC32) (*arg_fields)->value.lval, (FLDLEN) (*arg_value_space)->value.lval),
 			Fneeded ((FLDOCC) (*arg_fields)->value.lval, (FLDLEN) (*arg_value_space)->value.lval)));
 }
@@ -1451,14 +1450,14 @@ ZEND_FUNCTION (tux_fneeded)
 
 
 
-/* {{{ function tux_ftype
+/* {{{ function ndrx_ftype
 	function takes two arguments:
 	1.  the field id 
-	2.  The FML / FML32 type (TUX_FML_BUF_TYPE, TUX_FML32_BUF_TYPE)
+	2.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
 	and returns the result from Ftype(32).
 */
-ZEND_FUNCTION (tux_ftype)
+ZEND_FUNCTION (ndrx_ftype)
 {
 	zval ** arg_field_id;
 	zval ** arg_buf_type;
@@ -1475,15 +1474,15 @@ ZEND_FUNCTION (tux_ftype)
 	convert_to_long_ex (arg_field_id);
 	convert_to_long_ex (arg_buf_type);
 	
-	if (((*arg_buf_type)->value.lval != TUX_FML_BUF_TYPE) &&
-		((*arg_buf_type)->value.lval != TUX_FML32_BUF_TYPE))
+	if (((*arg_buf_type)->value.lval != NDRX_UBF_BUF_TYPE) &&
+		((*arg_buf_type)->value.lval != NDRX_UBF32_BUF_TYPE))
 	{
-		zend_error (E_WARNING, "Buffer type not a FML/FML32");
+		zend_error (E_WARNING, "Buffer type not a UBF/UBF32");
 		RETURN_NULL ();
 	}
 
 	RETURN_STRING (
-		IS32 (((*arg_buf_type)->value.lval == TUX_FML32_BUF_TYPE),
+		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
 			Ftype32 ((FLDID32) (*arg_field_id)->value.lval),
 			Ftype ((FLDID) (*arg_field_id)->value.lval)), 1);
 }
@@ -1492,33 +1491,33 @@ ZEND_FUNCTION (tux_ftype)
 
 
 /************************************************************
-	Functions taking 3+ arguments, a FML resource and two plus
+	Functions taking 3+ arguments, a UBF resource and two plus
 	other arguments.
 *************************************************************/
 
-/* {{{ function tux_fdel
+/* {{{ function ndrx_fdel
 	Accepts 3 argumens, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	2.  Fieldid
 	3.  Occurance.
 	
 	Returns int fdel.
 */
-ZEND_FUNCTION (tux_fdel)
+ZEND_FUNCTION (ndrx_fdel)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	zval ** arg_occ;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 	FLDID32 field_id;
 			
 	
 	if((ZEND_NUM_ARGS() != 3) || 
 		(zend_get_parameters_ex(3, 
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_field,
 			&arg_occ)              != SUCCESS))
 	{
@@ -1528,16 +1527,16 @@ ZEND_FUNCTION (tux_fdel)
 	convert_to_long_ex (arg_occ);
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 /*
@@ -1548,10 +1547,10 @@ ZEND_FUNCTION (tux_fdel)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fdel32 ((FBFR32*)fml_buf_res->buf, 
+	RETURN_LONG (IS32 (is32, Fdel32 ((FBFR32*)ubf_buf_res->buf, 
 									 (FLDID32) field_id,
 									 (FLDOCC32) (*arg_occ)->value.lval),
-							 Fdel   ((FBFR*) fml_buf_res->buf, 
+							 Fdel   ((FBFR*) ubf_buf_res->buf, 
 							 		 (FLDID) field_id,
 									 (FLDOCC) (*arg_occ)->value.lval)));
 }
@@ -1559,29 +1558,29 @@ ZEND_FUNCTION (tux_fdel)
 
 
 
-/* {{{ function tux_flen
+/* {{{ function ndrx_flen
 	Accepts 3 argumens, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	2.  Fieldid
 	3.  Occurance.
 	
 	Returns int flen
 */
-ZEND_FUNCTION (tux_flen)
+ZEND_FUNCTION (ndrx_flen)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	zval ** arg_occ;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 	FLDID32 field_id;
 		
 	
 	if((ZEND_NUM_ARGS() != 3) || 
 		(zend_get_parameters_ex(3, 
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_field,
 			&arg_occ)              != SUCCESS))
 	{
@@ -1591,16 +1590,16 @@ ZEND_FUNCTION (tux_flen)
 	convert_to_long_ex (arg_occ);
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 /*
@@ -1611,10 +1610,10 @@ ZEND_FUNCTION (tux_flen)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Flen32 ((FBFR32*)fml_buf_res->buf, 
+	RETURN_LONG (IS32 (is32, Flen32 ((FBFR32*)ubf_buf_res->buf, 
 									 (FLDID32) field_id,
 									 (FLDOCC32) (*arg_occ)->value.lval),
-							 Flen   ((FBFR*) fml_buf_res->buf, 
+							 Flen   ((FBFR*) ubf_buf_res->buf, 
 							 		 (FLDID) field_id,
 									 (FLDOCC) (*arg_occ)->value.lval)));
 }
@@ -1622,28 +1621,28 @@ ZEND_FUNCTION (tux_flen)
 
 
 
-/* {{{ function tux_fpres
+/* {{{ function ndrx_fpres
 	Accepts 3 argumens, 
-	1.  FML Resource#
+	1.  UBF Resource#
 	2.  Fieldid
 	3.  Occurance.
 	
 	Returns int fpres
 */
-ZEND_FUNCTION (tux_fpres)
+ZEND_FUNCTION (ndrx_fpres)
 {	
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	zval ** arg_occ;
 	
 
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 	FLDID32 field_id;
 	
 	if((ZEND_NUM_ARGS() != 3) || 
 		(zend_get_parameters_ex(3, 
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_field,
 			&arg_occ)              != SUCCESS))
 	{
@@ -1653,16 +1652,16 @@ ZEND_FUNCTION (tux_fpres)
 	convert_to_long_ex (arg_occ);
 	
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 /*
@@ -1673,33 +1672,33 @@ ZEND_FUNCTION (tux_fpres)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fpres32 ((FBFR32*)fml_buf_res->buf, 
+	RETURN_LONG (IS32 (is32, Fpres32 ((FBFR32*)ubf_buf_res->buf, 
 									 (FLDID32) field_id,
 									 (FLDOCC32) (*arg_occ)->value.lval),
-							 Fpres   ((FBFR*) fml_buf_res->buf, 
+							 Fpres   ((FBFR*) ubf_buf_res->buf, 
 							 		 (FLDID) field_id,
 									 (FLDOCC) (*arg_occ)->value.lval)));
 }
 /* }}} */
 
 
-/* {{{ function tux_fadd (ALIAS:  tux_fchg)
+/* {{{ function ndrx_fadd (ALIAS:  ndrx_fchg)
 	function takes three (or four) arguments:
-	1.  FML buffer resource
+	1.  UBF buffer resource
 	2.  Field ID
 	3.  data value
 	4.  (optional) the occurance value
 	
 	and returns the result from Fadd(32).
 */
-ZEND_FUNCTION (tux_fadd)
+ZEND_FUNCTION (ndrx_fadd)
 {
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	zval ** arg_data_val;
 	zval ** arg_occ_val;
 	
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 	FLDOCC32 occ = -1;
 	FLDID32 field_id;
@@ -1709,7 +1708,7 @@ ZEND_FUNCTION (tux_fadd)
 	{
 		case 3:
 			if (zend_get_parameters_ex (3, 
-						&arg_fml_ref, 
+						&arg_ubf_ref, 
 						&arg_field, 
 						&arg_data_val) !=  SUCCESS)
 				WRONG_PARAM_COUNT;
@@ -1717,7 +1716,7 @@ ZEND_FUNCTION (tux_fadd)
 			
 		case 4:
 			if (zend_get_parameters_ex (4, 
-						&arg_fml_ref, 
+						&arg_ubf_ref, 
 						&arg_field, 
 						&arg_data_val,
 						&arg_occ_val) !=  SUCCESS)
@@ -1737,16 +1736,16 @@ ZEND_FUNCTION (tux_fadd)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_LONG (-1);
 
 /*
@@ -1762,29 +1761,29 @@ ZEND_FUNCTION (tux_fadd)
 		its not the same its pretty easy to change it.
 */
 	
-	RETURN_LONG (_tux_fml_add (fml_buf_res, arg_data_val, field_id, occ));
+	RETURN_LONG (_ndrx_ubf_add (ubf_buf_res, arg_data_val, field_id, occ));
 }
 /* }}} */
 
 
-/* {{{ function tux_fget
+/* {{{ function ndrx_fget
 	function takes 2 or 3 arguments:
-	1.  FML buffer resource
+	1.  UBF buffer resource
 	2.  Field ID
 	3.  (optional) the occurrence value
 
 	returns the field value(LONG,DOUBLE,STRING, or FALSE)
 */
-ZEND_FUNCTION (tux_fget)
+ZEND_FUNCTION (ndrx_fget)
 {
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_field;
 	zval ** arg_occ_val;
 	int argc;
 	FLDID32 fldid;
 	int occ = 0;	/* first occurrence is default */
    
-	tux_tpalloc_buf_type *fml_buf_res;
+	ndrx_tpalloc_buf_type *ubf_buf_res;
 	int is32;
 	char *buf;
 	int buflen;
@@ -1798,7 +1797,7 @@ ZEND_FUNCTION (tux_fget)
 	argc = ZEND_NUM_ARGS();
 	if (argc < 2 || argc > 3 ||
 		zend_get_parameters_ex(argc,
-			&arg_fml_ref, &arg_field, &arg_occ_val) != SUCCESS) {
+			&arg_ubf_ref, &arg_field, &arg_occ_val) != SUCCESS) {
 		WRONG_PARAM_COUNT;
 	}
 
@@ -1806,15 +1805,15 @@ ZEND_FUNCTION (tux_fget)
         Now get the buffer from the argument.
     */
     ZEND_FETCH_RESOURCE(
-                        fml_buf_res,
-                        tux_tpalloc_buf_type *,
-                        arg_fml_ref,
+                        ubf_buf_res,
+                        ndrx_tpalloc_buf_type *,
+                        arg_ubf_ref,
                         -1,
-                        "Tuxedo tpalloc buffer",
-                        tux_rh_alloc_buffer);
+                        "Endurox tpalloc buffer",
+                        ndrx_rh_alloc_buffer);
 
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1) {
-		zend_error(E_WARNING, "resource is not fml type");
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1) {
+		zend_error(E_WARNING, "resource is not ubf type");
 		RETURN_FALSE;
 	}
 
@@ -1834,9 +1833,9 @@ ZEND_FUNCTION (tux_fget)
 	}
 
 	/* get length of the field value  for memory allocation */
-	buflen = IS32 (is32, Flen32((FBFR32 *)fml_buf_res->buf,
+	buflen = IS32 (is32, Flen32((FBFR32 *)ubf_buf_res->buf,
 								(FLDID32)fldid, (FLDOCC32)occ),
-						 Flen  ((FBFR *)fml_buf_res->buf,
+						 Flen  ((FBFR *)ubf_buf_res->buf,
 								(FLDID)fldid, (FLDOCC)occ));
 
 	if (buflen == -1)	/* not found the field occurrence */
@@ -1847,9 +1846,9 @@ ZEND_FUNCTION (tux_fget)
 		RETURN_FALSE;
 	}
 
-	rc = IS32 (is32, Fget32((FBFR32 *)fml_buf_res->buf,
+	rc = IS32 (is32, Fget32((FBFR32 *)ubf_buf_res->buf,
 							(FLDID32)fldid, (FLDOCC32)occ, buf, NULL),
-					 Fget  ((FBFR *)fml_buf_res->buf,
+					 Fget  ((FBFR *)ubf_buf_res->buf,
 							(FLDID)fldid, (FLDOCC)occ, buf, NULL));
 
 	if (rc == -1)
@@ -1888,23 +1887,23 @@ ZEND_FUNCTION (tux_fget)
 /* }}} */
 
 
-/* {{{ function tux_ffprint
+/* {{{ function ndrx_ffprint
 	function calls Ffprint
 	Acceps 2 or 3 arguments,
-		FML Resource#
+		UBF Resource#
 		output file path
 		(optional) file open mode ("a" is default)
 	Returns int similar to Ffprint.
 
 ZEND_FETCH_RESOURCE(fp, FILE *, zvalue, -1, "File-Handle", php_file_le_fopen());.
 */
-ZEND_FUNCTION (tux_ffprint)
+ZEND_FUNCTION (ndrx_ffprint)
 {
-	zval **arg_fml_ref;
+	zval **arg_ubf_ref;
 	zval **arg_file_ref;
 
 	int argc;
-	tux_tpalloc_buf_type *fml_buf_res;
+	ndrx_tpalloc_buf_type *ubf_buf_res;
 	int is32;
 	FILE *fp = NULL;
 	int rc, file_type;
@@ -1912,18 +1911,18 @@ ZEND_FUNCTION (tux_ffprint)
 	argc = ZEND_NUM_ARGS();
 	if (argc != 2 || 
 		(zend_get_parameters_ex(argc,
-		&arg_fml_ref, &arg_file_ref) != SUCCESS))
+		&arg_ubf_ref, &arg_file_ref) != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
 	}
 
-	ZEND_FETCH_RESOURCE(			/* fetch the Tuxedo resource */
-						fml_buf_res,
-						tux_tpalloc_buf_type *,
-						arg_fml_ref,
+	ZEND_FETCH_RESOURCE(			/* fetch the Endurox resource */
+						ubf_buf_res,
+						ndrx_tpalloc_buf_type *,
+						arg_ubf_ref,
 						-1,
-						"Tuxedo tpalloc buffer",
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer",
+						ndrx_rh_alloc_buffer);
 
 
 /*
@@ -1945,7 +1944,7 @@ ZEND_FUNCTION (tux_ffprint)
 	ZEND_VERIFY_RESOURCE(fp);
 
 
-	if ((is32 = _tux_is_fml_type(fml_buf_res->type)) == -1) {
+	if ((is32 = _ndrx_is_ubf_type(ubf_buf_res->type)) == -1) {
 		zend_error(E_WARNING, "argument 1 type is wrong.");
 		RETURN_LONG (-1);
 	}
@@ -1960,8 +1959,8 @@ ZEND_FUNCTION (tux_ffprint)
 		}
 #endif
 
-	rc = IS32 (is32, Ffprint32((FBFR32 *)fml_buf_res->buf, fp),
-					 Ffprint((FBFR *)fml_buf_res->buf, fp));
+	rc = IS32 (is32, Ffprint32((FBFR32 *)ubf_buf_res->buf, fp),
+					 Ffprint((FBFR *)ubf_buf_res->buf, fp));
 
 	RETURN_LONG (rc);
 }
@@ -1969,5 +1968,5 @@ ZEND_FUNCTION (tux_ffprint)
 
 
 #endif
-/*	end #if HAVE_TUXEDO */
+/*	end #if HAVE_ENDUROX */
 #endif

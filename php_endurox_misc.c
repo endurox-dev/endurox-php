@@ -1,12 +1,12 @@
 /*
 	===============================================================|
-	|   PHP Tuxedo                                                 |
+	|   PHP Endurox                                                 |
 	|--------------------------------------------------------------|
-	|  php_tuxedo_misc.c                                           |
+	|  php_endurox_misc.c                                           |
 	|    Misc functions used whereever                             |
 	===============================================================|
 */
-/* $Id: php_tuxedo_misc.c,v 1.4 2001/05/28 18:16:19 bfoddy Exp $ */
+/* $Id: php_endurox_misc.c,v 1.4 2001/05/28 18:16:19 bfoddy Exp $ */
 
 
 /*
@@ -14,27 +14,26 @@
 */
 #include <stdlib.h>
 #include <string.h>
-/* include the tuxedo headers */
+/* include the endurox headers */
 #include <atmi.h>
-#include <fml.h>
-#include <fml32.h>
-#include <tx.h>
+#include <ubf.h>
+#include <ubf32.h>
 
 /* include standard php header */
 
 #include "php.h"
-#include "php_tuxedo.h"
+#include "php_endurox.h"
 
-#if HAVE_TUXEDO
+#if HAVE_ENDUROX
 
 /* True globals, no need for thread safety */
-extern int tux_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
+extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
 
 
-char * _tux_type2string (long type)
+char * _ndrx_type2string (long type)
 {
-	static char * buf_types [TUX_NUM_BUF_TYPES] =
-		{"STRING", "CARRAY", "FML", "FML32", "VIEW" };
+	static char * buf_types [NDRX_NUM_BUF_TYPES] =
+		{"STRING", "CARRAY", "UBF", "UBF32", "VIEW" };
 		
 	return buf_types[type];
 }
@@ -42,22 +41,22 @@ char * _tux_type2string (long type)
 /*
 	We got to using this construct so often, I made it a function.
 */
-int _tux_is_fml_type (int type)
+int _ndrx_is_ubf_type (int type)
 {
 	int ret_val;
 	
 	switch (type)
 	{
-		case TUX_FML_BUF_TYPE:
+		case NDRX_UBF_BUF_TYPE:
 			ret_val = FALSE;
 			break;
 		
-		case TUX_FML32_BUF_TYPE:
+		case NDRX_UBF32_BUF_TYPE:
 			ret_val = TRUE;
 			break;
 			
 		default:
-			zend_error (E_WARNING, "Buffer type not FML / FML32");
+			zend_error (E_WARNING, "Buffer type not UBF / UBF32");
 			ret_val = -1;
 	}
 	
@@ -65,5 +64,5 @@ int _tux_is_fml_type (int type)
 }
 
 
-/*	end #if HAVE_TUXEDO */
+/*	end #if HAVE_ENDUROX */
 #endif

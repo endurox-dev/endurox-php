@@ -1,0 +1,786 @@
+ Home PageProject Site
+
+                                 PHP Endurox
+
+                                Function API
+
+NOTE: At this point in this products development cycle, it is assumed users
+have some understanding of basic Endurox client development. Many of these
+functions have a strong relationship to the original BEA Endurox API
+function. I recommend you where necessary refer to this documentation for
+additional information. BEA has their documentation online
+at:http://edocs.bea.com/endurox/ndrx65/index.htm. The Reference Material and
+Bookshelf are particularly good references.
+
+                         Function                                      Description                 Version        Status
+                                                                                                    Added
+ ndrx_array2ubf                                            Move array values into UBF             0.2.0        Tested
+                                                          ndrx_array2ubf (buffer #, array)
+                                                          buffer#: The Endurox buffer reference number for values to be
+                                                          stored in. Must be a valid UBF/UBF32 Endurox buffer.
+                                                          array: a 1 or 2 dimensional array to move the values from. The
+                                                          first dimension key should be the UBF/UBF32 Field names (a string)
+                                                          according to the Field Definition file. The second dimmension key
+                                                          (if present) will be taken as the FIELDID occurenence values,
+                                                          starting with 0. Skipped occurences result in a NULL UBF field id.
+
+                                                          Returns TRUE/FALSE
+
+                                                          Stores the values from the provided array into the destination
+                                                          UBF/UBF32 buffer. Values are placed into the UBF buffer with the
+                                                          Fchg Endurox API function. See the examples for a simple usage.
+
+                                                          This function has no single equivalent Endurox API function.
+                                                          See Also: ndrx_ubf2array, BEA Documentation of Fchg and related
+                                                          functions.
+ ndrx_ubf2array                                            Move UBF values into an array          0.2.0        Tested
+                                                          ndrx_ubf2array (buffer #, flag)
+                                                          buffer#: The Endurox buffer reference number for values to taken
+                                                          from. Must be a valid UBF/UBF32 Endurox buffer.
+
+                                                          flag: to indicate whether the primary index should be int or
+                                                          string They are set in a sequence of bits anded together.
+
+                                                          0 0 0 = Perform no index translation, multi-occurrence.
+                                                          0 0 1 = Store keys as the Field ID, coded same as 0.
+                                                          0 1 0 = Store keys as the Endurox Field Number value.
+                                                          1 0 0 = Store keys as the Field Name (String) value.
+
+                                                          Returns a new 1 or 2 dimensional array with values populated from
+                                                          the UBF/UBF32 buffer. The first dimension key should be the Field
+                                                          Number or UBF/UBF32 Field names (a string) according to the Field
+                                                          Definition file. The second dimmension key (if present) will be
+                                                          taken as the FIELDID occurenence values, starting with 0. Skipped
+                                                          occurences result in a NULL value.
+
+                                                          This function has no single equivalent Endurox API function.
+                                                          See Also: ndrx_array2ubf, BEA Documentation of Fnext and related
+                                                          functions.
+ ndrx_get_buf                                              Retrieve contents of buffer            0.1.0        Tested
+                                                          ndrx_get_buf (buffer #)
+                                                          buffer#: The Endurox buffer reference number.
+
+                                                          Returns contents of Endurox STRING or CARRAY buffer.
+
+                                                          This function has no equivalent BEA function because raw Endurox
+                                                          functions allow direct access to the buffer contents. Call this
+                                                          function after ndrx_tpcall (or tpacall) to get the contents in the
+                                                          buffer.
+
+                                                          See Also: ndrx_put_buf.
+ ndrx_get_tperrno                                          Retrieve contents of tperrno           0.1.0        Tested
+                                                          ndrx_get_tperrno ()
+
+                                                          Returns the value of the Endurox global variable tperrno, similar
+                                                          to the UNIX errno. Results are usually used in calls to
+                                                          ndrx_tpstrerror.
+
+                                                          See Also: ndrx_tpstrerror, BEA documentation.
+ ndrx_put_buf                                              Store value into Endurox buffer         0.1.0        Tested
+                                                          ndrx_put_buf (buffer #, data)
+                                                          buffer#: The Endurox buffer reference number.
+                                                          data: The contents to be placed into the buffer. Data is copied
+                                                          using binary safe memcpy.
+
+                                                          Return value: TRUE/FALSE.
+
+                                                          Places the contents of data into the Endurox buffer.
+
+                                                          See Also: ndrx_put_buf.
+ ndrx_tpabort                                              Abort a Endurox transaction.            0.1.0        Not Tested
+                                                          ndrx_tpabort ()
+
+                                                          Rollback a pending Endurox transaction.
+
+                                                          See Also: ndrx_tpcommit, ndrx_tpbegin, BEA Documentation
+ ndrx_tpalloc                                              Allocate a Endurox Buffer               0.1.0        Tested
+                                                          ndrx_tpalloc (type, sub_type, size)
+                                                          type: Predefined constant indicating the type of buffer to create
+                                                          sub_type: String indicating the subtype of buffer to create. Use
+                                                          "" for NULL value.
+                                                          size: Long value indicating the total size of the buffer to
+                                                          create.
+
+                                                          Return Value: Buffer Reference Number.
+                                                          Error Return: False
+                                                          Type Definitions:
+
+                                                          NDRX_STRING:
+                                                               Create a standard Endurox STRING buffer.
+                                                          NDRX_CARRAY
+                                                               Create a standard Endurox CARRAY buffer. Not fully tested.
+                                                          NDRX_UBF
+                                                               Create a Endurox fielded UBF buffer.
+                                                          NDRX_UBF32
+                                                               Create a Endurox fielded UBF32 buffer
+                                                          NDRX_VIEW
+                                                               Create a Endurox View buffer. Not tested
+
+                                                          See Also: ndrx_falloc, BEA Documentation
+
+ ndrx_tpacall                                              Send an allocated buffer async         0.1.0        Minimal
+                                                                                                              testing
+                                                          ndrx_tpacall (srvc, in_buf, flags)
+                                                          srvc: A string containing the name of the Endurox service to call.
+                                                          in_buf: Input buffer given to service.
+                                                          flags: Flags passed on to tpcall, see tpacall documentation.
+
+                                                          Return Value: Int cd. Value should be used in tpgetrply.
+                                                          Error Return: -1.
+
+                                                          Just like tpcall except call does not block for reply.
+
+                                                          See Also: ndrx_tpcall, BEA documentation.
+ ndrx_tpbegin                                              Start a Endurox transaction.            0.1.0        Not Tested
+                                                          ndrx_tpbegin ()
+
+                                                          Start a Endurox transaction.
+
+                                                          See Also: ndrx_tpcommit, ndrx_tpabort, BEA Documentation
+ ndrx_tpcall                                               Send an allocated buffer.              0.1.0        Tested
+                                                          ndrx_tpcall (srvc, in_buf, out_buf, flags)
+                                                          srvc: A string containing the name of the Endurox service to call.
+                                                          in_buf: Input buffer given to service.
+                                                          out_buf: Reply buffer service fills after execution.
+                                                          flags: Flags passed on to tpcall, see tpcall documentation.
+
+                                                          Return Value: Int equaling returns value of raw tpcall function.
+                                                          Error Return: -1.
+
+                                                          See Also: ndrx_tpacall, BEA documentation.
+ ndrx_tpclose                                              Close a Endurox session.                0.1.0        Tested
+                                                          ndrx_tpclose ()
+
+                                                          Closes current Endurox connection, direct call to Endurox tpclose
+                                                          function.
+
+                                                          See Also: BEA documentation.
+ ndrx_tpcommit                                             Commit a Endurox transaction.           0.1.0        Not Tested
+                                                          ndrx_tpcommit ()
+
+                                                          Commit a Endurox transaction.
+
+                                                          See Also: ndrx_tpabort, ndrx_tpbegin, BEA Documentation
+ ndrx_tpfree                                               Free a Endurox buffer.                  0.1.0        Tested
+                                                          ndrx_tpfree (buffer #)
+                                                          buffer#: The Endurox buffer reference number.
+
+                                                          Release resources and memory associated with a Endurox buffer.
+                                                          Function calls tpfree, then releases internal structure.
+                                                          All Endurox buffers are automatically freed at the end of the page
+                                                          processing.
+
+                                                          See Also: ndrx_tpalloc, BEA documentation.
+
+ ndrx_tpgetrply                                            Retrieve results from tpacall          0.1.0        Minimal
+                                                                                                              testing
+                                                          ndrx_tpgetrply (&cd, out_buf#, flags)
+                                                          &cd: Reference to int cd value. Value may be altered on return to
+                                                          contain cd from tpacall.
+                                                          out_buf#: Endurox reference number for results to be placed in.
+                                                          flags: Flags to be passed on to tpgetrply function.
+
+                                                          Return value: int return value from tpgetrply
+
+                                                          Retrieves results from completed tpacall and places results into
+                                                          out_buf..
+
+                                                          See Also: ndrx_tpacall, BEA documentation.
+ ndrx_tpinit                                               Open connection to Endurox              0.1.0        Tested
+                                                          ndrx_tpinit (username, clientname, password, flags)
+                                                          username: String containing the Endurox user name for this
+                                                          application.
+                                                          clientname: String containing the client identifier name.
+                                                          password: String containing the Endurox application password.
+                                                          flags: Long containing flags passed to tpinit function.
+
+                                                          Return value: return value of Endurox tpinit function.
+
+                                                          Initializes a Endurox connection. The groupname field passed to
+                                                          tpinit is currently set to
+                                                          NULL because we are using the Endurox Workstation Listener.
+
+                                                          See Also: ndrx_tpclose, BEA documentation.
+
+ ndrx_tpstrerror                                           Return error string                    0.1.0        Minimal
+                                                                                                              Testing
+                                                          ndrx_tpstrerror (tperror)
+                                                          tperror: Endurox error number usually returned from ndrx_get_tperrno
+
+                                                          Returns a string associated with the provided error number.
+
+                                                          See Also: ndrx_get_tperrno, BEA documentation.
+
+ ndrx_ndrxgetenv                                            Return Endurox environment variable     0.3.5        Tested
+                                                          ndrx_ndrxgetenv (variable)
+                                                          variable: A char string of the environment variable to return.
+
+                                                          Returns a binary safe string representing the environment
+                                                          variable.
+
+                                                          See Also: See Also: BEA documentation for ndrxgetenv.
+ ndrx_ndrxputenv                                            Set Endurox environment variable        0.3.5        Tested
+                                                          ndrx_ndrxputenv (variable, value)
+                                                          variable: A char string of the environment variable to return.
+                                                          value: A string value to set hte environment variable to.
+
+                                                          Returns TRUE/FALSE.
+
+                                                          See Also: BEA documentation for ndrxputenv.
+
+ ndrx_ndrxreadenv                                           Set Endurox environment variable from   0.3.5        Tested
+                                                          file
+                                                          ndrx_ndrxgetenv (file, label)
+                                                          file: absolute path name of file to extract environment variables
+                                                          from.
+                                                          label: section name.
+
+                                                          Returns TRUE/FALSE.
+
+                                                          See Also: BEA documentation for ndrxreadenv.
+ Low Level UBF/UBF32 Functions
+ Most of these UBF functions have one-for-one equivalents
+ to the raw Endurox UBF functions. Where possible, the
+ correct UBF/UBF32 calls are detected; however on some
+ calls this is not possible so you must provide a type
+ argument.
+
+ The list of these functions will likely grow in future
+ releases. I tried to pick out the functions that were
+ either very commonly used and/or with no equivalent
+ method already created. If you find a specific function
+ not listed here is needed, they can be created easily.
+ Send me an email.
+
+ NOTE: As of version 0.4.0, the following functions
+ (ndrx_fdelall, ndrx_foccur, ndrx_fdel, ndrx_flen, ndrx_fpres,
+ ndrx_fadd, and ndrx_fget) can take a Field Name string in
+ place of the Field ID parameter. If the provided
+ argument is a string (as defined in PHP) the fldid
+ function will be called to convert the string to its
+ Field ID before processing.
+ ndrx_fadd                                                 Add new field occurrence.              0.3.0        Tested
+                                                          ndrx_fadd (buff#, Field_ID, data, occur)
+                                                          buff#: The buffer reference number for the data value to be added.
+
+                                                          field_id: If numeric, the numerical field id for data to be added.
+                                                          If string, the Field Name for the corresponding Field ID. The
+                                                          conversion is automatic.
+
+                                                          data: Data value to be added. The type of data is determined by
+                                                          the Field_ID type given. The length of the data value is
+                                                          automatically determined by the type and PHP.
+
+                                                          occur: An optional field to allow the specification of a Field_ID
+                                                          specific occurrence. If the value is not specified, -1 is assumed
+                                                          which means to add the data as the next occurrence.
+
+                                                          Return value is a long.
+
+                                                          ndrx_fadd and ndrx_fchg are aliased to the same function code. The
+                                                          only difference between the two original functions is Fchg allowed
+                                                          the specification of an occurrence where Fadd did not.
+
+                                                          See BEA documentation for Fadd and Fchg for more information.
+ ndrx_fchg                                                 Add / change new field occurrence.     0.3.0        Tested
+                                                          See ndrx_fadd.
+ ndrx_fchksum                                              Compute checksum for fielded buffer.   0.3.0        Tested
+                                                          ndrx_fchksum (buff#)
+                                                          buff#: Input UBF/UBF32 buffer to compute checksum against.
+
+                                                          Performs a checksum against the input buffer. The stored checksum
+                                                          may be inspected by the receiving process to verify that the
+                                                          entire buffer was received.
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fchksum for more information.
+ ndrx_fcmp                                                 Compare two fielded UBF/UBF32 buffers. 0.3.0        Tested
+                                                          ndrx_fcmp (buff1#, buff2#)
+                                                          buff1#: Input UBF/UBF32 buffer to compare against.
+                                                          buff2#: Input UBF/UBF32 buffer to compare against.
+
+                                                          Compares the field identifiers and then the field values of two
+                                                          UBF buffers.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fcmp for more information.
+
+ ndrx_fconcat                                              Concatenate source and destination     0.3.0        Tested
+                                                          UBF/UBF32 buffers.
+                                                          ndrx_fconcat (dest_buff#, source_buff#)
+                                                          dest_buff#: Input UBF/UBF32 destination buffer.
+                                                          source_buff#: Input UBF/UBF32 source buffer.
+
+                                                          Adds fields from the source buffer to the fields that already
+                                                          exist in the destination buffer.
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fconcat for more information.
+
+ ndrx_fcpy                                                 Copy source to destination UBF/UBF32   0.3.0        Tested
+                                                          buffers.
+                                                          ndrx_fcpy (dest_buff#, source_buff#)
+                                                          dest_buff#: Input UBF/UBF32 destination buffer.
+
+                                                          source_buff#: Input UBF/UBF32 source buffer.
+
+                                                          Copy the contents of one fielded buffer to another fielded buffer
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fcpy for more information.
+ ndrx_fdel                                                 Delete field occurrence.               0.3.0        Tested
+                                                          ndrx_fdel (buff#, Field_ID, occur)
+                                                          buff#: The buffer reference number for the data value to be
+                                                          deleted.
+
+                                                          field_id: If numeric, the numerical field id for data to be added.
+                                                          If string, the Field Name for the corresponding Field ID. The
+                                                          conversion is automatic.
+
+                                                          occur: The Field_ID specific occurrence to be deleted.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fdel for more information.
+
+ ndrx_fdelall                                              Delete all field occurrences from      0.3.0        Tested
+                                                          UBF/UBF32 buffers.
+                                                          ndrx_fdelall (buff#, Field_ID)
+                                                          buff#: Input UBF/UBF32 destination buffer.
+                                                          field_id: If numeric, the numerical field id for data to be added.
+                                                          If string, the Field Name for the corresponding Field ID. The
+                                                          conversion is automatic.
+
+                                                          Deletes all occurrences of the specified field in the buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fdelall for more information.
+
+ ndrx_ffprint                                              Print fielded buffer to specified      0.4.0        Tested
+                                                          stream from UBF/UBF32 buffers.
+                                                          ndrx_ffprint (buff#, fileref#)
+                                                          buff#: Input UBF/UBF32 destination buffer.
+
+                                                          fileref#: A previously open PHP file reference. This file
+                                                          reference can be of types File and Pipe.
+
+                                                          Print contents of UBF/UBF buffer to file reference.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Ffprint for more information.
+
+ ndrx_fget                                                 Retrieve field occurrences from        0.4.0        Tested
+                                                          UBF/UBF32 buffers.
+                                                          ndrx_fget (buff#, Field_ID, occur)
+                                                          buff#: Input UBF/UBF32 destination buffer.
+                                                          field_id: If numeric, the numerical field id for data to be added.
+                                                          If string, the Field Name for the corresponding Field ID. The
+                                                          conversion is automatic.
+
+                                                          occur: The Field_ID specific occurrence to be retrieved.
+
+                                                          Deletes all occurrences of the specified field in the buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fget for more information.
+                                                          Also see ndrx_ubf2array to convert an entire UBF/UBF32 structure
+                                                          into a PHP array.
+ ndrx_fidxused                                             Return amount of space used by index.  0.3.0        Tested
+                                                          ndrx_fidxused (buff#)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          Indicates the current amount of space used by the buffer's index.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fidxused for more information.
+ ndrx_fielded                                              Return TRUE if buffer fielded.         0.3.0        Tested
+                                                          ndrx_fielded (buff#)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          Used to test whether the specified buffer is fielded
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fielded for more information.
+ ndrx_findex                                               Index fielded UBF/UBF32 buffer.        0.3.0        Tested
+                                                          ndrx_findex (buff#, intval)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          intval: The indexing interval, that is, the ideal separation of
+                                                          indexed fields.
+
+                                                          Explicitly to index a fielded buffer
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Findex for more information.
+
+ ndrx_fjoin                                                Join source into destination UBF/UBF32 0.3.0        Tested
+                                                          buffers.
+                                                          ndrx_fjoin (dest_buff#, source_buff#)
+                                                          dest_buff#: Input UBF/UBF32 destination buffer.
+                                                          source_buff#: Input UBF/UBF32 source buffer.
+
+                                                          Used to join two fielded buffers based on matching
+                                                          fieldid/occurrence
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fjoin for more information.
+ ndrx_fldid                                                Map field name to field identifier.    0.3.0        Tested
+                                                          ndrx_fldid (field_name, type)
+                                                          field_name: string containing field name to be mapped.
+
+                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          indicate whether to perform the mapping using UBF or UBF32
+                                                          functions.
+
+                                                          Performs a runtime field mapping of the input field name to a
+                                                          Field ID.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fldid for more information.
+
+                                                          The type parameter is required because the function does not take
+                                                          a UBF buffer reference so it doesn't know how to do the mapping.
+ ndrx_fldno                                                Map field identifier to field number.  0.3.0        Tested
+                                                          ndrx_fldno (field_id, type)
+                                                          field_id: numerical field id.
+
+                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          indicate whether to perform the mapping using UBF or UBF32
+                                                          functions.
+
+                                                          Performs a runtime field mapping of the input field id to a field
+                                                          number.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fldno for more information.
+
+                                                          The type parameter is required because the function does not take
+                                                          a UBF buffer reference so it doesn't know how to do the mapping.
+ ndrx_fldtype                                              Map field identifier to field type.    0.3.0        Tested
+                                                          ndrx_fldtype (field_id, type)
+                                                          field_id: numerical field id.
+
+                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          indicate whether to perform the mapping using UBF or UBF32
+                                                          functions.
+
+                                                          Performs a runtime field mapping of the input field id to a field
+                                                          type (an integer) as defined in the endurox ubf.h header file.
+                                                          Return value is a long.
+
+                                                          See BEA documentation for fldtype for more information.
+
+                                                          The type parameter is required because the function does not take
+                                                          a UBF buffer reference so it doesn't know how to do the mapping.
+
+ ndrx_flen                                                 Return len of field occurrence in      0.3.0        Tested
+                                                          buffer.
+                                                          ndrx_flen (buff#, Field_ID, occur)
+                                                          buff#: The buffer reference number.
+
+                                                          field_id: If numeric, the numerical field id for data to be added.
+                                                          If string, the Field Name for the corresponding Field ID. The
+                                                          conversion is automatic.
+
+                                                          occur: The Field_ID specific occurrence.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Flen for more information.
+ ndrx_fmkfldid                                             Make a field identifier.               0.3.0        Tested
+                                                          ndrx_fmkfldid (data_type, field_num, type)
+                                                          data_type: numerical data type in ubf.h.
+                                                          field_num: numerical field number.
+
+                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          indicate whether to perform the mapping using UBF or UBF32
+                                                          functions.
+
+                                                          Creates a Field ID based on input values of data type and field
+                                                          number.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fmkfldid for more information.
+
+                                                          The type parameter is required because the function does not take
+                                                          a UBF buffer reference so it doesn't know how to do the mapping.
+
+ ndrx_fmove                                                Move source fielded buffer to          0.3.0        Tested
+                                                          destination buffer.
+                                                          ndrx_fmove (dest_buff#, source_buff#)
+                                                          dest_buff#: Destination buffer, for this function its not required
+                                                          to be a UBF buffer.
+
+                                                          source_buff#: Input UBF/UBF32 source buffer.
+
+                                                          Copy the contents of one fielded buffer to another.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fmove for more information.
+ ndrx_fname                                                Map field identifier to field name.    0.3.0        Tested
+                                                          ndrx_fname (field_id, type)
+                                                          field_id: numerical field id.
+
+                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          indicate whether to perform the mapping using UBF or UBF32
+                                                          functions.
+
+                                                          Performs a runtime field mapping of the input field id to a field
+                                                          name.
+
+                                                          Return value is a string.
+
+                                                          See BEA documentation for Fname for more information.
+
+                                                          The type parameter is required because the function does not take
+                                                          a UBF buffer reference so it doesn't know how to do the mapping.
+ ndrx_fneeded                                              Compute size needed for buffer.        0.3.0        Tested
+                                                          ndrx_fneeded (fields, bytes, type)
+                                                          fields: number of fields.
+
+                                                          bytes: bytes of value space.
+
+                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          indicate whether to perform the mapping using UBF or UBF32
+                                                          functions.
+
+                                                          Determine the space that must be allocated.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fneeded for more information.
+
+                                                          The type parameter is required because the function does not take
+                                                          a UBF buffer reference so it doesn't know how to do the mapping.
+
+ ndrx_fnum                                                 Return count of all occurrences in     0.3.0        Tested
+                                                          UBF/UBF32 buffer.
+                                                          ndrx_fnum (buff#)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          Returns the number of fields contained in the specified buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fnum for more information.
+
+ ndrx_foccur                                               Return count of field occurrence in    0.3.0        Tested
+                                                          buffer.
+                                                          ndrx_foccur (buff#, Field_ID)
+                                                          buff#: The buffer reference number.
+
+                                                          field_id: If numeric, the numerical field id for data to be added.
+                                                          If string, the Field Name for the corresponding Field ID. The
+                                                          conversion is automatic.
+
+                                                          Return value is a long.
+
+                                                          Used to determine the number of occurrences of the field specified
+                                                          by fieldid.
+
+                                                          See BEA documentation for Foccur for more information.
+
+ ndrx_fojoin                                               Outer join source into destination     0.3.0        Tested
+                                                          UBF/UBF32 buffers.
+                                                          ndrx_fojoin (dest_buff#, source_buff#)
+                                                          dest_buff#: Input UBF/UBF32 destination buffer.
+
+                                                          source_buff#: Input UBF/UBF32 source buffer.
+
+                                                          Similar to ndrx_join, but it keeps fields from the destination
+                                                          buffer, dest, that have no corresponding fieldid/occurrence in the
+                                                          source buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fojoin for more information.
+
+ ndrx_fpres                                                Return TRUE if field occurrence in     0.3.0        Tested
+                                                          buffer.
+                                                          ndrx_fpres (buff#, Field_ID, occur)
+                                                          buff#: The buffer reference number.
+
+                                                          field_id: If numeric, the numerical field id for data to be added.
+                                                          If string, the Field Name for the corresponding Field ID. The
+                                                          conversion is automatic.
+
+                                                          occur: The Field_ID specific occurrence.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fpres for more information.
+
+ ndrx_frstrindex                                           Restore index in fielded UBF/UBF32     0.3.0        Tested
+                                                          buffer.
+                                                          ndrx_frstrindex (buff#, numidx)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          numidx: The return from the ndrx_funindex function.
+
+                                                          A fielded buffer that has been unindexed may be reindexed by
+                                                          either calling ndrx_findex or ndrx_frstrindx
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Frstrindex for more information.
+ ndrx_fsizeof                                              Return size of fielded buffer.         0.3.0        Tested
+                                                          ndrx_fsizeof (buff#)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          Returns size of the fielded UBF/UBF32 buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fsizeof for more information.
+ ndrx_fstrerror                                            Retrieve UBF error description.        0.3.0        Tested
+                                                          ndrx_fstrerror (ferror)
+                                                          ferror: Value of internal UBF variable "ferror".
+
+                                                          Returns a string containing the error description for ferror.
+                                                          ferror can be retrieved from the api function ndrx_get_ferror.
+
+                                                          This function has no equivalent BEA function.
+ ndrx_ftype                                                Return string to type of field.        0.3.0        Tested
+                                                          ndrx_ftype (field_id, type)
+                                                          field_id: numerical field id.
+
+                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          indicate whether to perform the mapping using UBF or UBF32
+                                                          functions.
+
+                                                          Returns a string containing the name of the type of a field, given
+                                                          a field identifier.
+
+                                                          Return value is a string.
+
+                                                          See BEA documentation for ftype for more information.
+
+                                                          The type parameter is required because the function does not take
+                                                          a UBF buffer reference so it doesn't know how to do the mapping.
+ ndrx_funindex                                             Discard index to fieded buffer..       0.3.0        Tested
+                                                          ndrx_funindex (buff#)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          Discards index to UBF/UBF32 fielded buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Funindex for more information.
+
+ ndrx_funused                                              Return number of bytes not used in     0.3.0        Tested
+                                                          fieded buffer..
+                                                          ndrx_funused (buff#)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          Returns the amount of space currently unused in the UBF/UBF32
+                                                          fielded buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Funused for more information.
+
+ ndrx_fupdate                                              Update destination UBF/UBF32 buffers   0.3.0        Tested
+                                                          with source.
+                                                          ndrx_fupdate (dest_buff#, source_buff#)
+                                                          dest_buff#: Input UBF/UBF32 destination buffer.
+
+                                                          source_buff#: Input UBF/UBF32 source buffer.
+
+                                                          Updates the destination buffer with the field values in the source
+                                                          buffer. For fields that match on fieldid/occurrence, the field
+                                                          value is updated in the destination buffer with the value in the
+                                                          source buffer. Fields in the destination buffer that have no
+                                                          corresponding field in the source buffer are left untouched.
+                                                          Fields in the source buffer that have no corresponding field in
+                                                          the destination buffer are added to the destination buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fupdate for more information.
+
+ ndrx_fused                                                Return number of bytes used in fieded  0.3.0        Tested
+                                                          buffer..
+                                                          ndrx_fused (buff#)
+                                                          buff#: Input UBF/UBF32 buffer.
+
+                                                          Returns the amount of space currently used in the UBF/UBF32
+                                                          fielded buffer.
+
+                                                          Return value is a long.
+
+                                                          See BEA documentation for Fused for more information.
+
+ ndrx_get_ferror                                           Retrieve value of internal UBF error   0.3.0        Tested
+                                                          variable ferror
+                                                          ndrx_get_ferror ()
+                                                          (No arguments)
+
+                                                          Returns the value of the internal Endurox UBF error variable
+                                                          "ferror". This value is normally used in ndrx_fstrerror to return a
+                                                          string description.
+
+                                                          This function has no equivalent BEA function.
+                                                          The following constants are predefine by the module and should
+ Constants                                                wherever you need the value. Using these constants will allow for
+ (Name)                                                   easier migration as the API is evolving.
+                                                          (Value as defined in Endurox .h header files or expected by
+                                                          functions)
+ Buffer Types
+ NDRX_STRING                                               Numerical value meaning STRING
+ NDRX_CARRAY                                               Numerical value meaning CARRAY
+ NDRX_UBF                                                  Numerical value meaning UBF
+ NDRX_UBF32                                                Numerical value meaning UBF32
+ NDRX_VIEW                                                 Numerical value meaning VIEW
+ Common FLAGS
+ NDRX_TPNOTRAN                                             TPNOTRAN
+ NDRX_TPNOCHANGE                                           TPNOCHANGE
+ NDRX_TPNOBLOCK                                            TPNOBLOCK
+ NDRX_TPNOTIME                                             TPNOTIME
+ NDRX_TPSIGRSTRT                                           TPSIGRSTRT
+ NDRX_TPGETANY                                             TPGETANY
+ Error Constants
+ NDRX_TPMINVAL                                             TPMINVAL
+ NDRX_TPEABORT                                             TPEABORT
+ NDRX_TPEBADDESC                                           TPEBADDESC
+ NDRX_TPEBLOCK                                             TPEBLOCK
+ NDRX_TPEINVAL                                             TPEINVAL
+ NDRX_TPELIMIT                                             TPELIMIT
+ NDRX_TPENOENT                                             TPENOENT
+ NDRX_TPEOS                                                TPEOS
+ NDRX_TPEPERM                                              TPEPERM
+ NDRX_TPEPROTO                                             TPEPROTO
+ NDRX_TPESVCERR                                            TPESVCERR
+ NDRX_TPESVCFAIL                                           TPESVCFAIL
+ NDRX_TPESYSTEM                                            TPESYSTEM
+ NDRX_TPETIME                                              TPETIME
+ NDRX_TPETRAN                                              TPETRAN
+ NDRX_TPGOTSIG                                             TPGOTSIG
+ NDRX_TPERMERR                                             TPERMERR
+ NDRX_TPEITYPE                                             TPEITYPE
+ NDRX_TPEOTYPE                                             TPEOTYPE
+ NDRX_TPERELEASE                                           TPERELEASE
+ NDRX_TPEHAZARD                                            TPEHAZARD
+ NDRX_TPEHEURISTIC                                         TPEHEURISTIC
+ NDRX_TPEEVENT                                             TPEEVENT
+ NDRX_TPEMATCH                                             TPEMATCH
+ NDRX_TPEDIAGNOSTIC                                        TPEDIAGNOSTIC
+ NDRX_TPEMIB                                               TPEMIB
+ NDRX_TPMAXVAL                                             TPMAXVAL
+ NDRX_TPU_SIG                                              TPU_SIG
+ NDRX_TPU_DIP                                              TPU_DIP
+ NDRX_TPU_IGN                                              TPU_IGN
+ NDRX_TPSA_FASTPATH                                        TPSA_FASTPATH
+ NDRX_TPSA_PROTECTED                                       TPSA_PROTECTED

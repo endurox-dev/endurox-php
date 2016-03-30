@@ -1,47 +1,46 @@
 /*
 	===============================================================|
-	|   PHP Tuxedo                                                 |
+	|   PHP Endurox                                                 |
 	|--------------------------------------------------------------|
-	|  php_tuxedo_arrayfml.c                                       |
-	|    Contains functions for the array to fml functions         |
+	|  php_endurox_arrayubf.c                                       |
+	|    Contains functions for the array to ubf functions         |
 	===============================================================|
 */
-/* $Id: php_tuxedo_arrayfml.c,v 1.6 2002/01/07 05:36:41 bfoddy Exp $ */
+/* $Id: php_endurox_arrayubf.c,v 1.6 2002/01/07 05:36:41 bfoddy Exp $ */
 
 
 #include <stdlib.h>
 #include <string.h>
-/* include the tuxedo headers */
+/* include the endurox headers */
 #include <atmi.h>
-#include <fml.h>
-#include <fml32.h>
-#include <tx.h>
+#include <ubf.h>
+#include <ubf32.h>
 
 /* include standard php header */
 
 #include "php.h"
-#include "php_tuxedo.h"
+#include "php_endurox.h"
 
-#if HAVE_TUXEDO
-#if (TUX_FML32 || TUX_FML)
+#if HAVE_ENDUROX
+#if (NDRX_UBF32 || NDRX_UBF)
 
 /* True globals, no need for thread safety */
-extern int tux_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
+extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
 
 
 
 /* 
-	ZEND_FUNCTION declarations located in php_tuxedo.h
+	ZEND_FUNCTION declarations located in php_endurox.h
 */
 
-/* {{{ function tux_falloc
+/* {{{ function ndrx_falloc
 	Function mimics falloc or falloc32.  Actually calls
 	Fneeded and Feeded32 then calls
-	_tux_alloc which does a tpalloc followed by a Finit.
+	_ndrx_alloc which does a tpalloc followed by a Finit.
 	
 	Returns reference to buffer.
 */
-ZEND_FUNCTION (tux_falloc)
+ZEND_FUNCTION (ndrx_falloc)
 {	
 	zval ** arg_buf_type;
 	zval ** arg_buf_fldocc;
@@ -65,9 +64,9 @@ ZEND_FUNCTION (tux_falloc)
 	convert_to_long_ex (arg_buf_fldlen);
 	
 /*
-		Check to see if its a FML or FML32.
+		Check to see if its a UBF or UBF32.
 */
-	if ((is32 = _tux_is_fml_type ((*arg_buf_type)->value.lval)) == -1)
+	if ((is32 = _ndrx_is_ubf_type ((*arg_buf_type)->value.lval)) == -1)
 		RETURN_NULL ();
 
 	
@@ -81,33 +80,33 @@ ZEND_FUNCTION (tux_falloc)
 		Now that we have the right size, call the generic alloc function
 		with the type and size.
 */
-	RETURN_RESOURCE (_tux_alloc ((*arg_buf_type)->value.lval, "", size_needed));
+	RETURN_RESOURCE (_ndrx_alloc ((*arg_buf_type)->value.lval, "", size_needed));
 }
 /* }}} */
 
 
 
-/* {{{ function tux_arrary2fml
+/* {{{ function ndrx_arrary2ubf
 	Function takes 2 arguments:
-		1.  The destination FML reference number 
+		1.  The destination UBF reference number 
 		2.  an array argument (possibly 2 dimensional)
-	and inserts values into a FML/FML32 buffer according to the
+	and inserts values into a UBF/UBF32 buffer according to the
 	index value.
 	
 	Design note:  I though some of making this function do a recursive call
-	to move through N layers of a array, but the FML buffer can only take
+	to move through N layers of a array, but the UBF buffer can only take
 	two dimensions so we will limit this function to 2 without recursion.
 	
 	Returns TRUE/FALSE.
 */
-ZEND_FUNCTION (tux_array2fml)
+ZEND_FUNCTION (ndrx_array2ubf)
 {
 	zval ** arg_buf_ref;
 	zval ** arg_src_array;
 
 	int is32;
 	
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	HashTable * primary_ht;
 	HashTable * secondary_ht;
 	zval **     primary_data;
@@ -133,12 +132,12 @@ ZEND_FUNCTION (tux_array2fml)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
 						arg_buf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 /*
 	Ok the plan of action...
 	Loop through the array element by element.
@@ -169,17 +168,17 @@ ZEND_FUNCTION (tux_array2fml)
 	zend_hash_internal_pointer_reset(*ht)  -- resets array pointer to start
 */
 
-	if (fml_buf_res->type == TUX_FML_BUF_TYPE)
+	if (ubf_buf_res->type == NDRX_UBF_BUF_TYPE)
 	{
 		is32 = FALSE;
 	}
-	else if (fml_buf_res->type == TUX_FML32_BUF_TYPE)
+	else if (ubf_buf_res->type == NDRX_UBF32_BUF_TYPE)
 	{
 		is32 = TRUE;
 	}
 	else
 	{
-		zend_error (E_WARNING, "Supplied buffer type is not FML/FML32");
+		zend_error (E_WARNING, "Supplied buffer type is not UBF/UBF32");
 		RETURN_FALSE;
 	}
 	
@@ -193,7 +192,7 @@ ZEND_FUNCTION (tux_array2fml)
 /*
 			First get the primary key value (could be int or string).
 */
-		if ((primary_key = _tux_get_fmlarray_key (primary_ht, is32)) == -1)
+		if ((primary_key = _ndrx_get_ubfarray_key (primary_ht, is32)) == -1)
 		{
 			RETURN_FALSE;
 		}
@@ -216,11 +215,11 @@ ZEND_FUNCTION (tux_array2fml)
 
 /*				zend_printf ("Inside zend_hash_get_cur_data array %d<br>", secondary_key);		*/
 
-				if ( ! _tux_fml_add (fml_buf_res, secondary_data, primary_key, secondary_key))
+				if ( ! _ndrx_ubf_add (ubf_buf_res, secondary_data, primary_key, secondary_key))
 				{
 					/* need more error handling here... 
 					   if we change the buffer, remember to write it back to the resource*/
-					zend_error (E_WARNING, "Adding FML field call failed");
+					zend_error (E_WARNING, "Adding UBF field call failed");
 					RETURN_FALSE;
 				}
 
@@ -230,11 +229,11 @@ ZEND_FUNCTION (tux_array2fml)
 		}
 		else		/* its a normal value of some type, add it*/
 		{
-			if ( ! _tux_fml_add (fml_buf_res, primary_data, primary_key, -1))
+			if ( ! _ndrx_ubf_add (ubf_buf_res, primary_data, primary_key, -1))
 			{
 					/* need more error handling here...  
 					   if we change the buffer, remember to write it back to the resource*/
-				zend_error (E_WARNING, "Adding FML field call failed");
+				zend_error (E_WARNING, "Adding UBF field call failed");
 				RETURN_FALSE;
 			}
 		}
@@ -252,7 +251,7 @@ ZEND_FUNCTION (tux_array2fml)
 	This function will take a hash pointer and a buffer type, and
 	return the type of the current key array.
 */
-long _tux_get_fmlarray_key (HashTable * ht, int is32)
+long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 {
 	long ret_val = 0;
 	char * str_index;
@@ -281,19 +280,19 @@ long _tux_get_fmlarray_key (HashTable * ht, int is32)
 
 
 /*
-	This function takes an long key (FLDID), a pointer to a tux_tpalloc_buf_type,
+	This function takes an long key (FLDID), a pointer to a ndrx_tpalloc_buf_type,
 	and a zval ** and inserts the data into the buffer by calling Fchg(32).
 
 	returns TRUE/FALSE.
 	
 	It has to vary exection depending by what type of value data points to,
-	and by what type of FML buf is.
+	and by what type of UBF buf is.
 
 	We call Fldtype to determine the type of field they gave us, and cast accordingly.
 
 	Fappend(FBFR *fbfr, FLDID fieldid, char *value, FLDLEN len)
 	
-	FML field types  -- fml.h  these are the same for FML32 also.
+	UBF field types  -- ubf.h  these are the same for UBF32 also.
 		#define FLD_SHORT       0        short int 
 		#define FLD_LONG        1        long int 
 		#define FLD_CHAR        2        character 
@@ -303,7 +302,7 @@ long _tux_get_fmlarray_key (HashTable * ht, int is32)
 		#define FLD_CARRAY      6        character array 
   
 */
-long _tux_fml_add (tux_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid32, FLDOCC32 occ32)
+long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid32, FLDOCC32 occ32)
 {
 /*
 		This is a function pointer, its name F_add does not imply it points to
@@ -320,7 +319,7 @@ long _tux_fml_add (tux_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid32,
 	double double_data;
 	
 	int ret_val;
-	int  is32 = ((buffer->type == TUX_FML32_BUF_TYPE) ? TRUE : FALSE);	
+	int  is32 = ((buffer->type == NDRX_UBF32_BUF_TYPE) ? TRUE : FALSE);	
 
 /*
 		First they passed us a fldid, find out what type it is.
@@ -397,12 +396,12 @@ long _tux_fml_add (tux_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid32,
 		
 		default:
 			zend_error (E_WARNING, "Somehow you have created a"
-				" Field ID type I don't know about, probably a new Tux version.");
+				" Field ID type I don't know about, probably a new Ndrx version.");
 			return FAILURE;
 	}
 	if (ret_val == -1)
 	{
-		zend_error (E_WARNING, "Failed to add field [%d] to FML buffer [%s]", 
+		zend_error (E_WARNING, "Failed to add field [%d] to UBF buffer [%s]", 
 			fldid32, IS32(is32, (char*)Fstrerror32(Ferror32), (char*)Fstrerror(Ferror)));
 	}
 	return ret_val;
@@ -411,21 +410,21 @@ long _tux_fml_add (tux_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid32,
 
 
 
-/* {{{ function tux_fml2array
+/* {{{ function ndrx_ubf2array
 	Function takes 2 arguments:
-		1.  The source FML reference number 
+		1.  The source UBF reference number 
 		2.  A flag to indicate whether the primary index should be int or string
 			They are set in a sequence of bits anded together.
 	
 			0 0 0  =  Perform no index translation, multi-occurrence.
 			0 0 1  =  Store keys as the Field ID, coded same as 0.
-			0 1 0  =  Store keys as the Tuxedo Field Number value.
+			0 1 0  =  Store keys as the Endurox Field Number value.
 			1 0 0  =  Store keys as the Field Name (String) value.
 
 	
 	Returns array, possibly 2 dimensional with second-D being occurrences.
 
-	Design:  Using Fnext(32) loop through the source FML(32) buffer field
+	Design:  Using Fnext(32) loop through the source UBF(32) buffer field
 	by field, occurrence by occurrence.  For each hit:
 	1.  Fnext points to the hit.
 	2.  Fnext stores info in value.
@@ -437,9 +436,9 @@ long _tux_fml_add (tux_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid32,
 	6.  On to the next value.
 	7.  Return the array ht at the end.
 */
-ZEND_FUNCTION (tux_fml2array)
+ZEND_FUNCTION (ndrx_ubf2array)
 {
-	zval ** arg_fml_ref;
+	zval ** arg_ubf_ref;
 	zval ** arg_index_flag;
 
 	FLDID fieldid;
@@ -457,7 +456,7 @@ ZEND_FUNCTION (tux_fml2array)
 	long array_key;     /* either the fieldid or occ for a 2-d */
 	char value[256];	/* a temp holding area */
 	char * copy_val;	/* a pointer to value usually, but not if too short */
-	tux_tpalloc_buf_type * fml_buf_res;
+	ndrx_tpalloc_buf_type * ubf_buf_res;
 	long fnext_ret;
 	zval *new_data;	/* a pointer to each new data element as allocated */
 	zval *d2_array;	/* pointer to an array, needed it its a multiple occurrence */
@@ -474,7 +473,7 @@ ZEND_FUNCTION (tux_fml2array)
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2,
-			&arg_fml_ref,
+			&arg_ubf_ref,
 			&arg_index_flag) != SUCCESS))
 	{
 		WRONG_PARAM_COUNT;
@@ -487,18 +486,18 @@ ZEND_FUNCTION (tux_fml2array)
 	*/
 
 	ZEND_FETCH_RESOURCE(
-						fml_buf_res, 
-						tux_tpalloc_buf_type *, 
-						arg_fml_ref, 
+						ubf_buf_res, 
+						ndrx_tpalloc_buf_type *, 
+						arg_ubf_ref, 
 						-1, 
-						"Tuxedo tpalloc buffer", 
-						tux_rh_alloc_buffer);
+						"Endurox tpalloc buffer", 
+						ndrx_rh_alloc_buffer);
 
 /*
-	we just retrieved the FML buffer, what type was it?
+	we just retrieved the UBF buffer, what type was it?
 	And set the function pointers we will need later on...
 */
-	if ((is32 = _tux_is_fml_type (fml_buf_res->type)) == -1)
+	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_NULL ();
 
 	
@@ -522,14 +521,14 @@ ZEND_FUNCTION (tux_fml2array)
 		
 		Main call... Fnext
 			A return of 1 is fine.
-			A return of 0 from Fnext is the end of the FML.
+			A return of 0 from Fnext is the end of the UBF.
 			A return of -1 is an error.
 */
 
 	while ((len = len32 = sizeof(value)) && 
 		   memset (value, 0, len) &&		/* zero out for new data */
-		   (fnext_ret = IS32 (is32, Fnext32 ((FBFR32*)fml_buf_res->buf, &fieldid32, &occ32, value, &len32),
-									Fnext ((FBFR*)fml_buf_res->buf, &fieldid, &occ, value, &len))))
+		   (fnext_ret = IS32 (is32, Fnext32 ((FBFR32*)ubf_buf_res->buf, &fieldid32, &occ32, value, &len32),
+									Fnext ((FBFR*)ubf_buf_res->buf, &fieldid, &occ, value, &len))))
 	{
 		copy_val = value;		/* re-init the copy_val pointer */
 		dupe_string_flag = 1;	/* normally we want to duplicate any strings */
@@ -553,11 +552,11 @@ ZEND_FUNCTION (tux_fml2array)
 				we can then use in Ffind.
 */
 
-				IS32 (is32, Fnext32 ((FBFR32*)fml_buf_res->buf, &fieldid32, &occ32, NULL, &len32),
-									Fnext ((FBFR*)fml_buf_res->buf, &fieldid, &occ, NULL, &len));
+				IS32 (is32, Fnext32 ((FBFR32*)ubf_buf_res->buf, &fieldid32, &occ32, NULL, &len32),
+									Fnext ((FBFR*)ubf_buf_res->buf, &fieldid, &occ, NULL, &len));
 
-				tmp_ptr = IS32(is32, Ffind32 ((FBFR32*)fml_buf_res->buf, fieldid32, occ32, &len32),
-							Ffind ((FBFR*) fml_buf_res->buf, fieldid, occ, &len));
+				tmp_ptr = IS32(is32, Ffind32 ((FBFR32*)ubf_buf_res->buf, fieldid32, occ32, &len32),
+							Ffind ((FBFR*) ubf_buf_res->buf, fieldid, occ, &len));
 							
 				if (tmp_ptr == NULL)
 				{
@@ -583,7 +582,7 @@ ZEND_FUNCTION (tux_fml2array)
 			}
 			else
 			{
-				zend_error (E_WARNING, "Failure getting next FML record [%s]",
+				zend_error (E_WARNING, "Failure getting next UBF record [%s]",
 						IS32(is32, (char*)Fstrerror32(Ferror32), (char*)Fstrerror(Ferror))); 
 				RETURN_FALSE;
 			}
@@ -597,8 +596,8 @@ ZEND_FUNCTION (tux_fml2array)
 /*
 				get the number of occurrences to expect.
 */
-			if ((cur_fieldid_occ = IS32(is32, Foccur32 ((FBFR32*)fml_buf_res->buf, fieldid32),
-											 Foccur ((FBFR*) fml_buf_res->buf, fieldid)))  <= 0)
+			if ((cur_fieldid_occ = IS32(is32, Foccur32 ((FBFR32*)ubf_buf_res->buf, fieldid32),
+											 Foccur ((FBFR*) ubf_buf_res->buf, fieldid)))  <= 0)
 			{
 				zend_error (E_WARNING, 
 					"Error determining number of occurrences for FLDID %d [%s]", 
@@ -622,8 +621,8 @@ ZEND_FUNCTION (tux_fml2array)
 				array_ht = HASH_OF(d2_array);	/* point us to the 2d array ht */
 
 
-				/*Update the return hash table with the FML info */
-				if (_tux_update_fml_zend_hash (
+				/*Update the return hash table with the UBF info */
+				if (_ndrx_update_ubf_zend_hash (
 						HASH_OF (return_value), 
 						IS32(is32, fieldid32, fieldid), 
 						&d2_array, 
@@ -687,16 +686,16 @@ ZEND_FUNCTION (tux_fml2array)
 				
 			default:
 				zend_error (E_WARNING, "Somehow you have created a"
-					" Field ID type I don't know about, probably a new Tux version.");
+					" Field ID type I don't know about, probably a new Ndrx version.");
 				RETURN_FALSE;
 		}
 		
 			/*
-			  Update the hash table with the FML info 
+			  Update the hash table with the UBF info 
 			  The conditional assignment overrides the use Fname flag if
 			  we are in the multiple occurrence loop
 			*/
-		if (_tux_update_fml_zend_hash (
+		if (_ndrx_update_ubf_zend_hash (
 				array_ht, 
 				array_key, 
 				&new_data, 
@@ -711,7 +710,7 @@ ZEND_FUNCTION (tux_fml2array)
 }
 
 
-long _tux_update_fml_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data, int is32, int flag)
+long _ndrx_update_ubf_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data, int is32, int flag)
 {
 	char * (*f_name) (long);	/*define a function pointer */
 	char * name;
@@ -723,7 +722,7 @@ long _tux_update_fml_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data, 
 	
 	0 0 0  =  Perform no index translation, multi-occurrence.
 	0 0 1  =  Store keys as the Field ID, coded same as 0.
-	0 1 0  =  Store keys as the Tuxedo Field Number value.
+	0 1 0  =  Store keys as the Endurox Field Number value.
 	1 0 0  =  Store keys as the Field Name (String) value.
 */				
 	if (flag & 2)		/* they want the Field Number */
@@ -768,5 +767,5 @@ long _tux_update_fml_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data, 
 	return TRUE;
 }
 #endif
-/*	end #if HAVE_TUXEDO */
+/*	end #if HAVE_ENDUROX */
 #endif

@@ -1,6 +1,6 @@
 # $Id: Makefile.in,v 1.1 2001/05/05 17:15:26 bfoddy Exp $
 
-LTLIBRARY_NAME    = libtuxedo.la
-LTLIBRARY_SOURCES = php_tuxedo.c php_tuxedo_arrayfml.c php_tuxedo_misc.c php_tuxedo_fml_api.c
+LTLIBRARY_NAME    = libendurox.la
+LTLIBRARY_SOURCES = php_endurox.c php_endurox_arrayubf.c php_endurox_misc.c php_endurox_ubf_api.c
 
 include $(top_srcdir)/build/dynlib.mk
