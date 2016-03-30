@@ -100,7 +100,7 @@ ZEND_FUNCTION (ndrx_bstrerror)
 
 	convert_to_long_ex(arg_ferrno);
 
-	RETURN_STRING (Bstrerror32 ((*arg_ferrno)->value.lval), 1);
+	RETURN_STRING (Bstrerror ((*arg_ferrno)->value.lval), 1);
 }
 /* }}} */
 
@@ -485,59 +485,6 @@ ZEND_FUNCTION (ndrx_bcpy)
 /* }}} */
 
 
-
-/* {{{ function ndrx_bjoin
-	function takes two argument:
-	1.  UBF buffer resource destination
-	2.  UBF buffer resource source
-	
-	and returns the result from Bjoin(32).
-*/
-ZEND_FUNCTION (ndrx_bjoin)
-{
-	zval ** arg_ubf_ref_d;
-	zval ** arg_ubf_ref_s;
-	
-
-	ndrx_tpalloc_buf_type * ubf_buf_res_d;
-	ndrx_tpalloc_buf_type * ubf_buf_res_s;
-		
-	
-	if((ZEND_NUM_ARGS() != 2) || 
-		(zend_get_parameters_ex(2, 
-			&arg_ubf_ref_d,
-			&arg_ubf_ref_s)              != SUCCESS))
-	{
-		WRONG_PARAM_COUNT;
-	}
-
-	/*
-		Now get the buffer from the argument.
-	*/
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_d, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_d, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-
-	ZEND_FETCH_RESOURCE(
-						ubf_buf_res_s, 
-						ndrx_tpalloc_buf_type *, 
-						arg_ubf_ref_s, 
-						-1, 
-						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
-
-	
-	RETURN_LONG (Bjoin((UBFH*)ubf_buf_res_d->buf, (UBFH*)ubf_buf_res_s->buf));
-}
-/* }}} */
-
-
 /* {{{ function ndrx_bupdate
 	function takes two argument:
 	1.  UBF buffer resource destination
@@ -553,8 +500,6 @@ ZEND_FUNCTION (ndrx_bupdate)
 
 	ndrx_tpalloc_buf_type * ubf_buf_res_d;
 	ndrx_tpalloc_buf_type * ubf_buf_res_s;
-	int is32_d, is32_s;
-		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
@@ -641,7 +586,7 @@ ZEND_FUNCTION (ndrx_bdelall)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (Bdelall((UBFH*)ubf_buf_res->buf, (BFLDID) field_id)));
+	RETURN_LONG (Bdelall((UBFH*)ubf_buf_res->buf, (BFLDID) field_id));
 }
 /* }}} */
 
@@ -660,8 +605,6 @@ ZEND_FUNCTION (ndrx_brstrindex)
 	
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	int is32;
-		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, 
@@ -684,7 +627,7 @@ ZEND_FUNCTION (ndrx_brstrindex)
 
 
 
-	RETURN_LONG (Brstrindex((UBFH*)ubf_buf_res->buf, (BFLDOCC32)(*arg_index_intvl)->value.lval));
+	RETURN_LONG (Brstrindex((UBFH*)ubf_buf_res->buf, (BFLDOCC)(*arg_index_intvl)->value.lval));
 }
 /* }}} */
 
@@ -850,15 +793,15 @@ ZEND_FUNCTION (ndrx_bfldtype)
 
 
 
-/* {{{ function ndrx_fmkbfldid
+/* {{{ function ndrx_bmkfldid
 	function takes three arguments:
 	1.  the data type from ubf.h
 	2.  The Field Number 
 	3.  The UBF / UBF32 type (NDRX_UBF_BUF_TYPE, NDRX_UBF32_BUF_TYPE)
 	
-	and returns the result from Fmkbfldid(32).
+	and returns the result from Bmkfldid(32).
 */
-ZEND_FUNCTION (ndrx_fmkbfldid)
+ZEND_FUNCTION (ndrx_bmkfldid)
 {
 	zval ** arg_data_type;
 	zval ** arg_field_num;
@@ -885,7 +828,7 @@ ZEND_FUNCTION (ndrx_fmkbfldid)
 		RETURN_LONG (-1);
 	}
 
-	RETURN_LONG (Fmkbfldid ((int) (*arg_data_type)->value.lval, (BFLDID) (*arg_field_num)->value.lval));
+	RETURN_LONG (Bmkfldid ((int) (*arg_data_type)->value.lval, (BFLDID) (*arg_field_num)->value.lval));
 }
 /* }}} */
 
@@ -1071,8 +1014,8 @@ ZEND_FUNCTION (ndrx_blen)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (Blen   ((UBFH*) ubf_buf_res->buf, (BFLDID) field_id,
-					(BFLDOCC) (*arg_occ)->value.lval)));
+	RETURN_LONG (Blen   ((UBFH*) ubf_buf_res->buf, (BFLDID) field_id,
+					(BFLDOCC) (*arg_occ)->value.lval));
 }
 /* }}} */
 
@@ -1148,7 +1091,7 @@ ZEND_FUNCTION (ndrx_badd)
 	zval ** arg_occ_val;
 	
 	ndrx_tpalloc_buf_type * ubf_buf_res;
-	BFLDOCC32 occ = -1;
+	BFLDOCC occ = -1;
 	BFLDID field_id;
 	
 
@@ -1254,7 +1197,7 @@ ZEND_FUNCTION (ndrx_bget)
                         "Endurox tpalloc buffer",
                         ndrx_rh_alloc_buffer);
 
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1) {
+	if ((_ndrx_is_ubf_type (ubf_buf_res->type)) == -1) {
 		zend_error(E_WARNING, "resource is not ubf type");
 		RETURN_FALSE;
 	}
@@ -1331,7 +1274,7 @@ ZEND_FUNCTION (ndrx_bget)
 		(optional) file open mode ("a" is default)
 	Returns int similar to Bfprint.
 
-ZEND_FETCH_RESOURCE(fp, FILE *, zvalue, -1, "File-Handle", php_file_le_fopen());.
+ZEND_FETCH_RESOURCE(fp, FILE *, zvalue, -1, "File-Handle", php_file_le_stream());.
 */
 ZEND_FUNCTION (ndrx_bfprint)
 {
@@ -1374,8 +1317,8 @@ ZEND_FUNCTION (ndrx_bfprint)
 						"File-Handle", 
 						&file_type,
 						2,				/* number of resource types to take */
-						php_file_le_fopen(),
-		  				php_file_le_popen());
+						php_file_le_stream(),
+		  				php_file_le_pstream());
 	ZEND_VERIFY_RESOURCE(fp);
 
 

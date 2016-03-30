@@ -358,19 +358,6 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See ATR Baltic documentation for Bisubf for more information.
- ndrx_bjoin                                                Join source into destination UBF/UBF32 0.3.0        Tested
-                                                          buffers.
-                                                          ndrx_bjoin (dest_buff#, source_buff#)
-                                                          dest_buff#: Input UBF/UBF32 destination buffer.
-                                                          source_buff#: Input UBF/UBF32 source buffer.
-
-                                                          Used to join two bisubf buffers based on matching
-                                                          fieldid/occurrence
-
-                                                          Return value is a long.
-
-                                                          See ATR Baltic documentation for Bjoin for more information.
  ndrx_bfldid                                                Map field name to field identifier.    0.3.0        Tested
                                                           ndrx_bfldid (field_name, type)
                                                           field_name: string containing field name to be mapped.
@@ -436,8 +423,8 @@ Bookshelf are particularly good references.
                                                           Return value is a long.
 
                                                           See ATR Baltic documentation for Blen for more information.
- ndrx_fmkbfldid                                             Make a field identifier.               0.3.0        Tested
-                                                          ndrx_fmkbfldid (data_type, field_num, type)
+ ndrx_bmkfldid                                             Make a field identifier.               0.3.0        Tested
+                                                          ndrx_bmkfldid (data_type, field_num, type)
                                                           data_type: numerical data type in ubf.h.
                                                           field_num: numerical field number.
 
@@ -450,7 +437,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See ATR Baltic documentation for Fmkbfldid for more information.
+                                                          See ATR Baltic documentation for Bmkfldid for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.

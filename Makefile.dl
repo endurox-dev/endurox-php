@@ -34,8 +34,7 @@ INCLS = -I. -I${PHPDIR} -I${PHPDIR}/ext -I${PHPDIR}/Zend -I${PHPDIR}/TSRM \
 		-I${PHPDIR}/main -I${NDRXDIR}/include 
 			
 			
-NDRXLIBS = -L${NDRXDIR}/lib php_endurox.o  -lwsc -lbuft -lwsc  -lnws -lnwi \
-  			-lnws  -lubf -lubf32 -lgp  /usr/lib/libcrypt.a
+NDRXLIBS = -L${NDRXDIR}/lib php_endurox.o  -latmiclt -latmi -lubf -lnstd -lrt -ldl -lm
 
 LIBS = $(NDRXLIBS)
 

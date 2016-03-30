@@ -75,9 +75,8 @@ zend_function_entry endurox_functions[] =
 	ZEND_FE (ndrx_bidxused, NULL)
 	ZEND_FE (ndrx_bisubf, NULL)
 	ZEND_FE (ndrx_blen, NULL)
-	ZEND_FE (ndrx_fmkbfldid, NULL)
+	ZEND_FE (ndrx_bmkfldid, NULL)
 	ZEND_FE (ndrx_boccur, NULL)
-	ZEND_FE (ndrx_bjoin, NULL)
 	ZEND_FE (ndrx_bpres, NULL)
 	ZEND_FE (ndrx_btype, NULL)
 	ZEND_FE (ndrx_bunindex, NULL)
@@ -168,10 +167,7 @@ ZEND_MINIT_FUNCTION (endurox)
 ZEND_MSHUTDOWN_FUNCTION (endurox)
 {
 	tpterm ();
-#if (NDRX_UBF32 || NDRX_UBF)
-	Fnmid_unload ();
-	Fnmid_unload32 ();
-#endif
+
 	return SUCCESS;
 }
 
@@ -197,11 +193,6 @@ ZEND_RINIT_FUNCTION (endurox)
 ZEND_RSHUTDOWN_FUNCTION (endurox)
 {
 	tpterm ();
-	tx_close ();
-#if (NDRX_UBF32 || NDRX_UBF)
-	Fnmid_unload ();
-	Fnmid_unload32 ();
-#endif
 	return SUCCESS;
 }
 
@@ -874,7 +865,6 @@ ZEND_FUNCTION (ndrx_tpclose)
 	}
 	
 	tpclose ();
-	tx_close ();
 	RETURN_NULL ();
 }
 /* }}} */
@@ -945,10 +935,7 @@ ZEND_FUNCTION (ndrx_tpinit)
 /*
 		Allocate a temp buffer
 */
-	if (argc == 5)
-		bublen = TPINITNEED(Z_STRLEN_PP(arg_data) + 1);
-	else
-		bublen = sizeof(TPINIT);
+	bublen = sizeof(TPINIT);
 	tpinit_buf = (TPINIT*) tpalloc ("TPINIT", NULL, bublen);
 	if (tpinit_buf == (TPINIT *)NULL)
 	{

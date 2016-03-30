@@ -666,30 +666,6 @@ particularly good references.</b></p>
       See ATR Baltic documentation for Bisubf for more information.</p></td>
     </tr>
 
-   
-    
-
-    <tr>
-      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bjoin</b></td>
-      <td id="API_DEF" bgcolor="#00cccc">Join source into destination UBF/UBF32 buffers.</td>
-      <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
-      <td id="API_DEF" bgcolor="#00cccc">Tested</td>
-    </tr>
-    <tr>
-      <td width="73"><br>
-</td>
-      <td colspan="3" width="740"><font size="+1"><b>ndrx_bjoin (dest_buff#, source_buff#)</b></font><br>
-      dest_buff#:  Input UBF/UBF32 destination buffer.
-	  <br>
-	  source_buff#:  Input UBF/UBF32 source buffer.
-      <p>
-	  Used to join two bisubf buffers based on matching fieldid/occurrence
-	  </p><p>
-	  Return value is a long.
-      </p><p>
-      See ATR Baltic documentation for Bjoin for more information.</p></td>
-    </tr>
-
     <tr>
       <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bfldid</b></td>
       <td id="API_DEF" bgcolor="#00cccc">Map field name to field identifier.</td>
@@ -789,7 +765,7 @@ particularly good references.</b></p>
     </tr>
 
     <tr>
-      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_fmkbfldid</b></td>
+      <td id="API_DEF" bgcolor="#00cccc" width="73"><b>ndrx_bmkfldid</b></td>
       <td id="API_DEF" bgcolor="#00cccc">Make a field identifier.</td>
       <td id="API_DEF" bgcolor="#00cccc">0.3.0</td>
       <td id="API_DEF" bgcolor="#00cccc">Tested</td>
@@ -797,7 +773,7 @@ particularly good references.</b></p>
     <tr>
       <td width="73"><br>
 </td>
-      <td colspan="3" width="740"><font size="+1"><b>ndrx_fmkbfldid (data_type, field_num, type)</b></font><br>
+      <td colspan="3" width="740"><font size="+1"><b>ndrx_bmkfldid (data_type, field_num, type)</b></font><br>
       data_type:  numerical data type in ubf.h.
 	  <br>
       field_num:  numerical field number.
@@ -809,7 +785,7 @@ particularly good references.</b></p>
 	  </p><p>
 	  Return value is a long.
       </p><p>
-      See ATR Baltic documentation for Fmkbfldid for more information.
+      See ATR Baltic documentation for Bmkfldid for more information.
 	  </p><p>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</p></td>

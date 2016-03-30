@@ -97,9 +97,8 @@ ZEND_FUNCTION (ndrx_bfldno);
 ZEND_FUNCTION (ndrx_bfldtype);
 ZEND_FUNCTION (ndrx_bidxused);
 ZEND_FUNCTION (ndrx_bisubf);
-ZEND_FUNCTION (ndrx_bjoin);
 ZEND_FUNCTION (ndrx_blen);
-ZEND_FUNCTION (ndrx_fmkbfldid);
+ZEND_FUNCTION (ndrx_bmkfldid);
 ZEND_FUNCTION (ndrx_bfname);
 ZEND_FUNCTION (ndrx_fnum);
 ZEND_FUNCTION (ndrx_boccur);
@@ -122,6 +121,6 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int);
 long _ndrx_ubf_add (ndrx_tpalloc_buf_type *, zval **, BFLDID bfldid, BFLDOCC occ32);
 long _ndrx_update_ubf_zend_hash (HashTable *ht, BFLDID fieldid32, zval ** data, int flag);
 int  _ndrx_is_ubf_type (int);
-BFLDID _get_arg_field_id (zval ** arg_field, int is32, int arg_no);
+BFLDID _get_arg_field_id (zval ** arg_field, int arg_no);
 
 #define phpext_endurox_ptr &endurox_module_entry
