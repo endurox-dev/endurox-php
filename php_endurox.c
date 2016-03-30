@@ -87,7 +87,6 @@ zend_function_entry endurox_functions[] =
 	ZEND_FE (ndrx_fmkfldid, NULL)
 	ZEND_FE (ndrx_fmove, NULL)
 	ZEND_FE (ndrx_fneeded, NULL)
-	ZEND_FE (ndrx_fnum, NULL)
 	ZEND_FE (ndrx_foccur, NULL)
 	ZEND_FE (ndrx_fjoin, NULL)
 	ZEND_FE (ndrx_fojoin, NULL)

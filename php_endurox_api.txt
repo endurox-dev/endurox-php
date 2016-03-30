@@ -566,17 +566,6 @@ Bookshelf are particularly good references.
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
 
- ndrx_fnum                                                 Return count of all occurrences in     0.3.0        Tested
-                                                          UBF/UBF32 buffer.
-                                                          ndrx_fnum (buff#)
-                                                          buff#: Input UBF/UBF32 buffer.
-
-                                                          Returns the number of fields contained in the specified buffer.
-
-                                                          Return value is a long.
-
-                                                          See ATR Baltic documentation for Fnum for more information.
-
  ndrx_foccur                                               Return count of field occurrence in    0.3.0        Tested
                                                           buffer.
                                                           ndrx_foccur (buff#, Field_ID)
