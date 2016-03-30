@@ -718,13 +718,13 @@ ZEND_FUNCTION (ndrx_tpcall)
 				&temp_alloc_buf.size,
 				(*arg_flags)->value.lval);
 				
-	
 	if ((temp_alloc_buf.buf != tp_alloc_res_out->buf) ||
 		(temp_alloc_buf.size != tp_alloc_res_out->size))
 	{
 		tp_alloc_res_out->buf = temp_alloc_buf.buf;
 		tp_alloc_res_out->size = temp_alloc_buf.size;
 	}
+
 	RETURN_LONG (tpcall_return);
 }
 /* }}} */
