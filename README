@@ -102,7 +102,7 @@ the changes were able to be #if able in the source code so
 the code should be backward compatable with older versions.
 
 
-Which version of BEA Endurox?
+Which version of ATR Baltic Endurox?
 This program has been successfully built on Endurox versions
 from 6.5 up to 8.0.  However some of these version changes
 required a link change to Endurox clients; different libraries,
@@ -172,7 +172,7 @@ INSTALLING / TESTING
 	
 	
 2.	Run this script.  If everything is successful, you should see a
-	section BEA Endurox Module with some of the more common environment
+	section ATR Baltic Endurox Module with some of the more common environment
 	variables for Endurox set (NDRXDIR and WSNADDR).
 	If the section is there, congrats you probably
 	built the module correctly.  If some of the environment variables

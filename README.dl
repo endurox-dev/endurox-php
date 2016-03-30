@@ -24,7 +24,7 @@ BUILDING as a DL (Sorry, not a very automated build process yet.)
 	dl load to work.  If they are not the same, you may see
 	an error message like when you try and dl the module.
 	
-	Warning: BEA Endurox Module: Unable to initialize module Module 
+	Warning: ATR Baltic Endurox Module: Unable to initialize module Module 
 	compiled with debug=0, thread-safety=0 module API=20001214 PHP compiled
 	with debug=1, thread-safety=0 module API=20001214 
 	These options need to match in 
@@ -78,7 +78,7 @@ INSTALLING / TESTING
 		phpinfo ();
 	?>
 3.	Run this script.  If everything is successful, you should see a
-	section BEA Endurox Module with some of the more common environment
+	section ATR Baltic Endurox Module with some of the more common environment
 	variables for Endurox set (NDRXDIR and WSNADDR).
 	If the section is there, congrats you probably
 	built the module correctly.  If some of the environment variables

@@ -34,10 +34,10 @@ TD{
 cycle, it is assumed users have some understanding
 of basic Endurox client development. Many
 of these functions have a strong relationship
-to the original BEA Endurox API function.
+to the original ATR Baltic Endurox API function.
 I recommend you where necessary refer to
 this documentation for additional information.
-BEA has their documentation online at:<A href="http://edocs.bea.com/endurox/ndrx65/index.htm" target="_blank">http://edocs.bea.com/endurox/ndrx65/index.htm</A>.</B> <B>The Reference Material and Bookshelf are
+ATR Baltic has their documentation online at:<A href="http://edocs.bea.com/endurox/ndrx65/index.htm" target="_blank">http://edocs.bea.com/endurox/ndrx65/index.htm</A>.</B> <B>The Reference Material and Bookshelf are
 particularly good references.</B></P>
 <TABLE border="1" width="1002">
   <THEAD>
@@ -80,7 +80,7 @@ particularly good references.</B></P>
 	  <P>
       This function has no single equivalent Endurox
       API function. <BR>
-      See Also: ndrx_ubf2array, BEA Documentation
+      See Also: ndrx_ubf2array, ATR Baltic Documentation
       of Fchg and related functions.</TD>
     </TR>
     <TR>
@@ -117,7 +117,7 @@ particularly good references.</B></P>
 	  <P>
       This function has no single equivalent Endurox
       API function. <BR>
-      See Also: ndrx_array2ubf, BEA Documentation
+      See Also: ndrx_array2ubf, ATR Baltic Documentation
       of Fnext and related functions.</TD>
     </TR>
     <TR>
@@ -134,7 +134,7 @@ particularly good references.</B></P>
       Returns contents of Endurox STRING or CARRAY
       buffer.	  <P>
 
-      This function has no equivalent BEA function
+      This function has no equivalent ATR Baltic function
       because raw Endurox functions allow direct
       access to the buffer contents. Call this
       function after ndrx_tpcall (or tpacall) to
@@ -157,7 +157,7 @@ particularly good references.</B></P>
       tperrno, similar to the UNIX errno. Results
       are usually used in calls to ndrx_tpstrerror.<BR>
       <BR>
-      See Also: ndrx_tpstrerror, BEA documentation.</TD>
+      See Also: ndrx_tpstrerror, ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_put_buf</B></TD>
@@ -192,7 +192,7 @@ particularly good references.</B></P>
       <BR>
       Rollback a pending Endurox transaction.<BR>
       <BR>
-      See Also: ndrx_tpcommit, ndrx_tpbegin, BEA
+      See Also: ndrx_tpcommit, ndrx_tpbegin, ATR Baltic
       Documentation</TD>
     </TR>
     <TR>
@@ -228,7 +228,7 @@ particularly good references.</B></P>
         <DT>NDRX_VIEW
         <DD>Create a Endurox View buffer. Not tested<BR>
       </DL>
-      See Also: ndrx_falloc, BEA Documentation</TD>
+      See Also: ndrx_falloc, ATR Baltic Documentation</TD>
     </TR>
     <TR></TR>
     <TR>
@@ -253,7 +253,7 @@ particularly good references.</B></P>
       Just like tpcall except call does not block
       for reply.<BR>
       <BR>
-      See Also: ndrx_tpcall, BEA documentation.</TD>
+      See Also: ndrx_tpcall, ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpbegin</B></TD>
@@ -267,7 +267,7 @@ particularly good references.</B></P>
       <BR>
       Start a Endurox transaction.<BR>
       <BR>
-      See Also: ndrx_tpcommit, ndrx_tpabort, BEA
+      See Also: ndrx_tpcommit, ndrx_tpabort, ATR Baltic
       Documentation</TD>
     </TR>
     <TR>
@@ -291,7 +291,7 @@ particularly good references.</B></P>
       of raw tpcall function.<BR>
       Error Return: -1.<BR>
 	  <P>
-      See Also: ndrx_tpacall, BEA documentation.</TD>
+      See Also: ndrx_tpacall, ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpclose</B></TD>
@@ -306,7 +306,7 @@ particularly good references.</B></P>
       Closes current Endurox connection, direct
       call to Endurox tpclose function.<BR>
       <BR>
-      See Also: BEA documentation.</TD>
+      See Also: ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpcommit</B></TD>
@@ -320,7 +320,7 @@ particularly good references.</B></P>
       <BR>
       Commit a Endurox transaction.<BR>
       <BR>
-      See Also: ndrx_tpabort, ndrx_tpbegin, BEA Documentation</TD>
+      See Also: ndrx_tpabort, ndrx_tpbegin, ATR Baltic Documentation</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpfree</B></TD>
@@ -340,7 +340,7 @@ particularly good references.</B></P>
       All Endurox buffers are automatically freed
       at the end of the page processing.<BR>
 	  <P>
-      See Also: ndrx_tpalloc, BEA documentation.</TD>
+      See Also: ndrx_tpalloc, ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpgetrply</B></TD>
@@ -364,7 +364,7 @@ particularly good references.</B></P>
       Retrieves results from completed tpacall
       and places results into out_buf..<BR>
 	  <P>
-      See Also: ndrx_tpacall, BEA documentation.</TD>
+      See Also: ndrx_tpacall, ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpinit</B></TD>
@@ -393,7 +393,7 @@ particularly good references.</B></P>
       NULL because we are using the Endurox Workstation
       Listener.<BR>
 	  <P>
-      See Also: ndrx_tpclose, BEA documentation.</TD>
+      See Also: ndrx_tpclose, ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_tpstrerror</B></TD>
@@ -410,7 +410,7 @@ particularly good references.</B></P>
       Returns a string associated with the provided
       error number.<BR>
 	  <P>
-      See Also: ndrx_get_tperrno, BEA documentation.</TD>
+      See Also: ndrx_get_tperrno, ATR Baltic documentation.</TD>
     </TR>
     <TR>
       <TD></TD>
@@ -429,7 +429,7 @@ particularly good references.</B></P>
 	  <P>
       Returns a binary safe string representing the environment variable.<BR>
  	  <P>
-      See Also: See Also: BEA documentation for ndrxgetenv.</TD>
+      See Also: See Also: ATR Baltic documentation for ndrxgetenv.</TD>
     </TR>
 
     <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxputenv</B></TD>
@@ -445,7 +445,7 @@ particularly good references.</B></P>
 	  <P>
       Returns TRUE/FALSE.<BR>
 	  <P>
-      See Also: BEA documentation for ndrxputenv.</TD>
+      See Also: ATR Baltic documentation for ndrxputenv.</TD>
     </TR>
 
     <TD width="73" bgcolor="#00cccc" id="API_DEF"><B>ndrx_ndrxreadenv</B></TD>
@@ -461,7 +461,7 @@ particularly good references.</B></P>
 	  <P>
       Returns TRUE/FALSE.<BR>
 	  <P>
-      See Also: BEA documentation for ndrxreadenv.</TD>
+      See Also: ATR Baltic documentation for ndrxreadenv.</TD>
     </TR>
 
 
@@ -507,7 +507,7 @@ particularly good references.</B></P>
 	  ndrx_fadd and ndrx_fchg are aliased to the same function code.  The only difference between
 	  the two original functions is Fchg allowed the specification of an occurrence where Fadd did not.
 	  <P>
-      See BEA documentation for Fadd and Fchg for more information.</TD>
+      See ATR Baltic documentation for Fadd and Fchg for more information.</TD>
     </TR>
 
     <TR>
@@ -538,7 +538,7 @@ particularly good references.</B></P>
 	  <BR>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fchksum for more information.</TD>
+      See ATR Baltic documentation for Fchksum for more information.</TD>
     </TR>
 
     <TR>
@@ -558,7 +558,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fcmp for more information.</TD>
+      See ATR Baltic documentation for Fcmp for more information.</TD>
     </TR>
 
     <TR>
@@ -578,7 +578,7 @@ particularly good references.</B></P>
 	  <BR>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fconcat for more information.</TD>
+      See ATR Baltic documentation for Fconcat for more information.</TD>
     </TR>
 
     <TR>
@@ -598,7 +598,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fcpy for more information.</TD>
+      See ATR Baltic documentation for Fcpy for more information.</TD>
     </TR>
 
    <TR>
@@ -619,7 +619,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fdel for more information.</TD>
+      See ATR Baltic documentation for Fdel for more information.</TD>
     </TR>
 
     <TR>
@@ -640,7 +640,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fdelall for more information.</TD>
+      See ATR Baltic documentation for Fdelall for more information.</TD>
     </TR>
 
     <TR>
@@ -661,7 +661,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Ffprint for more information.
+      See ATR Baltic documentation for Ffprint for more information.
     </TR>
 
     <TR>
@@ -684,7 +684,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fget for more information.
+      See ATR Baltic documentation for Fget for more information.
 	  <BR>Also see ndrx_ubf2array to
 	  convert an entire UBF/UBF32 structure into a PHP array.</TD>
     </TR>
@@ -704,7 +704,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fidxused for more information.</TD>
+      See ATR Baltic documentation for Fidxused for more information.</TD>
     </TR>
 
    <TR>
@@ -722,7 +722,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fielded for more information.</TD>
+      See ATR Baltic documentation for Fielded for more information.</TD>
     </TR>
 
    <TR>
@@ -742,7 +742,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Findex for more information.</TD>
+      See ATR Baltic documentation for Findex for more information.</TD>
     </TR>
 
     <TR>
@@ -762,7 +762,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fjoin for more information.</TD>
+      See ATR Baltic documentation for Fjoin for more information.</TD>
     </TR>
 
     <TR>
@@ -783,7 +783,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fldid for more information.
+      See ATR Baltic documentation for Fldid for more information.
 	  <P>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
@@ -807,7 +807,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fldno for more information.
+      See ATR Baltic documentation for Fldno for more information.
 	  <P>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
@@ -832,7 +832,7 @@ particularly good references.</B></P>
 	  <BR>
 	  Return value is a long.
       <P>
-      See BEA documentation for fldtype for more information.
+      See ATR Baltic documentation for fldtype for more information.
 	  <P>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
@@ -856,7 +856,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Flen for more information.</TD>
+      See ATR Baltic documentation for Flen for more information.</TD>
     </TR>
 
     <TR>
@@ -879,7 +879,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fmkfldid for more information.
+      See ATR Baltic documentation for Fmkfldid for more information.
 	  <P>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
@@ -902,7 +902,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fmove for more information.</TD>
+      See ATR Baltic documentation for Fmove for more information.</TD>
     </TR>
 
     <TR>
@@ -923,7 +923,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a string.
       <P>
-      See BEA documentation for Fname for more information.
+      See ATR Baltic documentation for Fname for more information.
 	  <P>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
@@ -949,7 +949,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fneeded for more information.
+      See ATR Baltic documentation for Fneeded for more information.
 	  <P>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
@@ -970,7 +970,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fnum for more information.</TD>
+      See ATR Baltic documentation for Fnum for more information.</TD>
     </TR>
 
    <TR>
@@ -991,7 +991,7 @@ particularly good references.</B></P>
 	  <P>
 	  Used to determine the number of occurrences of the field specified by fieldid.
       <P>
-      See BEA documentation for Foccur for more information.</TD>
+      See ATR Baltic documentation for Foccur for more information.</TD>
     </TR>
 
     <TR>
@@ -1012,7 +1012,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fojoin for more information.</TD>
+      See ATR Baltic documentation for Fojoin for more information.</TD>
     </TR>
 
    <TR>
@@ -1033,7 +1033,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fpres for more information.</TD>
+      See ATR Baltic documentation for Fpres for more information.</TD>
     </TR>
 
    <TR>
@@ -1054,7 +1054,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Frstrindex for more information.</TD>
+      See ATR Baltic documentation for Frstrindex for more information.</TD>
     </TR>
 
    <TR>
@@ -1072,7 +1072,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fsizeof for more information.</TD>
+      See ATR Baltic documentation for Fsizeof for more information.</TD>
     </TR>
 
     <TR>
@@ -1089,7 +1089,7 @@ particularly good references.</B></P>
 	  Returns a string containing the error description for ferror.
 	  ferror can be retrieved from the api function ndrx_get_ferror.
       <P>
-      This function has no equivalent BEA function.</TD>
+      This function has no equivalent ATR Baltic function.</TD>
     </TR>
 
     <TR>
@@ -1110,7 +1110,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a string.
       <P>
-      See BEA documentation for ftype for more information.
+      See ATR Baltic documentation for ftype for more information.
 	  <P>
 	  The type parameter is required because the function does not take a UBF buffer reference
 	  so it doesn't know how to do the mapping.</TD>
@@ -1131,7 +1131,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Funindex for more information.</TD>
+      See ATR Baltic documentation for Funindex for more information.</TD>
     </TR>
 
    <TR>
@@ -1149,7 +1149,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Funused for more information.</TD>
+      See ATR Baltic documentation for Funused for more information.</TD>
     </TR>
 
    <TR>
@@ -1175,7 +1175,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fupdate for more information.</TD>
+      See ATR Baltic documentation for Fupdate for more information.</TD>
     </TR>
 
 
@@ -1194,7 +1194,7 @@ particularly good references.</B></P>
 	  <P>
 	  Return value is a long.
       <P>
-      See BEA documentation for Fused for more information.</TD>
+      See ATR Baltic documentation for Fused for more information.</TD>
     </TR>
 	
     <TR>
@@ -1211,7 +1211,7 @@ particularly good references.</B></P>
 	  Returns the value of the internal Endurox UBF error variable "ferror".
 	  This value is normally used in ndrx_fstrerror to return a string description.
       <P>
-      This function has no equivalent BEA function.</TD>
+      This function has no equivalent ATR Baltic function.</TD>
     </TR>
 
     <TR>

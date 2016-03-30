@@ -6,9 +6,9 @@
 
 NOTE: At this point in this products development cycle, it is assumed users
 have some understanding of basic Endurox client development. Many of these
-functions have a strong relationship to the original BEA Endurox API
+functions have a strong relationship to the original ATR Baltic Endurox API
 function. I recommend you where necessary refer to this documentation for
-additional information. BEA has their documentation online
+additional information. ATR Baltic has their documentation online
 at:http://edocs.bea.com/endurox/ndrx65/index.htm. The Reference Material and
 Bookshelf are particularly good references.
 
@@ -31,7 +31,7 @@ Bookshelf are particularly good references.
                                                           Fchg Endurox API function. See the examples for a simple usage.
 
                                                           This function has no single equivalent Endurox API function.
-                                                          See Also: ndrx_ubf2array, BEA Documentation of Fchg and related
+                                                          See Also: ndrx_ubf2array, ATR Baltic Documentation of Fchg and related
                                                           functions.
  ndrx_ubf2array                                            Move UBF values into an array          0.2.0        Tested
                                                           ndrx_ubf2array (buffer #, flag)
@@ -54,7 +54,7 @@ Bookshelf are particularly good references.
                                                           occurences result in a NULL value.
 
                                                           This function has no single equivalent Endurox API function.
-                                                          See Also: ndrx_array2ubf, BEA Documentation of Fnext and related
+                                                          See Also: ndrx_array2ubf, ATR Baltic Documentation of Fnext and related
                                                           functions.
  ndrx_get_buf                                              Retrieve contents of buffer            0.1.0        Tested
                                                           ndrx_get_buf (buffer #)
@@ -62,7 +62,7 @@ Bookshelf are particularly good references.
 
                                                           Returns contents of Endurox STRING or CARRAY buffer.
 
-                                                          This function has no equivalent BEA function because raw Endurox
+                                                          This function has no equivalent ATR Baltic function because raw Endurox
                                                           functions allow direct access to the buffer contents. Call this
                                                           function after ndrx_tpcall (or tpacall) to get the contents in the
                                                           buffer.
@@ -75,7 +75,7 @@ Bookshelf are particularly good references.
                                                           to the UNIX errno. Results are usually used in calls to
                                                           ndrx_tpstrerror.
 
-                                                          See Also: ndrx_tpstrerror, BEA documentation.
+                                                          See Also: ndrx_tpstrerror, ATR Baltic documentation.
  ndrx_put_buf                                              Store value into Endurox buffer         0.1.0        Tested
                                                           ndrx_put_buf (buffer #, data)
                                                           buffer#: The Endurox buffer reference number.
@@ -92,7 +92,7 @@ Bookshelf are particularly good references.
 
                                                           Rollback a pending Endurox transaction.
 
-                                                          See Also: ndrx_tpcommit, ndrx_tpbegin, BEA Documentation
+                                                          See Also: ndrx_tpcommit, ndrx_tpbegin, ATR Baltic Documentation
  ndrx_tpalloc                                              Allocate a Endurox Buffer               0.1.0        Tested
                                                           ndrx_tpalloc (type, sub_type, size)
                                                           type: Predefined constant indicating the type of buffer to create
@@ -116,7 +116,7 @@ Bookshelf are particularly good references.
                                                           NDRX_VIEW
                                                                Create a Endurox View buffer. Not tested
 
-                                                          See Also: ndrx_falloc, BEA Documentation
+                                                          See Also: ndrx_falloc, ATR Baltic Documentation
 
  ndrx_tpacall                                              Send an allocated buffer async         0.1.0        Minimal
                                                                                                               testing
@@ -130,13 +130,13 @@ Bookshelf are particularly good references.
 
                                                           Just like tpcall except call does not block for reply.
 
-                                                          See Also: ndrx_tpcall, BEA documentation.
+                                                          See Also: ndrx_tpcall, ATR Baltic documentation.
  ndrx_tpbegin                                              Start a Endurox transaction.            0.1.0        Not Tested
                                                           ndrx_tpbegin ()
 
                                                           Start a Endurox transaction.
 
-                                                          See Also: ndrx_tpcommit, ndrx_tpabort, BEA Documentation
+                                                          See Also: ndrx_tpcommit, ndrx_tpabort, ATR Baltic Documentation
  ndrx_tpcall                                               Send an allocated buffer.              0.1.0        Tested
                                                           ndrx_tpcall (srvc, in_buf, out_buf, flags)
                                                           srvc: A string containing the name of the Endurox service to call.
@@ -147,20 +147,20 @@ Bookshelf are particularly good references.
                                                           Return Value: Int equaling returns value of raw tpcall function.
                                                           Error Return: -1.
 
-                                                          See Also: ndrx_tpacall, BEA documentation.
+                                                          See Also: ndrx_tpacall, ATR Baltic documentation.
  ndrx_tpclose                                              Close a Endurox session.                0.1.0        Tested
                                                           ndrx_tpclose ()
 
                                                           Closes current Endurox connection, direct call to Endurox tpclose
                                                           function.
 
-                                                          See Also: BEA documentation.
+                                                          See Also: ATR Baltic documentation.
  ndrx_tpcommit                                             Commit a Endurox transaction.           0.1.0        Not Tested
                                                           ndrx_tpcommit ()
 
                                                           Commit a Endurox transaction.
 
-                                                          See Also: ndrx_tpabort, ndrx_tpbegin, BEA Documentation
+                                                          See Also: ndrx_tpabort, ndrx_tpbegin, ATR Baltic Documentation
  ndrx_tpfree                                               Free a Endurox buffer.                  0.1.0        Tested
                                                           ndrx_tpfree (buffer #)
                                                           buffer#: The Endurox buffer reference number.
@@ -170,7 +170,7 @@ Bookshelf are particularly good references.
                                                           All Endurox buffers are automatically freed at the end of the page
                                                           processing.
 
-                                                          See Also: ndrx_tpalloc, BEA documentation.
+                                                          See Also: ndrx_tpalloc, ATR Baltic documentation.
 
  ndrx_tpgetrply                                            Retrieve results from tpacall          0.1.0        Minimal
                                                                                                               testing
@@ -185,7 +185,7 @@ Bookshelf are particularly good references.
                                                           Retrieves results from completed tpacall and places results into
                                                           out_buf..
 
-                                                          See Also: ndrx_tpacall, BEA documentation.
+                                                          See Also: ndrx_tpacall, ATR Baltic documentation.
  ndrx_tpinit                                               Open connection to Endurox              0.1.0        Tested
                                                           ndrx_tpinit (username, clientname, password, flags)
                                                           username: String containing the Endurox user name for this
@@ -200,7 +200,7 @@ Bookshelf are particularly good references.
                                                           tpinit is currently set to
                                                           NULL because we are using the Endurox Workstation Listener.
 
-                                                          See Also: ndrx_tpclose, BEA documentation.
+                                                          See Also: ndrx_tpclose, ATR Baltic documentation.
 
  ndrx_tpstrerror                                           Return error string                    0.1.0        Minimal
                                                                                                               Testing
@@ -209,7 +209,7 @@ Bookshelf are particularly good references.
 
                                                           Returns a string associated with the provided error number.
 
-                                                          See Also: ndrx_get_tperrno, BEA documentation.
+                                                          See Also: ndrx_get_tperrno, ATR Baltic documentation.
 
  ndrx_ndrxgetenv                                            Return Endurox environment variable     0.3.5        Tested
                                                           ndrx_ndrxgetenv (variable)
@@ -218,7 +218,7 @@ Bookshelf are particularly good references.
                                                           Returns a binary safe string representing the environment
                                                           variable.
 
-                                                          See Also: See Also: BEA documentation for ndrxgetenv.
+                                                          See Also: See Also: ATR Baltic documentation for ndrxgetenv.
  ndrx_ndrxputenv                                            Set Endurox environment variable        0.3.5        Tested
                                                           ndrx_ndrxputenv (variable, value)
                                                           variable: A char string of the environment variable to return.
@@ -226,7 +226,7 @@ Bookshelf are particularly good references.
 
                                                           Returns TRUE/FALSE.
 
-                                                          See Also: BEA documentation for ndrxputenv.
+                                                          See Also: ATR Baltic documentation for ndrxputenv.
 
  ndrx_ndrxreadenv                                           Set Endurox environment variable from   0.3.5        Tested
                                                           file
@@ -237,7 +237,7 @@ Bookshelf are particularly good references.
 
                                                           Returns TRUE/FALSE.
 
-                                                          See Also: BEA documentation for ndrxreadenv.
+                                                          See Also: ATR Baltic documentation for ndrxreadenv.
  Low Level UBF/UBF32 Functions
  Most of these UBF functions have one-for-one equivalents
  to the raw Endurox UBF functions. Where possible, the
@@ -281,7 +281,7 @@ Bookshelf are particularly good references.
                                                           only difference between the two original functions is Fchg allowed
                                                           the specification of an occurrence where Fadd did not.
 
-                                                          See BEA documentation for Fadd and Fchg for more information.
+                                                          See ATR Baltic documentation for Fadd and Fchg for more information.
  ndrx_fchg                                                 Add / change new field occurrence.     0.3.0        Tested
                                                           See ndrx_fadd.
  ndrx_fchksum                                              Compute checksum for fielded buffer.   0.3.0        Tested
@@ -293,7 +293,7 @@ Bookshelf are particularly good references.
                                                           entire buffer was received.
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fchksum for more information.
+                                                          See ATR Baltic documentation for Fchksum for more information.
  ndrx_fcmp                                                 Compare two fielded UBF/UBF32 buffers. 0.3.0        Tested
                                                           ndrx_fcmp (buff1#, buff2#)
                                                           buff1#: Input UBF/UBF32 buffer to compare against.
@@ -304,7 +304,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fcmp for more information.
+                                                          See ATR Baltic documentation for Fcmp for more information.
 
  ndrx_fconcat                                              Concatenate source and destination     0.3.0        Tested
                                                           UBF/UBF32 buffers.
@@ -316,7 +316,7 @@ Bookshelf are particularly good references.
                                                           exist in the destination buffer.
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fconcat for more information.
+                                                          See ATR Baltic documentation for Fconcat for more information.
 
  ndrx_fcpy                                                 Copy source to destination UBF/UBF32   0.3.0        Tested
                                                           buffers.
@@ -329,7 +329,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fcpy for more information.
+                                                          See ATR Baltic documentation for Fcpy for more information.
  ndrx_fdel                                                 Delete field occurrence.               0.3.0        Tested
                                                           ndrx_fdel (buff#, Field_ID, occur)
                                                           buff#: The buffer reference number for the data value to be
@@ -343,7 +343,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fdel for more information.
+                                                          See ATR Baltic documentation for Fdel for more information.
 
  ndrx_fdelall                                              Delete all field occurrences from      0.3.0        Tested
                                                           UBF/UBF32 buffers.
@@ -357,7 +357,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fdelall for more information.
+                                                          See ATR Baltic documentation for Fdelall for more information.
 
  ndrx_ffprint                                              Print fielded buffer to specified      0.4.0        Tested
                                                           stream from UBF/UBF32 buffers.
@@ -371,7 +371,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Ffprint for more information.
+                                                          See ATR Baltic documentation for Ffprint for more information.
 
  ndrx_fget                                                 Retrieve field occurrences from        0.4.0        Tested
                                                           UBF/UBF32 buffers.
@@ -387,7 +387,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fget for more information.
+                                                          See ATR Baltic documentation for Fget for more information.
                                                           Also see ndrx_ubf2array to convert an entire UBF/UBF32 structure
                                                           into a PHP array.
  ndrx_fidxused                                             Return amount of space used by index.  0.3.0        Tested
@@ -398,7 +398,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fidxused for more information.
+                                                          See ATR Baltic documentation for Fidxused for more information.
  ndrx_fielded                                              Return TRUE if buffer fielded.         0.3.0        Tested
                                                           ndrx_fielded (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
@@ -407,7 +407,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fielded for more information.
+                                                          See ATR Baltic documentation for Fielded for more information.
  ndrx_findex                                               Index fielded UBF/UBF32 buffer.        0.3.0        Tested
                                                           ndrx_findex (buff#, intval)
                                                           buff#: Input UBF/UBF32 buffer.
@@ -419,7 +419,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Findex for more information.
+                                                          See ATR Baltic documentation for Findex for more information.
 
  ndrx_fjoin                                                Join source into destination UBF/UBF32 0.3.0        Tested
                                                           buffers.
@@ -432,7 +432,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fjoin for more information.
+                                                          See ATR Baltic documentation for Fjoin for more information.
  ndrx_fldid                                                Map field name to field identifier.    0.3.0        Tested
                                                           ndrx_fldid (field_name, type)
                                                           field_name: string containing field name to be mapped.
@@ -446,7 +446,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fldid for more information.
+                                                          See ATR Baltic documentation for Fldid for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
@@ -463,7 +463,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fldno for more information.
+                                                          See ATR Baltic documentation for Fldno for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
@@ -479,7 +479,7 @@ Bookshelf are particularly good references.
                                                           type (an integer) as defined in the endurox ubf.h header file.
                                                           Return value is a long.
 
-                                                          See BEA documentation for fldtype for more information.
+                                                          See ATR Baltic documentation for fldtype for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
@@ -497,7 +497,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Flen for more information.
+                                                          See ATR Baltic documentation for Flen for more information.
  ndrx_fmkfldid                                             Make a field identifier.               0.3.0        Tested
                                                           ndrx_fmkfldid (data_type, field_num, type)
                                                           data_type: numerical data type in ubf.h.
@@ -512,7 +512,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fmkfldid for more information.
+                                                          See ATR Baltic documentation for Fmkfldid for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
@@ -529,7 +529,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fmove for more information.
+                                                          See ATR Baltic documentation for Fmove for more information.
  ndrx_fname                                                Map field identifier to field name.    0.3.0        Tested
                                                           ndrx_fname (field_id, type)
                                                           field_id: numerical field id.
@@ -543,7 +543,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a string.
 
-                                                          See BEA documentation for Fname for more information.
+                                                          See ATR Baltic documentation for Fname for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
@@ -561,7 +561,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fneeded for more information.
+                                                          See ATR Baltic documentation for Fneeded for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
@@ -575,7 +575,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fnum for more information.
+                                                          See ATR Baltic documentation for Fnum for more information.
 
  ndrx_foccur                                               Return count of field occurrence in    0.3.0        Tested
                                                           buffer.
@@ -591,7 +591,7 @@ Bookshelf are particularly good references.
                                                           Used to determine the number of occurrences of the field specified
                                                           by fieldid.
 
-                                                          See BEA documentation for Foccur for more information.
+                                                          See ATR Baltic documentation for Foccur for more information.
 
  ndrx_fojoin                                               Outer join source into destination     0.3.0        Tested
                                                           UBF/UBF32 buffers.
@@ -606,7 +606,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fojoin for more information.
+                                                          See ATR Baltic documentation for Fojoin for more information.
 
  ndrx_fpres                                                Return TRUE if field occurrence in     0.3.0        Tested
                                                           buffer.
@@ -621,7 +621,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fpres for more information.
+                                                          See ATR Baltic documentation for Fpres for more information.
 
  ndrx_frstrindex                                           Restore index in fielded UBF/UBF32     0.3.0        Tested
                                                           buffer.
@@ -635,7 +635,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Frstrindex for more information.
+                                                          See ATR Baltic documentation for Frstrindex for more information.
  ndrx_fsizeof                                              Return size of fielded buffer.         0.3.0        Tested
                                                           ndrx_fsizeof (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
@@ -644,7 +644,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fsizeof for more information.
+                                                          See ATR Baltic documentation for Fsizeof for more information.
  ndrx_fstrerror                                            Retrieve UBF error description.        0.3.0        Tested
                                                           ndrx_fstrerror (ferror)
                                                           ferror: Value of internal UBF variable "ferror".
@@ -652,7 +652,7 @@ Bookshelf are particularly good references.
                                                           Returns a string containing the error description for ferror.
                                                           ferror can be retrieved from the api function ndrx_get_ferror.
 
-                                                          This function has no equivalent BEA function.
+                                                          This function has no equivalent ATR Baltic function.
  ndrx_ftype                                                Return string to type of field.        0.3.0        Tested
                                                           ndrx_ftype (field_id, type)
                                                           field_id: numerical field id.
@@ -666,7 +666,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a string.
 
-                                                          See BEA documentation for ftype for more information.
+                                                          See ATR Baltic documentation for ftype for more information.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
@@ -678,7 +678,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Funindex for more information.
+                                                          See ATR Baltic documentation for Funindex for more information.
 
  ndrx_funused                                              Return number of bytes not used in     0.3.0        Tested
                                                           fieded buffer..
@@ -690,7 +690,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Funused for more information.
+                                                          See ATR Baltic documentation for Funused for more information.
 
  ndrx_fupdate                                              Update destination UBF/UBF32 buffers   0.3.0        Tested
                                                           with source.
@@ -709,7 +709,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fupdate for more information.
+                                                          See ATR Baltic documentation for Fupdate for more information.
 
  ndrx_fused                                                Return number of bytes used in fieded  0.3.0        Tested
                                                           buffer..
@@ -721,7 +721,7 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          See BEA documentation for Fused for more information.
+                                                          See ATR Baltic documentation for Fused for more information.
 
  ndrx_get_ferror                                           Retrieve value of internal UBF error   0.3.0        Tested
                                                           variable ferror
@@ -732,7 +732,7 @@ Bookshelf are particularly good references.
                                                           "ferror". This value is normally used in ndrx_fstrerror to return a
                                                           string description.
 
-                                                          This function has no equivalent BEA function.
+                                                          This function has no equivalent ATR Baltic function.
                                                           The following constants are predefine by the module and should
  Constants                                                wherever you need the value. Using these constants will allow for
  (Name)                                                   easier migration as the API is evolving.

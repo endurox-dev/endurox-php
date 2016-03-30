@@ -305,7 +305,7 @@ zend_module_entry endurox_module_entry =
 #if ZEND_MODULE_API_NO >= 20010901
 	STANDARD_MODULE_HEADER,
 #endif
-	"BEA Endurox Module",				/* the name of these modules */
+	"ATR Baltic Endurox Module",				/* the name of these modules */
 	endurox_functions,					/* points to zend_function_entry */
 	ZEND_MINIT (endurox),				/* module startup function */
 	ZEND_MSHUTDOWN (endurox),			/* module shutdown function */
