@@ -15,7 +15,7 @@ BUILDING as a DL (Sorry, not a very automated build process yet.)
 1.  Extract the contents of this package into a clean
 	directory.
 	
-2.	Obtain and extract the PHP4 source code for the version
+2.	Obtain and extract the PHP4 (or php5) source code for the version
 	loaded in your web server in a different directory.
 	If its old, maybe this is a good time to upgrade and
 	get the latest at www.php.net.  I've been using 4.0.4p1.
@@ -30,7 +30,7 @@ BUILDING as a DL (Sorry, not a very automated build process yet.)
 	These options need to match in 
 	/home/brian/dev/www/ndrx_phpinfo.php on line 2
 
-3.	Configure PHP4 according to the instructions for
+3.	Configure PHP5 according to the instructions for
 	that package.  You don't need to actually make
 	the package, the configure step will create the needed
 	header files.  Definitely you don't need to install a new
