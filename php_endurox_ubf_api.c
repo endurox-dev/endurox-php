@@ -23,7 +23,6 @@
 /* include the endurox headers */
 #include <atmi.h>
 #include <ubf.h>
-#include <ubf32.h>
 
 /* include standard php header */
 
@@ -43,20 +42,20 @@ extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handl
 	or an integer.  If its a string, it will cal Fldid(32) against
 	the argument to convert it to a true Field ID.
 */
-FLDID32 _get_arg_field_id (zval ** arg_field, int is32, int arg_no)
+BFLDID _get_arg_field_id (zval ** arg_field, int is32, int arg_no)
 {
-	FLDID32 field_id;
+	BFLDID field_id;
 		
 	switch (Z_TYPE_PP (arg_field)) {
 		case IS_STRING:  /* need to convert it to the real Field ID */
 
 			field_id = IS32 (is32,
-						Fldid32 ((*arg_field)->value.str.val),
+						Bfldid ((*arg_field)->value.str.val),
 						Fldid ((*arg_field)->value.str.val));
 			break;
 			
 		case IS_LONG:  /* everything is ok */
-			field_id = (FLDID32) (*arg_field)->value.lval;
+			field_id = (BFLDID) (*arg_field)->value.lval;
 			break;
 			
 		default:
@@ -1011,7 +1010,7 @@ ZEND_FUNCTION (ndrx_fdelall)
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
-	FLDID32 field_id;
+	BFLDID field_id;
 			
 	
 	if((ZEND_NUM_ARGS() != 2) || 
@@ -1043,7 +1042,7 @@ ZEND_FUNCTION (ndrx_fdelall)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Fdelall32 ((FBFR32*)ubf_buf_res->buf, (FLDID32) field_id),
+	RETURN_LONG (IS32 (is32, Fdelall32 ((FBFR32*)ubf_buf_res->buf, (BFLDID) field_id),
 							 Fdelall ((FBFR*) ubf_buf_res->buf, (FLDID) field_id)));
 }
 /* }}} */
@@ -1162,7 +1161,7 @@ ZEND_FUNCTION (ndrx_foccur)
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
-	FLDID32 field_id;
+	BFLDID field_id;
 		
 	
 	if((ZEND_NUM_ARGS() != 2) || 
@@ -1193,7 +1192,7 @@ ZEND_FUNCTION (ndrx_foccur)
 		RETURN_LONG (-1);
 
 
-	RETURN_LONG (IS32 (is32, Foccur32 ((FBFR32*)ubf_buf_res->buf, (FLDID32) field_id),
+	RETURN_LONG (IS32 (is32, Foccur32 ((FBFR32*)ubf_buf_res->buf, (BFLDID) field_id),
 							 Foccur ((FBFR*) ubf_buf_res->buf, (FLDID) field_id)));
 }
 /* }}} */
@@ -1234,7 +1233,7 @@ ZEND_FUNCTION (ndrx_fldid)
 
 	RETURN_LONG (
 		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fldid32 ((*arg_field_name)->value.str.val),
+			Bfldid ((*arg_field_name)->value.str.val),
 			Fldid ((*arg_field_name)->value.str.val)));
 }
 /* }}} */
@@ -1274,7 +1273,7 @@ ZEND_FUNCTION (ndrx_fldno)
 
 	RETURN_LONG (
 		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fldno32 ((FLDID32) (*arg_field_id)->value.lval),
+			Fldno32 ((BFLDID) (*arg_field_id)->value.lval),
 			Fldno ((FLDID) (*arg_field_id)->value.lval)));
 }
 /* }}} */
@@ -1314,7 +1313,7 @@ ZEND_FUNCTION (ndrx_fldtype)
 
 	RETURN_LONG (
 		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fldtype32 ((FLDID32) (*arg_field_id)->value.lval),
+			Fldtype32 ((BFLDID) (*arg_field_id)->value.lval),
 			Fldtype ((FLDID) (*arg_field_id)->value.lval)));
 }
 /* }}} */
@@ -1358,7 +1357,7 @@ ZEND_FUNCTION (ndrx_fmkfldid)
 
 	RETURN_LONG (
 		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fmkfldid32 ((int) (*arg_data_type)->value.lval, (FLDID32) (*arg_field_num)->value.lval),
+			Fmkbfldid ((int) (*arg_data_type)->value.lval, (BFLDID) (*arg_field_num)->value.lval),
 			Fmkfldid ((int) (*arg_data_type)->value.lval, (FLDID) (*arg_field_num)->value.lval)));
 }
 /* }}} */
@@ -1400,7 +1399,7 @@ ZEND_FUNCTION (ndrx_fname)
 
 	RETURN_STRING (
 		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Fname32 ((FLDID32) (*arg_field_id)->value.lval),
+			Fname32 ((BFLDID) (*arg_field_id)->value.lval),
 			Fname ((FLDID) (*arg_field_id)->value.lval)), 1);
 }
 /* }}} */
@@ -1483,7 +1482,7 @@ ZEND_FUNCTION (ndrx_ftype)
 
 	RETURN_STRING (
 		IS32 (((*arg_buf_type)->value.lval == NDRX_UBF32_BUF_TYPE),
-			Ftype32 ((FLDID32) (*arg_field_id)->value.lval),
+			Ftype32 ((BFLDID) (*arg_field_id)->value.lval),
 			Ftype ((FLDID) (*arg_field_id)->value.lval)), 1);
 }
 /* }}} */
@@ -1512,7 +1511,7 @@ ZEND_FUNCTION (ndrx_fdel)
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
-	FLDID32 field_id;
+	BFLDID field_id;
 			
 	
 	if((ZEND_NUM_ARGS() != 3) || 
@@ -1548,7 +1547,7 @@ ZEND_FUNCTION (ndrx_fdel)
 
 
 	RETURN_LONG (IS32 (is32, Fdel32 ((FBFR32*)ubf_buf_res->buf, 
-									 (FLDID32) field_id,
+									 (BFLDID) field_id,
 									 (FLDOCC32) (*arg_occ)->value.lval),
 							 Fdel   ((FBFR*) ubf_buf_res->buf, 
 							 		 (FLDID) field_id,
@@ -1575,7 +1574,7 @@ ZEND_FUNCTION (ndrx_flen)
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
-	FLDID32 field_id;
+	BFLDID field_id;
 		
 	
 	if((ZEND_NUM_ARGS() != 3) || 
@@ -1611,7 +1610,7 @@ ZEND_FUNCTION (ndrx_flen)
 
 
 	RETURN_LONG (IS32 (is32, Flen32 ((FBFR32*)ubf_buf_res->buf, 
-									 (FLDID32) field_id,
+									 (BFLDID) field_id,
 									 (FLDOCC32) (*arg_occ)->value.lval),
 							 Flen   ((FBFR*) ubf_buf_res->buf, 
 							 		 (FLDID) field_id,
@@ -1638,7 +1637,7 @@ ZEND_FUNCTION (ndrx_fpres)
 
 	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
-	FLDID32 field_id;
+	BFLDID field_id;
 	
 	if((ZEND_NUM_ARGS() != 3) || 
 		(zend_get_parameters_ex(3, 
@@ -1673,7 +1672,7 @@ ZEND_FUNCTION (ndrx_fpres)
 
 
 	RETURN_LONG (IS32 (is32, Fpres32 ((FBFR32*)ubf_buf_res->buf, 
-									 (FLDID32) field_id,
+									 (BFLDID) field_id,
 									 (FLDOCC32) (*arg_occ)->value.lval),
 							 Fpres   ((FBFR*) ubf_buf_res->buf, 
 							 		 (FLDID) field_id,
@@ -1701,7 +1700,7 @@ ZEND_FUNCTION (ndrx_fadd)
 	ndrx_tpalloc_buf_type * ubf_buf_res;
 	int is32;
 	FLDOCC32 occ = -1;
-	FLDID32 field_id;
+	BFLDID field_id;
 	
 
 	switch (ZEND_NUM_ARGS ())
@@ -1780,7 +1779,7 @@ ZEND_FUNCTION (ndrx_fget)
 	zval ** arg_field;
 	zval ** arg_occ_val;
 	int argc;
-	FLDID32 fldid;
+	BFLDID fldid;
 	int occ = 0;	/* first occurrence is default */
    
 	ndrx_tpalloc_buf_type *ubf_buf_res;
@@ -1834,7 +1833,7 @@ ZEND_FUNCTION (ndrx_fget)
 
 	/* get length of the field value  for memory allocation */
 	buflen = IS32 (is32, Flen32((FBFR32 *)ubf_buf_res->buf,
-								(FLDID32)fldid, (FLDOCC32)occ),
+								(BFLDID)fldid, (FLDOCC32)occ),
 						 Flen  ((FBFR *)ubf_buf_res->buf,
 								(FLDID)fldid, (FLDOCC)occ));
 
@@ -1847,14 +1846,14 @@ ZEND_FUNCTION (ndrx_fget)
 	}
 
 	rc = IS32 (is32, Fget32((FBFR32 *)ubf_buf_res->buf,
-							(FLDID32)fldid, (FLDOCC32)occ, buf, NULL),
+							(BFLDID)fldid, (FLDOCC32)occ, buf, NULL),
 					 Fget  ((FBFR *)ubf_buf_res->buf,
 							(FLDID)fldid, (FLDOCC)occ, buf, NULL));
 
 	if (rc == -1)
 		RETURN_FALSE;
 
-	switch (IS32(is32, Fldtype32((FLDID32) fldid), Fldtype((FLDID) fldid))) {
+	switch (IS32(is32, Fldtype32((BFLDID) fldid), Fldtype((FLDID) fldid))) {
 	case FLD_SHORT:
 		memcpy(&short_data, buf, sizeof(short));
 		RETVAL_LONG(short_data);

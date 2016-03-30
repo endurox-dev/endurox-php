@@ -14,7 +14,6 @@
 /* include the endurox headers */
 #include <atmi.h>
 #include <ubf.h>
-#include <ubf32.h>
 
 /* include standard php header */
 
@@ -47,8 +46,6 @@ ZEND_FUNCTION (ndrx_falloc)
 	zval ** arg_buf_fldlen;
 
 	long size_needed;
-	int is32;
-	
 
 	if((ZEND_NUM_ARGS() != 3) || 
 		(zend_get_parameters_ex(3, 
@@ -63,18 +60,9 @@ ZEND_FUNCTION (ndrx_falloc)
 	convert_to_long_ex (arg_buf_fldocc);
 	convert_to_long_ex (arg_buf_fldlen);
 	
-/*
-		Check to see if its a UBF or UBF32.
-*/
-	if ((is32 = _ndrx_is_ubf_type ((*arg_buf_type)->value.lval)) == -1)
-		RETURN_NULL ();
-
 	
-	size_needed = IS32 (is32, 
-						Fneeded32 ((*arg_buf_fldocc)->value.lval,
-								     (*arg_buf_fldlen)->value.lval),
-						Fneeded ((*arg_buf_fldocc)->value.lval,
-							  	   (*arg_buf_fldlen)->value.lval));
+	size_needed = Bneeded ((*arg_buf_fldocc)->value.lval,
+							  	   (*arg_buf_fldlen)->value.lval);
 
 /*
 		Now that we have the right size, call the generic alloc function
@@ -265,7 +253,7 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 			break;
 			
 		case HASH_KEY_IS_STRING:	/* a string, convert with  Fldid*/
-			ret_val = IS32 (is32, Fldid32 (str_index), Fldid (str_index));
+			ret_val = Fldid (str_index);
 			break;
 	
 		default:					/* How did this happen? */
@@ -290,26 +278,26 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 
 	We call Fldtype to determine the type of field they gave us, and cast accordingly.
 
-	Fappend(FBFR *fbfr, FLDID fieldid, char *value, FLDLEN len)
+	Fappend(UBFH *fbfr, FLDID fieldid, char *value, BFLDLEN len)
 	
 	UBF field types  -- ubf.h  these are the same for UBF32 also.
-		#define FLD_SHORT       0        short int 
-		#define FLD_LONG        1        long int 
-		#define FLD_CHAR        2        character 
-		#define FLD_FLOAT       3        single-precision float 
-		#define FLD_DOUBLE      4        double-precision float 
-		#define FLD_STRING      5        string - null terminated 
-		#define FLD_CARRAY      6        character array 
+		#define BFLD_SHORT       0        short int 
+		#define BFLD_LONG        1        long int 
+		#define BFLD_CHAR        2        character 
+		#define BFLD_FLOAT       3        single-precision float 
+		#define BFLD_DOUBLE      4        double-precision float 
+		#define BFLD_STRING      5        string - null terminated 
+		#define BFLD_CARRAY      6        character array 
   
 */
-long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid32, FLDOCC32 occ32)
+long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid, BFLDOCC occ32)
 {
 /*
 		This is a function pointer, its name F_add does not imply it points to
 		Fadd, actually it uses Fchg.
 */
-	FLDID fldid = (FLDID) fldid32;
-	FLDOCC occ = (FLDOCC) occ32;
+	BFLDID fldid = (BFLDID) bfldid;
+	BFLDOCC occ = (BFLDOCC) occ32;
 
 	int  fldid_type;
 	short short_data;
@@ -324,7 +312,7 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid3
 /*
 		First they passed us a fldid, find out what type it is.
 */
-	fldid_type = IS32(is32, Fldtype32 (fldid32), Fldtype (fldid));
+	fldid_type = Bfldtype (fldid);
 /*
 		Ok, we know what type the fldid is, we need to make
 		sure that the type of data they sent us is the same type.
@@ -333,64 +321,53 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid3
 */
 	switch (fldid_type)
 	{
-		case FLD_SHORT:		/* take a long and make it short */
+		case BFLD_SHORT:		/* take a long and make it short */
 			convert_to_long_ex (data);
 			short_data = (short) (*data)->value.lval;
-			ret_val = IS32 (is32, Fchg32((FBFR32*) buffer->buf, fldid32, occ32, (char*)&short_data, 0) ,
-								  Fchg ((FBFR*) buffer->buf, fldid, occ, (char*)&short_data, 0));
+			ret_val = Bchg((UBFH*) buffer->buf, bfldid, occ32, (char*)&short_data, 0);
 			break;
 			
 
-		case FLD_LONG:		/* nothing to do here except ensure its long */
+		case BFLD_LONG:		/* nothing to do here except ensure its long */
 			convert_to_long_ex (data);
 			long_data = (long) (*data)->value.lval;
-			ret_val = IS32 (is32, Fchg32((FBFR32*) buffer->buf, fldid32, occ32, (char*)&long_data, 0) ,
-								  Fchg ((FBFR*) buffer->buf, fldid, occ, (char*)&long_data, 0));
+			ret_val = Bchg((UBFH*) buffer->buf, bfldid, occ32, (char*)&long_data, 0);
 			break;
 			
 
-		case FLD_CHAR:		/* take a string and use only first character */
+		case BFLD_CHAR:		/* take a string and use only first character */
 			convert_to_string_ex (data);
 			char_data = (char) (*data)->value.str.val[0];  /* we only want the first char */
-			ret_val = IS32 (is32, Fchg32((FBFR32*) buffer->buf, fldid32, occ32, (char*)&char_data, 0) ,
-								  Fchg ((FBFR*) buffer->buf, fldid, occ, (char*)&char_data, 0));
+			ret_val = Bchg((UBFH*) buffer->buf, bfldid, occ32, (char*)&char_data, 0);
 			break;
 			
 
-		case FLD_FLOAT:		/* take a double and make it a float */
+		case BFLD_FLOAT:		/* take a double and make it a float */
 			convert_to_double_ex (data);
 			float_data = (float) (*data)->value.dval;
-			ret_val = IS32 (is32, Fchg32((FBFR32*) buffer->buf, fldid32, occ32, (char*)&float_data, 0) ,
-								  Fchg ((FBFR*) buffer->buf, fldid, occ, (char*)&float_data, 0));
+			ret_val = Bchg((UBFH*) buffer->buf, bfldid, occ32, (char*)&float_data, 0);
 			break;
 			
 
-		case FLD_DOUBLE:	/* nothing to do here */
+		case BFLD_DOUBLE:	/* nothing to do here */
 			convert_to_double_ex (data);
 			double_data = (double) (*data)->value.dval;
-			ret_val = IS32 (is32, Fchg32((FBFR32*) buffer->buf, fldid32, occ32, (char*)&double_data, 0) ,
-								  Fchg ((FBFR*) buffer->buf, fldid, occ, (char*)&double_data, 0));
+			ret_val = Bchg((UBFH*) buffer->buf, bfldid, occ32, (char*)&double_data, 0);
 			break;
 
 
-		case FLD_STRING:	/* nothing to do here */
+		case BFLD_STRING:	/* nothing to do here */
 			convert_to_string_ex (data);
-			ret_val = IS32 (is32, Fchg32((FBFR32*) buffer->buf, fldid32, occ32, (char*)(*data)->value.str.val, 0) ,
-								  Fchg ((FBFR*) buffer->buf, fldid, occ, (char*)(*data)->value.str.val, 0)); 
+			ret_val = Bchg((UBFH*) buffer->buf, bfldid, occ32, (char*)(*data)->value.str.val, 0);
 			break;
 
 
-		case FLD_CARRAY:	/* assume a string with binary safe copy, dont convert */
-			ret_val = IS32 (is32, Fchg32((FBFR32*)  buffer->buf, 
-													fldid32, 
+		case BFLD_CARRAY:	/* assume a string with binary safe copy, dont convert */
+			ret_val = Bchg((UBFH*)  buffer->buf, 
+													bfldid, 
 													occ32, 
 													(char*)(*data)->value.str.val, 
-													(FLDLEN32) (*data)->value.str.len) ,
-								  Fchg ((FBFR*)     buffer->buf, 
-								  					fldid, 
-													occ, 
-													(char*)(*data)->value.str.val, 
-								  					(FLDLEN) (*data)->value.str.len));
+													(BFLDLEN) (*data)->value.str.len);
 			break;
 		
 		
@@ -402,7 +379,7 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, FLDID32 fldid3
 	if (ret_val == -1)
 	{
 		zend_error (E_WARNING, "Failed to add field [%d] to UBF buffer [%s]", 
-			fldid32, IS32(is32, (char*)Fstrerror32(Ferror32), (char*)Fstrerror(Ferror)));
+			bfldid, (char*)Bstrerror(Berror));
 	}
 	return ret_val;
 }
@@ -441,14 +418,10 @@ ZEND_FUNCTION (ndrx_ubf2array)
 	zval ** arg_ubf_ref;
 	zval ** arg_index_flag;
 
-	FLDID fieldid;
-	FLDOCC occ;
-	FLDLEN len;
-	
-	FLDID32 fieldid32;
-	FLDOCC32 occ32;
-	FLDLEN32 len32;
-	FLDID32 last_fieldid;      /* stores the last fieldid we had, so I can tell if it changes */
+	BFLDID fieldid32;
+	BFLDOCC occ32;
+	BFLDLEN len32;
+	BFLDID last_fieldid;      /* stores the last fieldid we had, so I can tell if it changes */
 	
 	int is32;			/* our flag everywhere to tell us what type of buffer we have */
 	
@@ -511,7 +484,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 		A couple variable inits before the loop.
 */
 
-	fieldid = fieldid32 = last_fieldid = FIRSTFLDID;	/* start at the beginning */
+	fieldid32 = last_fieldid = BFIRSTFLDID;	/* start at the beginning */
 	array_ht = HASH_OF(return_value);  /* point us to the main array ht */
 
 /*
@@ -525,10 +498,9 @@ ZEND_FUNCTION (ndrx_ubf2array)
 			A return of -1 is an error.
 */
 
-	while ((len = len32 = sizeof(value)) && 
-		   memset (value, 0, len) &&		/* zero out for new data */
-		   (fnext_ret = IS32 (is32, Fnext32 ((FBFR32*)ubf_buf_res->buf, &fieldid32, &occ32, value, &len32),
-									Fnext ((FBFR*)ubf_buf_res->buf, &fieldid, &occ, value, &len))))
+	while ((len32 = sizeof(value)) && 
+		   memset (value, 0, len32) &&		/* zero out for new data */
+		   (fnext_ret = Bnext ((UBFH*)ubf_buf_res->buf, &fieldid32, &occ32, value, &len32)))
 	{
 		copy_val = value;		/* re-init the copy_val pointer */
 		dupe_string_flag = 1;	/* normally we want to duplicate any strings */
@@ -536,7 +508,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 		if (fnext_ret == -1)
 		{
 
-			if (IS32(is32, Ferror32, Ferror) == FNOSPACE)  /* value too small */
+			if (Berror == BNOSPACE)  /* value too small */
 			{
 				char * tmp_ptr;
 				long   tmp_len;
@@ -552,25 +524,22 @@ ZEND_FUNCTION (ndrx_ubf2array)
 				we can then use in Ffind.
 */
 
-				IS32 (is32, Fnext32 ((FBFR32*)ubf_buf_res->buf, &fieldid32, &occ32, NULL, &len32),
-									Fnext ((FBFR*)ubf_buf_res->buf, &fieldid, &occ, NULL, &len));
+				Bnext ((UBFH*)ubf_buf_res->buf, &fieldid32, &occ32, NULL, &len32);
 
-				tmp_ptr = IS32(is32, Ffind32 ((FBFR32*)ubf_buf_res->buf, fieldid32, occ32, &len32),
-							Ffind ((FBFR*) ubf_buf_res->buf, fieldid, occ, &len));
+				tmp_ptr = Bfind ((UBFH*)ubf_buf_res->buf, fieldid32, occ32, &len32);
 							
 				if (tmp_ptr == NULL)
 				{
 					zend_error (E_WARNING, "Unable to retrieve fieldid [%d, %s]",
-						IS32 (is32, fieldid32, fieldid), 
-						IS32 (is32, Fstrerror32 (Ferror32), Fstrerror (Ferror)));
+						fieldid32, Bstrerror (Berror));
 					RETURN_FALSE;
 				}
 				
 				
-				tmp_len = IS32(is32, len32, len);
+				tmp_len = len32;
 				if ((copy_val = emalloc (tmp_len)) == NULL)
 				{
-					zend_error (E_WARNING, "Unable to allocate %d bytes of memory", tmp_len);
+					zend_error (E_WARNING, "Unable to allocate %ld bytes of memory", tmp_len);
 					RETURN_FALSE;
 				}
 
@@ -583,26 +552,24 @@ ZEND_FUNCTION (ndrx_ubf2array)
 			else
 			{
 				zend_error (E_WARNING, "Failure getting next UBF record [%s]",
-						IS32(is32, (char*)Fstrerror32(Ferror32), (char*)Fstrerror(Ferror))); 
+						(char*)Bstrerror(Berror)); 
 				RETURN_FALSE;
 			}
 		}
 		
 
-		if (((is32) && (fieldid32 != last_fieldid))  ||  /* did we change to a new fieldid */
-			 (!is32) && (fieldid != last_fieldid))
+		if ((fieldid32 != last_fieldid))  /* did we change to a new fieldid */
 		{
-			last_fieldid = IS32(is32, fieldid32, fieldid);	
+			last_fieldid = fieldid32;
 /*
 				get the number of occurrences to expect.
 */
-			if ((cur_fieldid_occ = IS32(is32, Foccur32 ((FBFR32*)ubf_buf_res->buf, fieldid32),
-											 Foccur ((FBFR*) ubf_buf_res->buf, fieldid)))  <= 0)
+			if ((cur_fieldid_occ = Boccur ((UBFH*) ubf_buf_res->buf, fieldid32))  <= 0)
 			{
 				zend_error (E_WARNING, 
 					"Error determining number of occurrences for FLDID %d [%s]", 
-					IS32(is32,fieldid32,fieldid), 
-					IS32(is32, (char*)Fstrerror32(Ferror32), (char*)Fstrerror(Ferror)));
+					fieldid32,
+					(char*)Bstrerror(Berror));
 				RETURN_FALSE;
 			}
 /*
@@ -624,9 +591,8 @@ ZEND_FUNCTION (ndrx_ubf2array)
 				/*Update the return hash table with the UBF info */
 				if (_ndrx_update_ubf_zend_hash (
 						HASH_OF (return_value), 
-						IS32(is32, fieldid32, fieldid), 
+						fieldid32,
 						&d2_array, 
-						is32,
 						(*arg_index_flag)->value.lval) == -1)
 				{
 					RETURN_FALSE;
@@ -634,53 +600,53 @@ ZEND_FUNCTION (ndrx_ubf2array)
 			}
 			else
 			{
-				array_key = IS32 (is32, fieldid32, fieldid);	/* normally for single occurrences we want this */
+				array_key = fieldid32;	/* normally for single occurrences we want this */
 				multi_occ_flag = 0;
 				array_ht = HASH_OF(return_value);  /* point us to the main array ht */
 			}
 		}
 		else	/* we are on the multi-occurrence of a 2-d */
 		{
-			array_key = IS32(is32, occ32, occ);	/* this time we want to use the occurrence number */
+			array_key = occ32;	/* this time we want to use the occurrence number */
 		}
 
 
 		MAKE_STD_ZVAL (new_data);			/* allocate and init zval element */
 
-		switch ( IS32 (is32, Fldtype32 (fieldid32), Fldtype (fieldid)))
+		switch ( Bfldtype (fieldid32))
 		{
-			case FLD_SHORT:		/* take a short and store as long */
+			case BFLD_SHORT:		/* take a short and store as long */
 				memcpy (&short_data, copy_val, sizeof (short));
 				ZVAL_LONG (new_data, (long)short_data);
 				break;
 			
 
-			case FLD_LONG:		/* nothing to do here */
+			case BFLD_LONG:		/* nothing to do here */
 				memcpy (&long_data, copy_val, sizeof (long));
 				ZVAL_LONG (new_data, long_data);
 				break;
 						
 
-			case FLD_FLOAT:		/* take the float and store as double */
+			case BFLD_FLOAT:		/* take the float and store as double */
 				memcpy (&float_data, copy_val, sizeof (float));
 				ZVAL_DOUBLE (new_data, (double)float_data);
 				break;
 			
 
-			case FLD_DOUBLE:	/* nothing to do here */
+			case BFLD_DOUBLE:	/* nothing to do here */
 				memcpy (&double_data, copy_val, sizeof (double));
 				ZVAL_DOUBLE (new_data, double_data);
 				break;
 
 
-			case FLD_CHAR:		/* take the char and store as string */
-			case FLD_STRING:	/* nothing to do here */
+			case BFLD_CHAR:		/* take the char and store as string */
+			case BFLD_STRING:	/* nothing to do here */
 				ZVAL_STRING (new_data, copy_val, dupe_string_flag);
 				break;
 		
 
-			case FLD_CARRAY:	/* assume a string with binary safe copy, dont convert */
-				ZVAL_STRINGL (new_data, copy_val, len, dupe_string_flag);  /* binary safe copy */
+			case BFLD_CARRAY:	/* assume a string with binary safe copy, dont convert */
+				ZVAL_STRINGL (new_data, copy_val, len32, dupe_string_flag);  /* binary safe copy */
 				break;
 				
 				
@@ -699,7 +665,6 @@ ZEND_FUNCTION (ndrx_ubf2array)
 				array_ht, 
 				array_key, 
 				&new_data, 
-				is32, 
 				multi_occ_flag ? 0 : (*arg_index_flag)->value.lval) 
 			== -1)
 		{
@@ -710,7 +675,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 }
 
 
-long _ndrx_update_ubf_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data, int is32, int flag)
+long _ndrx_update_ubf_zend_hash (HashTable *ht, BFLDID fieldid32, zval ** data, int flag)
 {
 	char * (*f_name) (long);	/*define a function pointer */
 	char * name;
@@ -727,7 +692,7 @@ long _ndrx_update_ubf_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data,
 */				
 	if (flag & 2)		/* they want the Field Number */
 	{
-		if (zend_hash_index_update (ht, IS32(is32, Fldno32(fieldid32), Fldno((FLDID)fieldid32)), 
+		if (zend_hash_index_update (ht, Bfldno(fieldid32), 
 				(void*) data, sizeof (zval*), NULL) == FAILURE)
 		{
 			zend_error (E_WARNING, "Unable to convert to Field Number, returning as FieldID");
@@ -737,7 +702,7 @@ long _ndrx_update_ubf_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data,
 	
 	if (flag & 4)		/* they want the Field Name */
 	{
-		if ((name = IS32 (is32, Fname32 (fieldid32), Fname ((FLDID) fieldid32))) == NULL)
+		if ((name = Bfname (fieldid32)) == NULL)
 		{
 			zend_error (E_WARNING, "Error converting FIELDID to Fname, returning as FieldID");
 			flag &= ~4;  /* unset the bit for below */

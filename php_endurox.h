@@ -10,8 +10,6 @@
 
 #include <atmi.h>
 #include <ubf.h>
-#include <ubf32.h>
-#include <tx.h>
 
 #include "php.h"
 
@@ -38,14 +36,6 @@ static char _php_ndrx_ver[] = "0.4.0";
 #define NDRX_VIEW_BUF_TYPE		4
  
 									  
-#if (NDRX_UBF32 && NDRX_UBF)
-#define IS32(flag,a,b) ((flag) ? (a) : (b))
-#elif NDRX_UBF32
-#define IS32(flag,a,b) (a)
-#elif NDRX_UBF
-#define IS32(flag,a,b) (b)
-#endif
-
 extern zend_module_entry endurox_module_entry;
 
 /*
@@ -139,9 +129,9 @@ static void free_ndrx_tpalloc_buf(ndrx_tpalloc_buf_type *);
 long _ndrx_alloc (long type, char * subtype, long size);
 char * _ndrx_type2string (long type);
 long _ndrx_get_ubfarray_key (HashTable * ht, int);
-long _ndrx_ubf_add (ndrx_tpalloc_buf_type *, zval **, FLDID32 fldid32, FLDOCC32 occ32);
-long _ndrx_update_ubf_zend_hash (HashTable *ht, FLDID32 fieldid32, zval ** data, int ubftype, int flag);
+long _ndrx_ubf_add (ndrx_tpalloc_buf_type *, zval **, BFLDID bfldid, BFLDOCC occ32);
+long _ndrx_update_ubf_zend_hash (HashTable *ht, BFLDID fieldid32, zval ** data, int flag);
 int  _ndrx_is_ubf_type (int);
-FLDID32 _get_arg_field_id (zval ** arg_field, int is32, int arg_no);
+BFLDID _get_arg_field_id (zval ** arg_field, int is32, int arg_no);
 
 #define phpext_endurox_ptr &endurox_module_entry

@@ -15,7 +15,6 @@
 /* include the endurox headers */
 #include <atmi.h>
 #include <ubf.h>
-#include <ubf32.h>
 
 /* include standard php header */
 
@@ -50,11 +49,7 @@ zend_function_entry endurox_functions[] =
 	ZEND_FE (ndrx_get_buf, NULL)
 	ZEND_FE (ndrx_tpcall, NULL)
 	ZEND_FE (ndrx_tpacall, NULL)
-#if ZEND_MODULE_API_NO >= 20010901
-	ZEND_FE (ndrx_tpgetrply, first_arg_force_ref)
-#else
 	ZEND_FE (ndrx_tpgetrply, NULL)
-#endif
 	ZEND_FE (ndrx_tpclose, NULL)
 	ZEND_FE (ndrx_tpterm, NULL)
 	ZEND_FE (ndrx_tpinit, NULL)
@@ -174,15 +169,6 @@ ZEND_MINIT_FUNCTION (endurox)
 	REGISTER_LONG_CONSTANT("NDRX_TPEMIB", TPEMIB, CONSTANT_FLAG);
 	REGISTER_LONG_CONSTANT("NDRX_TPMAXVAL", TPMAXVAL, CONSTANT_FLAG);
 
-/*
-		These are less frequent used.
-*/
-
-	REGISTER_LONG_CONSTANT("NDRX_TPU_SIG", TPU_SIG, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPU_DIP", TPU_DIP, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPU_IGN", TPU_IGN, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPSA_FASTPATH", TPSA_FASTPATH, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPSA_PROTECTED", TPSA_PROTECTED, CONSTANT_FLAG);
 	
 	return SUCCESS;
 }
@@ -213,7 +199,7 @@ ZEND_RINIT_FUNCTION (endurox)
 		In case the previous ended in an error, zero them out.
 */
 	tperrno = 0;
-	Ferror = 0;
+	Berror = 0;
 	return SUCCESS;
 }
 

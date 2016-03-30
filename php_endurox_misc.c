@@ -17,7 +17,6 @@
 /* include the endurox headers */
 #include <atmi.h>
 #include <ubf.h>
-#include <ubf32.h>
 
 /* include standard php header */
 
