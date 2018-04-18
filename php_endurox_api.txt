@@ -14,8 +14,8 @@ Bookshelf are particularly good references.
 
                          Function                                      Description                 Version        Status
                                                                                                     Added
- ndrx_array2ubf                                            Move array values into UBF             0.2.0        Tested
-                                                          ndrx_array2ubf (buffer #, array)
+ ndrxph_array2ubf                                            Move array values into UBF             0.2.0        Tested
+                                                          ndrxph_array2ubf (buffer #, array)
                                                           buffer#: The Endurox buffer reference number for values to be
                                                           stored in. Must be a valid UBF/UBF32 Endurox buffer.
                                                           array: a 1 or 2 dimensional array to move the values from. The
@@ -31,10 +31,10 @@ Bookshelf are particularly good references.
                                                           Fchg Endurox API function. See the examples for a simple usage.
 
                                                           This function has no single equivalent Endurox API function.
-                                                          See Also: ndrx_ubf2array, ATR Baltic Documentation of Fchg and related
+                                                          See Also: ndrxph_ubf2array, ATR Baltic Documentation of Fchg and related
                                                           functions.
- ndrx_ubf2array                                            Move UBF values into an array          0.2.0        Tested
-                                                          ndrx_ubf2array (buffer #, flag)
+ ndrxph_ubf2array                                            Move UBF values into an array          0.2.0        Tested
+                                                          ndrxph_ubf2array (buffer #, flag)
                                                           buffer#: The Endurox buffer reference number for values to taken
                                                           from. Must be a valid UBF/UBF32 Endurox buffer.
 
@@ -54,30 +54,30 @@ Bookshelf are particularly good references.
                                                           occurences result in a NULL value.
 
                                                           This function has no single equivalent Endurox API function.
-                                                          See Also: ndrx_array2ubf, ATR Baltic Documentation of Fnext and related
+                                                          See Also: ndrxph_array2ubf, ATR Baltic Documentation of Fnext and related
                                                           functions.
- ndrx_get_buf                                              Retrieve contents of buffer            0.1.0        Tested
-                                                          ndrx_get_buf (buffer #)
+ ndrxph_get_buf                                              Retrieve contents of buffer            0.1.0        Tested
+                                                          ndrxph_get_buf (buffer #)
                                                           buffer#: The Endurox buffer reference number.
 
                                                           Returns contents of Endurox STRING or CARRAY buffer.
 
                                                           This function has no equivalent ATR Baltic function because raw Endurox
                                                           functions allow direct access to the buffer contents. Call this
-                                                          function after ndrx_tpcall (or tpacall) to get the contents in the
+                                                          function after ndrxph_tpcall (or tpacall) to get the contents in the
                                                           buffer.
 
-                                                          See Also: ndrx_put_buf.
- ndrx_get_tperrno                                          Retrieve contents of tperrno           0.1.0        Tested
-                                                          ndrx_get_tperrno ()
+                                                          See Also: ndrxph_put_buf.
+ ndrxph_get_tperrno                                          Retrieve contents of tperrno           0.1.0        Tested
+                                                          ndrxph_get_tperrno ()
 
                                                           Returns the value of the Endurox global variable tperrno, similar
                                                           to the UNIX errno. Results are usually used in calls to
-                                                          ndrx_tpstrerror.
+                                                          ndrxph_tpstrerror.
 
-                                                          See Also: ndrx_tpstrerror, ATR Baltic documentation.
- ndrx_put_buf                                              Store value into Endurox buffer         0.1.0        Tested
-                                                          ndrx_put_buf (buffer #, data)
+                                                          See Also: ndrxph_tpstrerror, ATR Baltic documentation.
+ ndrxph_put_buf                                              Store value into Endurox buffer         0.1.0        Tested
+                                                          ndrxph_put_buf (buffer #, data)
                                                           buffer#: The Endurox buffer reference number.
                                                           data: The contents to be placed into the buffer. Data is copied
                                                           using binary safe memcpy.
@@ -86,15 +86,15 @@ Bookshelf are particularly good references.
 
                                                           Places the contents of data into the Endurox buffer.
 
-                                                          See Also: ndrx_put_buf.
- ndrx_tpabort                                              Abort a Endurox transaction.            0.1.0        Not Tested
-                                                          ndrx_tpabort ()
+                                                          See Also: ndrxph_put_buf.
+ ndrxph_tpabort                                              Abort a Endurox transaction.            0.1.0        Not Tested
+                                                          ndrxph_tpabort ()
 
                                                           Rollback a pending Endurox transaction.
 
-                                                          See Also: ndrx_tpcommit, ndrx_tpbegin, ATR Baltic Documentation
- ndrx_tpalloc                                              Allocate a Endurox Buffer               0.1.0        Tested
-                                                          ndrx_tpalloc (type, sub_type, size)
+                                                          See Also: ndrxph_tpcommit, ndrxph_tpbegin, ATR Baltic Documentation
+ ndrxph_tpalloc                                              Allocate a Endurox Buffer               0.1.0        Tested
+                                                          ndrxph_tpalloc (type, sub_type, size)
                                                           type: Predefined constant indicating the type of buffer to create
                                                           sub_type: String indicating the subtype of buffer to create. Use
                                                           "" for NULL value.
@@ -105,22 +105,22 @@ Bookshelf are particularly good references.
                                                           Error Return: False
                                                           Type Definitions:
 
-                                                          NDRX_STRING:
+                                                          NDRXPH_STRING:
                                                                Create a standard Endurox STRING buffer.
-                                                          NDRX_CARRAY
+                                                          NDRXPH_CARRAY
                                                                Create a standard Endurox CARRAY buffer. Not fully tested.
-                                                          NDRX_UBF
+                                                          NDRXPH_UBF
                                                                Create a Endurox bisubf UBF buffer.
-                                                          NDRX_UBF32
+                                                          NDRXPH_UBF32
                                                                Create a Endurox bisubf UBF32 buffer
-                                                          NDRX_VIEW
+                                                          NDRXPH_VIEW
                                                                Create a Endurox View buffer. Not tested
 
-                                                          See Also: ndrx_falloc, ATR Baltic Documentation
+                                                          See Also: ndrxph_falloc, ATR Baltic Documentation
 
- ndrx_tpacall                                              Send an allocated buffer async         0.1.0        Minimal
+ ndrxph_tpacall                                              Send an allocated buffer async         0.1.0        Minimal
                                                                                                               testing
-                                                          ndrx_tpacall (srvc, in_buf, flags)
+                                                          ndrxph_tpacall (srvc, in_buf, flags)
                                                           srvc: A string containing the name of the Endurox service to call.
                                                           in_buf: Input buffer given to service.
                                                           flags: Flags passed on to tpcall, see tpacall documentation.
@@ -130,15 +130,15 @@ Bookshelf are particularly good references.
 
                                                           Just like tpcall except call does not block for reply.
 
-                                                          See Also: ndrx_tpcall, ATR Baltic documentation.
- ndrx_tpbegin                                              Start a Endurox transaction.            0.1.0        Not Tested
-                                                          ndrx_tpbegin ()
+                                                          See Also: ndrxph_tpcall, ATR Baltic documentation.
+ ndrxph_tpbegin                                              Start a Endurox transaction.            0.1.0        Not Tested
+                                                          ndrxph_tpbegin ()
 
                                                           Start a Endurox transaction.
 
-                                                          See Also: ndrx_tpcommit, ndrx_tpabort, ATR Baltic Documentation
- ndrx_tpcall                                               Send an allocated buffer.              0.1.0        Tested
-                                                          ndrx_tpcall (srvc, in_buf, out_buf, flags)
+                                                          See Also: ndrxph_tpcommit, ndrxph_tpabort, ATR Baltic Documentation
+ ndrxph_tpcall                                               Send an allocated buffer.              0.1.0        Tested
+                                                          ndrxph_tpcall (srvc, in_buf, out_buf, flags)
                                                           srvc: A string containing the name of the Endurox service to call.
                                                           in_buf: Input buffer given to service.
                                                           out_buf: Reply buffer service fills after execution.
@@ -147,22 +147,22 @@ Bookshelf are particularly good references.
                                                           Return Value: Int equaling returns value of raw tpcall function.
                                                           Error Return: -1.
 
-                                                          See Also: ndrx_tpacall, ATR Baltic documentation.
- ndrx_tpclose                                              Close a Endurox session.                0.1.0        Tested
-                                                          ndrx_tpclose ()
+                                                          See Also: ndrxph_tpacall, ATR Baltic documentation.
+ ndrxph_tpclose                                              Close a Endurox session.                0.1.0        Tested
+                                                          ndrxph_tpclose ()
 
                                                           Closes current Endurox connection, direct call to Endurox tpclose
                                                           function.
 
                                                           See Also: ATR Baltic documentation.
- ndrx_tpcommit                                             Commit a Endurox transaction.           0.1.0        Not Tested
-                                                          ndrx_tpcommit ()
+ ndrxph_tpcommit                                             Commit a Endurox transaction.           0.1.0        Not Tested
+                                                          ndrxph_tpcommit ()
 
                                                           Commit a Endurox transaction.
 
-                                                          See Also: ndrx_tpabort, ndrx_tpbegin, ATR Baltic Documentation
- ndrx_tpfree                                               Free a Endurox buffer.                  0.1.0        Tested
-                                                          ndrx_tpfree (buffer #)
+                                                          See Also: ndrxph_tpabort, ndrxph_tpbegin, ATR Baltic Documentation
+ ndrxph_tpfree                                               Free a Endurox buffer.                  0.1.0        Tested
+                                                          ndrxph_tpfree (buffer #)
                                                           buffer#: The Endurox buffer reference number.
 
                                                           Release resources and memory associated with a Endurox buffer.
@@ -170,11 +170,11 @@ Bookshelf are particularly good references.
                                                           All Endurox buffers are automatically freed at the end of the page
                                                           processing.
 
-                                                          See Also: ndrx_tpalloc, ATR Baltic documentation.
+                                                          See Also: ndrxph_tpalloc, ATR Baltic documentation.
 
- ndrx_tpgetrply                                            Retrieve results from tpacall          0.1.0        Minimal
+ ndrxph_tpgetrply                                            Retrieve results from tpacall          0.1.0        Minimal
                                                                                                               testing
-                                                          ndrx_tpgetrply (&cd, out_buf#, flags)
+                                                          ndrxph_tpgetrply (&cd, out_buf#, flags)
                                                           &cd: Reference to int cd value. Value may be altered on return to
                                                           contain cd from tpacall.
                                                           out_buf#: Endurox reference number for results to be placed in.
@@ -185,9 +185,9 @@ Bookshelf are particularly good references.
                                                           Retrieves results from completed tpacall and places results into
                                                           out_buf..
 
-                                                          See Also: ndrx_tpacall, ATR Baltic documentation.
- ndrx_tpinit                                               Open connection to Endurox              0.1.0        Tested
-                                                          ndrx_tpinit (username, clientname, password, flags)
+                                                          See Also: ndrxph_tpacall, ATR Baltic documentation.
+ ndrxph_tpinit                                               Open connection to Endurox              0.1.0        Tested
+                                                          ndrxph_tpinit (username, clientname, password, flags)
                                                           username: String containing the Endurox user name for this
                                                           application.
                                                           clientname: String containing the client identifier name.
@@ -200,16 +200,16 @@ Bookshelf are particularly good references.
                                                           tpinit is currently set to
                                                           NULL because we are using the Endurox Workstation Listener.
 
-                                                          See Also: ndrx_tpclose, ATR Baltic documentation.
+                                                          See Also: ndrxph_tpclose, ATR Baltic documentation.
 
- ndrx_tpstrerror                                           Return error string                    0.1.0        Minimal
+ ndrxph_tpstrerror                                           Return error string                    0.1.0        Minimal
                                                                                                               Testing
-                                                          ndrx_tpstrerror (tperror)
-                                                          tperror: Endurox error number usually returned from ndrx_get_tperrno
+                                                          ndrxph_tpstrerror (tperror)
+                                                          tperror: Endurox error number usually returned from ndrxph_get_tperrno
 
                                                           Returns a string associated with the provided error number.
 
-                                                          See Also: ndrx_get_tperrno, ATR Baltic documentation.
+                                                          See Also: ndrxph_get_tperrno, ATR Baltic documentation.
 
  Low Level UBF/UBF32 Functions
  Most of these UBF functions have one-for-one equivalents
@@ -226,14 +226,14 @@ Bookshelf are particularly good references.
  Send me an email.
 
  NOTE: As of version 0.4.0, the following functions
- (ndrx_bdelall, ndrx_boccur, ndrx_bdel, ndrx_blen, ndrx_bpres,
- ndrx_badd, and ndrx_bget) can take a Field Name string in
+ (ndrxph_bdelall, ndrxph_boccur, ndrxph_bdel, ndrxph_blen, ndrxph_bpres,
+ ndrxph_badd, and ndrxph_bget) can take a Field Name string in
  place of the Field ID parameter. If the provided
  argument is a string (as defined in PHP) the bfldid
  function will be called to convert the string to its
  Field ID before processing.
- ndrx_badd                                                 Add new field occurrence.              0.3.0        Tested
-                                                          ndrx_badd (buff#, Field_ID, data, occur)
+ ndrxph_badd                                                 Add new field occurrence.              0.3.0        Tested
+                                                          ndrxph_badd (buff#, Field_ID, data, occur)
                                                           buff#: The buffer reference number for the data value to be added.
 
                                                           field_id: If numeric, the numerical field id for data to be added.
@@ -250,16 +250,16 @@ Bookshelf are particularly good references.
 
                                                           Return value is a long.
 
-                                                          ndrx_badd and ndrx_fchg are aliased to the same function code. The
+                                                          ndrxph_badd and ndrxph_fchg are aliased to the same function code. The
                                                           only difference between the two original functions is Fchg allowed
                                                           the specification of an occurrence where Badd did not.
 
                                                           See ATR Baltic documentation for Badd and Fchg for more information.
- ndrx_fchg                                                 Add / change new field occurrence.     0.3.0        Tested
-                                                          See ndrx_badd.
- ndrx_bconcat                                              Concatenate source and destination     0.3.0        Tested
+ ndrxph_fchg                                                 Add / change new field occurrence.     0.3.0        Tested
+                                                          See ndrxph_badd.
+ ndrxph_bconcat                                              Concatenate source and destination     0.3.0        Tested
                                                           UBF/UBF32 buffers.
-                                                          ndrx_bconcat (dest_buff#, source_buff#)
+                                                          ndrxph_bconcat (dest_buff#, source_buff#)
                                                           dest_buff#: Input UBF/UBF32 destination buffer.
                                                           source_buff#: Input UBF/UBF32 source buffer.
 
@@ -269,9 +269,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bconcat for more information.
 
- ndrx_bcpy                                                 Copy source to destination UBF/UBF32   0.3.0        Tested
+ ndrxph_bcpy                                                 Copy source to destination UBF/UBF32   0.3.0        Tested
                                                           buffers.
-                                                          ndrx_bcpy (dest_buff#, source_buff#)
+                                                          ndrxph_bcpy (dest_buff#, source_buff#)
                                                           dest_buff#: Input UBF/UBF32 destination buffer.
 
                                                           source_buff#: Input UBF/UBF32 source buffer.
@@ -281,8 +281,8 @@ Bookshelf are particularly good references.
                                                           Return value is a long.
 
                                                           See ATR Baltic documentation for Bcpy for more information.
- ndrx_bdel                                                 Delete field occurrence.               0.3.0        Tested
-                                                          ndrx_bdel (buff#, Field_ID, occur)
+ ndrxph_bdel                                                 Delete field occurrence.               0.3.0        Tested
+                                                          ndrxph_bdel (buff#, Field_ID, occur)
                                                           buff#: The buffer reference number for the data value to be
                                                           deleted.
 
@@ -296,9 +296,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bdel for more information.
 
- ndrx_bdelall                                              Delete all field occurrences from      0.3.0        Tested
+ ndrxph_bdelall                                              Delete all field occurrences from      0.3.0        Tested
                                                           UBF/UBF32 buffers.
-                                                          ndrx_bdelall (buff#, Field_ID)
+                                                          ndrxph_bdelall (buff#, Field_ID)
                                                           buff#: Input UBF/UBF32 destination buffer.
                                                           field_id: If numeric, the numerical field id for data to be added.
                                                           If string, the Field Name for the corresponding Field ID. The
@@ -310,9 +310,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bdelall for more information.
 
- ndrx_bfprint                                              Print bisubf buffer to specified      0.4.0        Tested
+ ndrxph_bfprint                                              Print bisubf buffer to specified      0.4.0        Tested
                                                           stream from UBF/UBF32 buffers.
-                                                          ndrx_bfprint (buff#, fileref#)
+                                                          ndrxph_bfprint (buff#, fileref#)
                                                           buff#: Input UBF/UBF32 destination buffer.
 
                                                           fileref#: A previously open PHP file reference. This file
@@ -324,9 +324,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bfprint for more information.
 
- ndrx_bget                                                 Retrieve field occurrences from        0.4.0        Tested
+ ndrxph_bget                                                 Retrieve field occurrences from        0.4.0        Tested
                                                           UBF/UBF32 buffers.
-                                                          ndrx_bget (buff#, Field_ID, occur)
+                                                          ndrxph_bget (buff#, Field_ID, occur)
                                                           buff#: Input UBF/UBF32 destination buffer.
                                                           field_id: If numeric, the numerical field id for data to be added.
                                                           If string, the Field Name for the corresponding Field ID. The
@@ -339,10 +339,10 @@ Bookshelf are particularly good references.
                                                           Return value is a long.
 
                                                           See ATR Baltic documentation for Bget for more information.
-                                                          Also see ndrx_ubf2array to convert an entire UBF/UBF32 structure
+                                                          Also see ndrxph_ubf2array to convert an entire UBF/UBF32 structure
                                                           into a PHP array.
- ndrx_bidxused                                             Return amount of space used by index.  0.3.0        Tested
-                                                          ndrx_bidxused (buff#)
+ ndrxph_bidxused                                             Return amount of space used by index.  0.3.0        Tested
+                                                          ndrxph_bidxused (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
 
                                                           Indicates the current amount of space used by the buffer's index.
@@ -350,19 +350,19 @@ Bookshelf are particularly good references.
                                                           Return value is a long.
 
                                                           See ATR Baltic documentation for Bidxused for more information.
- ndrx_bisubf                                              Return TRUE if buffer bisubf.         0.3.0        Tested
-                                                          ndrx_bisubf (buff#)
+ ndrxph_bisubf                                              Return TRUE if buffer bisubf.         0.3.0        Tested
+                                                          ndrxph_bisubf (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
 
                                                           Used to test whether the specified buffer is bisubf
 
                                                           Return value is a long.
 
- ndrx_bfldid                                                Map field name to field identifier.    0.3.0        Tested
-                                                          ndrx_bfldid (field_name, type)
+ ndrxph_bfldid                                                Map field name to field identifier.    0.3.0        Tested
+                                                          ndrxph_bfldid (field_name, type)
                                                           field_name: string containing field name to be mapped.
 
-                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          type: one of two pre-defined constants (NDRXPH_UBF, or NDRXPH_UBF32) to
                                                           indicate whether to perform the mapping using UBF or UBF32
                                                           functions.
 
@@ -375,11 +375,11 @@ Bookshelf are particularly good references.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
- ndrx_bfldno                                                Map field identifier to field number.  0.3.0        Tested
-                                                          ndrx_bfldno (field_id, type)
+ ndrxph_bfldno                                                Map field identifier to field number.  0.3.0        Tested
+                                                          ndrxph_bfldno (field_id, type)
                                                           field_id: numerical field id.
 
-                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          type: one of two pre-defined constants (NDRXPH_UBF, or NDRXPH_UBF32) to
                                                           indicate whether to perform the mapping using UBF or UBF32
                                                           functions.
 
@@ -392,11 +392,11 @@ Bookshelf are particularly good references.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
- ndrx_bfldtype                                              Map field identifier to field type.    0.3.0        Tested
-                                                          ndrx_bfldtype (field_id, type)
+ ndrxph_bfldtype                                              Map field identifier to field type.    0.3.0        Tested
+                                                          ndrxph_bfldtype (field_id, type)
                                                           field_id: numerical field id.
 
-                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          type: one of two pre-defined constants (NDRXPH_UBF, or NDRXPH_UBF32) to
                                                           indicate whether to perform the mapping using UBF or UBF32
                                                           functions.
 
@@ -409,9 +409,9 @@ Bookshelf are particularly good references.
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
 
- ndrx_blen                                                 Return len of field occurrence in      0.3.0        Tested
+ ndrxph_blen                                                 Return len of field occurrence in      0.3.0        Tested
                                                           buffer.
-                                                          ndrx_blen (buff#, Field_ID, occur)
+                                                          ndrxph_blen (buff#, Field_ID, occur)
                                                           buff#: The buffer reference number.
 
                                                           field_id: If numeric, the numerical field id for data to be added.
@@ -423,12 +423,12 @@ Bookshelf are particularly good references.
                                                           Return value is a long.
 
                                                           See ATR Baltic documentation for Blen for more information.
- ndrx_bmkfldid                                             Make a field identifier.               0.3.0        Tested
-                                                          ndrx_bmkfldid (data_type, field_num, type)
+ ndrxph_bmkfldid                                             Make a field identifier.               0.3.0        Tested
+                                                          ndrxph_bmkfldid (data_type, field_num, type)
                                                           data_type: numerical data type in ubf.h.
                                                           field_num: numerical field number.
 
-                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          type: one of two pre-defined constants (NDRXPH_UBF, or NDRXPH_UBF32) to
                                                           indicate whether to perform the mapping using UBF or UBF32
                                                           functions.
 
@@ -442,11 +442,11 @@ Bookshelf are particularly good references.
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
 
- ndrx_bfname                                                Map field identifier to field name.    0.3.0        Tested
-                                                          ndrx_bfname (field_id, type)
+ ndrxph_bfname                                                Map field identifier to field name.    0.3.0        Tested
+                                                          ndrxph_bfname (field_id, type)
                                                           field_id: numerical field id.
 
-                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          type: one of two pre-defined constants (NDRXPH_UBF, or NDRXPH_UBF32) to
                                                           indicate whether to perform the mapping using UBF or UBF32
                                                           functions.
 
@@ -459,9 +459,9 @@ Bookshelf are particularly good references.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
- ndrx_boccur                                               Return count of field occurrence in    0.3.0        Tested
+ ndrxph_boccur                                               Return count of field occurrence in    0.3.0        Tested
                                                           buffer.
-                                                          ndrx_boccur (buff#, Field_ID)
+                                                          ndrxph_boccur (buff#, Field_ID)
                                                           buff#: The buffer reference number.
 
                                                           field_id: If numeric, the numerical field id for data to be added.
@@ -475,9 +475,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Boccur for more information.
 
- ndrx_bpres                                                Return TRUE if field occurrence in     0.3.0        Tested
+ ndrxph_bpres                                                Return TRUE if field occurrence in     0.3.0        Tested
                                                           buffer.
-                                                          ndrx_bpres (buff#, Field_ID, occur)
+                                                          ndrxph_bpres (buff#, Field_ID, occur)
                                                           buff#: The buffer reference number.
 
                                                           field_id: If numeric, the numerical field id for data to be added.
@@ -490,21 +490,21 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bpres for more information.
 
- ndrx_brstrindex                                           Restore index in bisubf UBF/UBF32     0.3.0        Tested
+ ndrxph_brstrindex                                           Restore index in bisubf UBF/UBF32     0.3.0        Tested
                                                           buffer.
-                                                          ndrx_brstrindex (buff#, numidx)
+                                                          ndrxph_brstrindex (buff#, numidx)
                                                           buff#: Input UBF/UBF32 buffer.
 
-                                                          numidx: The return from the ndrx_bunindex function.
+                                                          numidx: The return from the ndrxph_bunindex function.
 
                                                           A bisubf buffer that has been unindexed may be reindexed by
-                                                          either calling ndrx_findex or ndrx_frstrindx
+                                                          either calling ndrxph_findex or ndrxph_frstrindx
 
                                                           Return value is a long.
 
                                                           See ATR Baltic documentation for Brstrindex for more information.
- ndrx_bsizeof                                              Return size of bisubf buffer.         0.3.0        Tested
-                                                          ndrx_bsizeof (buff#)
+ ndrxph_bsizeof                                              Return size of bisubf buffer.         0.3.0        Tested
+                                                          ndrxph_bsizeof (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
 
                                                           Returns size of the bisubf UBF/UBF32 buffer.
@@ -512,19 +512,19 @@ Bookshelf are particularly good references.
                                                           Return value is a long.
 
                                                           See ATR Baltic documentation for Bsizeof for more information.
- ndrx_bstrerror                                            Retrieve UBF error description.        0.3.0        Tested
-                                                          ndrx_bstrerror (berror)
+ ndrxph_bstrerror                                            Retrieve UBF error description.        0.3.0        Tested
+                                                          ndrxph_bstrerror (berror)
                                                           berror: Value of internal UBF variable "berror".
 
                                                           Returns a string containing the error description for berror.
-                                                          berror can be retrieved from the api function ndrx_get_berror.
+                                                          berror can be retrieved from the api function ndrxph_get_berror.
 
                                                           This function has no equivalent ATR Baltic function.
- ndrx_btype                                                Return string to type of field.        0.3.0        Tested
-                                                          ndrx_btype (field_id, type)
+ ndrxph_btype                                                Return string to type of field.        0.3.0        Tested
+                                                          ndrxph_btype (field_id, type)
                                                           field_id: numerical field id.
 
-                                                          type: one of two pre-defined constants (NDRX_UBF, or NDRX_UBF32) to
+                                                          type: one of two pre-defined constants (NDRXPH_UBF, or NDRXPH_UBF32) to
                                                           indicate whether to perform the mapping using UBF or UBF32
                                                           functions.
 
@@ -537,8 +537,8 @@ Bookshelf are particularly good references.
 
                                                           The type parameter is required because the function does not take
                                                           a UBF buffer reference so it doesn't know how to do the mapping.
- ndrx_bunindex                                             Discard index to fieded buffer..       0.3.0        Tested
-                                                          ndrx_bunindex (buff#)
+ ndrxph_bunindex                                             Discard index to fieded buffer..       0.3.0        Tested
+                                                          ndrxph_bunindex (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
 
                                                           Discards index to UBF/UBF32 bisubf buffer.
@@ -547,9 +547,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bunindex for more information.
 
- ndrx_bunused                                              Return number of bytes not used in     0.3.0        Tested
+ ndrxph_bunused                                              Return number of bytes not used in     0.3.0        Tested
                                                           fieded buffer..
-                                                          ndrx_bunused (buff#)
+                                                          ndrxph_bunused (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
 
                                                           Returns the amount of space currently unused in the UBF/UBF32
@@ -559,9 +559,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bunused for more information.
 
- ndrx_bupdate                                              Update destination UBF/UBF32 buffers   0.3.0        Tested
+ ndrxph_bupdate                                              Update destination UBF/UBF32 buffers   0.3.0        Tested
                                                           with source.
-                                                          ndrx_bupdate (dest_buff#, source_buff#)
+                                                          ndrxph_bupdate (dest_buff#, source_buff#)
                                                           dest_buff#: Input UBF/UBF32 destination buffer.
 
                                                           source_buff#: Input UBF/UBF32 source buffer.
@@ -578,9 +578,9 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bupdate for more information.
 
- ndrx_bused                                                Return number of bytes used in fieded  0.3.0        Tested
+ ndrxph_bused                                                Return number of bytes used in fieded  0.3.0        Tested
                                                           buffer..
-                                                          ndrx_bused (buff#)
+                                                          ndrxph_bused (buff#)
                                                           buff#: Input UBF/UBF32 buffer.
 
                                                           Returns the amount of space currently used in the UBF/UBF32
@@ -590,13 +590,13 @@ Bookshelf are particularly good references.
 
                                                           See ATR Baltic documentation for Bused for more information.
 
- ndrx_get_berror                                           Retrieve value of internal UBF error   0.3.0        Tested
+ ndrxph_get_berror                                           Retrieve value of internal UBF error   0.3.0        Tested
                                                           variable berror
-                                                          ndrx_get_berror ()
+                                                          ndrxph_get_berror ()
                                                           (No arguments)
 
                                                           Returns the value of the internal Endurox UBF error variable
-                                                          "berror". This value is normally used in ndrx_bstrerror to return a
+                                                          "berror". This value is normally used in ndrxph_bstrerror to return a
                                                           string description.
 
                                                           This function has no equivalent ATR Baltic function.
@@ -606,48 +606,48 @@ Bookshelf are particularly good references.
                                                           (Value as defined in Endurox .h header files or expected by
                                                           functions)
  Buffer Types
- NDRX_STRING                                               Numerical value meaning STRING
- NDRX_CARRAY                                               Numerical value meaning CARRAY
- NDRX_UBF                                                  Numerical value meaning UBF
- NDRX_UBF32                                                Numerical value meaning UBF32
- NDRX_VIEW                                                 Numerical value meaning VIEW
+ NDRXPH_STRING                                               Numerical value meaning STRING
+ NDRXPH_CARRAY                                               Numerical value meaning CARRAY
+ NDRXPH_UBF                                                  Numerical value meaning UBF
+ NDRXPH_UBF32                                                Numerical value meaning UBF32
+ NDRXPH_VIEW                                                 Numerical value meaning VIEW
  Common FLAGS
- NDRX_TPNOTRAN                                             TPNOTRAN
- NDRX_TPNOCHANGE                                           TPNOCHANGE
- NDRX_TPNOBLOCK                                            TPNOBLOCK
- NDRX_TPNOTIME                                             TPNOTIME
- NDRX_TPSIGRSTRT                                           TPSIGRSTRT
- NDRX_TPGETANY                                             TPGETANY
+ NDRXPH_TPNOTRAN                                             TPNOTRAN
+ NDRXPH_TPNOCHANGE                                           TPNOCHANGE
+ NDRXPH_TPNOBLOCK                                            TPNOBLOCK
+ NDRXPH_TPNOTIME                                             TPNOTIME
+ NDRXPH_TPSIGRSTRT                                           TPSIGRSTRT
+ NDRXPH_TPGETANY                                             TPGETANY
  Error Constants
- NDRX_TPMINVAL                                             TPMINVAL
- NDRX_TPEABORT                                             TPEABORT
- NDRX_TPEBADDESC                                           TPEBADDESC
- NDRX_TPEBLOCK                                             TPEBLOCK
- NDRX_TPEINVAL                                             TPEINVAL
- NDRX_TPELIMIT                                             TPELIMIT
- NDRX_TPENOENT                                             TPENOENT
- NDRX_TPEOS                                                TPEOS
- NDRX_TPEPERM                                              TPEPERM
- NDRX_TPEPROTO                                             TPEPROTO
- NDRX_TPESVCERR                                            TPESVCERR
- NDRX_TPESVCFAIL                                           TPESVCFAIL
- NDRX_TPESYSTEM                                            TPESYSTEM
- NDRX_TPETIME                                              TPETIME
- NDRX_TPETRAN                                              TPETRAN
- NDRX_TPGOTSIG                                             TPGOTSIG
- NDRX_TPERMERR                                             TPERMERR
- NDRX_TPEITYPE                                             TPEITYPE
- NDRX_TPEOTYPE                                             TPEOTYPE
- NDRX_TPERELEASE                                           TPERELEASE
- NDRX_TPEHAZARD                                            TPEHAZARD
- NDRX_TPEHEURISTIC                                         TPEHEURISTIC
- NDRX_TPEEVENT                                             TPEEVENT
- NDRX_TPEMATCH                                             TPEMATCH
- NDRX_TPEDIAGNOSTIC                                        TPEDIAGNOSTIC
- NDRX_TPEMIB                                               TPEMIB
- NDRX_TPMAXVAL                                             TPMAXVAL
- NDRX_TPU_SIG                                              TPU_SIG
- NDRX_TPU_DIP                                              TPU_DIP
- NDRX_TPU_IGN                                              TPU_IGN
- NDRX_TPSA_FASTPATH                                        TPSA_FASTPATH
- NDRX_TPSA_PROTECTED                                       TPSA_PROTECTED
+ NDRXPH_TPMINVAL                                             TPMINVAL
+ NDRXPH_TPEABORT                                             TPEABORT
+ NDRXPH_TPEBADDESC                                           TPEBADDESC
+ NDRXPH_TPEBLOCK                                             TPEBLOCK
+ NDRXPH_TPEINVAL                                             TPEINVAL
+ NDRXPH_TPELIMIT                                             TPELIMIT
+ NDRXPH_TPENOENT                                             TPENOENT
+ NDRXPH_TPEOS                                                TPEOS
+ NDRXPH_TPEPERM                                              TPEPERM
+ NDRXPH_TPEPROTO                                             TPEPROTO
+ NDRXPH_TPESVCERR                                            TPESVCERR
+ NDRXPH_TPESVCFAIL                                           TPESVCFAIL
+ NDRXPH_TPESYSTEM                                            TPESYSTEM
+ NDRXPH_TPETIME                                              TPETIME
+ NDRXPH_TPETRAN                                              TPETRAN
+ NDRXPH_TPGOTSIG                                             TPGOTSIG
+ NDRXPH_TPERMERR                                             TPERMERR
+ NDRXPH_TPEITYPE                                             TPEITYPE
+ NDRXPH_TPEOTYPE                                             TPEOTYPE
+ NDRXPH_TPERELEASE                                           TPERELEASE
+ NDRXPH_TPEHAZARD                                            TPEHAZARD
+ NDRXPH_TPEHEURISTIC                                         TPEHEURISTIC
+ NDRXPH_TPEEVENT                                             TPEEVENT
+ NDRXPH_TPEMATCH                                             TPEMATCH
+ NDRXPH_TPEDIAGNOSTIC                                        TPEDIAGNOSTIC
+ NDRXPH_TPEMIB                                               TPEMIB
+ NDRXPH_TPMAXVAL                                             TPMAXVAL
+ NDRXPH_TPU_SIG                                              TPU_SIG
+ NDRXPH_TPU_DIP                                              TPU_DIP
+ NDRXPH_TPU_IGN                                              TPU_IGN
+ NDRXPH_TPSA_FASTPATH                                        TPSA_FASTPATH
+ NDRXPH_TPSA_PROTECTED                                       TPSA_PROTECTED

@@ -24,7 +24,7 @@
 #if HAVE_ENDUROX
 
 /* True globals, no need for thread safety */
-int ndrx_rh_alloc_buffer = 0;  /* tpalloc buffer resource type resource handle*/
+int ndrxph_rh_alloc_buffer = 0;  /* tpalloc buffer resource type resource handle*/
 
 /* 
 	ZEND_FUNCTION declarations located in php_endurox.h
@@ -41,52 +41,52 @@ int ndrx_rh_alloc_buffer = 0;  /* tpalloc buffer resource type resource handle*/
 */
 zend_function_entry endurox_functions[] =
 {
-	ZEND_FE (ndrx_tpstrerror, NULL)
-	ZEND_FE (ndrx_get_tperrno, NULL)
-	ZEND_FE (ndrx_tpfree, NULL)
-	ZEND_FE (ndrx_tpalloc, NULL)
-	ZEND_FE (ndrx_put_buf, NULL)
-	ZEND_FE (ndrx_get_buf, NULL)
-	ZEND_FE (ndrx_tpcall, NULL)
-	ZEND_FE (ndrx_tpacall, NULL)
-	ZEND_FE (ndrx_tpgetrply, NULL)
-	ZEND_FE (ndrx_tpclose, NULL)
-	ZEND_FE (ndrx_tpterm, NULL)
-	ZEND_FE (ndrx_tpinit, NULL)
-	ZEND_FE (ndrx_tpabort, NULL)
-	ZEND_FE (ndrx_tpcommit, NULL)
-	ZEND_FE (ndrx_tpbegin, NULL)
-	ZEND_FE (ndrx_array2ubf, NULL)
-	ZEND_FE (ndrx_ubf2array, NULL)
+	ZEND_FE (ndrxph_tpstrerror, NULL)
+	ZEND_FE (ndrxph_get_tperrno, NULL)
+	ZEND_FE (ndrxph_tpfree, NULL)
+	ZEND_FE (ndrxph_tpalloc, NULL)
+	ZEND_FE (ndrxph_put_buf, NULL)
+	ZEND_FE (ndrxph_get_buf, NULL)
+	ZEND_FE (ndrxph_tpcall, NULL)
+	ZEND_FE (ndrxph_tpacall, NULL)
+	ZEND_FE (ndrxph_tpgetrply, NULL)
+	ZEND_FE (ndrxph_tpclose, NULL)
+	ZEND_FE (ndrxph_tpterm, NULL)
+	ZEND_FE (ndrxph_tpinit, NULL)
+	ZEND_FE (ndrxph_tpabort, NULL)
+	ZEND_FE (ndrxph_tpcommit, NULL)
+	ZEND_FE (ndrxph_tpbegin, NULL)
+	ZEND_FE (ndrxph_array2ubf, NULL)
+	ZEND_FE (ndrxph_ubf2array, NULL)
 /*		Functions in php_endurox_ubf_api.c */
-	ZEND_FE (ndrx_bfprintf, NULL)
-	ZEND_FE (ndrx_get_ferrno, NULL)
-	ZEND_FE (ndrx_bstrerror, NULL)
-	ZEND_FE (ndrx_bfldid, NULL)
-	ZEND_FE (ndrx_bfldno, NULL)
-	ZEND_FE (ndrx_bfldtype, NULL)
-	ZEND_FE (ndrx_bfname, NULL)
-	ZEND_FE (ndrx_badd, NULL)
-	ZEND_FALIAS (ndrx_fchg, ndrx_badd, NULL)  /* alias for badd */
-	ZEND_FE (ndrx_bconcat, NULL)
-	ZEND_FE (ndrx_bcpy, NULL)
-	ZEND_FE (ndrx_bdelall, NULL)
-	ZEND_FE (ndrx_bdel, NULL)
-	ZEND_FE (ndrx_bidxused, NULL)
-	ZEND_FE (ndrx_bisubf, NULL)
-	ZEND_FE (ndrx_blen, NULL)
-	ZEND_FE (ndrx_bmkfldid, NULL)
-	ZEND_FE (ndrx_boccur, NULL)
-	ZEND_FE (ndrx_bpres, NULL)
-	ZEND_FE (ndrx_btype, NULL)
-	ZEND_FE (ndrx_bunindex, NULL)
-	ZEND_FE (ndrx_bunused, NULL)
-	ZEND_FE (ndrx_bupdate, NULL)
-	ZEND_FE (ndrx_bused, NULL)
-	ZEND_FE (ndrx_brstrindex, NULL)
-	ZEND_FE (ndrx_bsizeof, NULL)
-	ZEND_FE (ndrx_bget, NULL)
-	ZEND_FE (ndrx_bfprint, NULL)
+	ZEND_FE (ndrxph_bfprintf, NULL)
+	ZEND_FE (ndrxph_get_ferrno, NULL)
+	ZEND_FE (ndrxph_bstrerror, NULL)
+	ZEND_FE (ndrxph_bfldid, NULL)
+	ZEND_FE (ndrxph_bfldno, NULL)
+	ZEND_FE (ndrxph_bfldtype, NULL)
+	ZEND_FE (ndrxph_bfname, NULL)
+	ZEND_FE (ndrxph_badd, NULL)
+	ZEND_FALIAS (ndrxph_fchg, ndrxph_badd, NULL)  /* alias for badd */
+	ZEND_FE (ndrxph_bconcat, NULL)
+	ZEND_FE (ndrxph_bcpy, NULL)
+	ZEND_FE (ndrxph_bdelall, NULL)
+	ZEND_FE (ndrxph_bdel, NULL)
+	ZEND_FE (ndrxph_bidxused, NULL)
+	ZEND_FE (ndrxph_bisubf, NULL)
+	ZEND_FE (ndrxph_blen, NULL)
+	ZEND_FE (ndrxph_bmkfldid, NULL)
+	ZEND_FE (ndrxph_boccur, NULL)
+	ZEND_FE (ndrxph_bpres, NULL)
+	ZEND_FE (ndrxph_btype, NULL)
+	ZEND_FE (ndrxph_bunindex, NULL)
+	ZEND_FE (ndrxph_bunused, NULL)
+	ZEND_FE (ndrxph_bupdate, NULL)
+	ZEND_FE (ndrxph_bused, NULL)
+	ZEND_FE (ndrxph_brstrindex, NULL)
+	ZEND_FE (ndrxph_bsizeof, NULL)
+	ZEND_FE (ndrxph_bget, NULL)
+	ZEND_FE (ndrxph_bfprint, NULL)
 	{NULL, NULL, NULL}	/* end of structure marker */
 };
 
@@ -106,53 +106,53 @@ ZEND_MINIT_FUNCTION (endurox)
 {
 #define CONSTANT_FLAG (CONST_CS | CONST_PERSISTENT)	
 	
-	ndrx_rh_alloc_buffer = register_list_destructors(free_ndrx_tpalloc_buf, NULL);
+	ndrxph_rh_alloc_buffer = register_list_destructors(free_ndrxph_tpalloc_buf, NULL);
 
 /*
 		Lets register some endurox constants.
 */
-	REGISTER_LONG_CONSTANT ("NDRX_STRING", NDRX_STRING_BUF_TYPE, CONSTANT_FLAG );
-	REGISTER_LONG_CONSTANT ("NDRX_CARRAY", NDRX_CARRAY_BUF_TYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT ("NDRX_UBF", NDRX_UBF_BUF_TYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT ("NDRX_UBF32", NDRX_UBF32_BUF_TYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT ("NDRX_VIEW", NDRX_VIEW_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRXPH_STRING", NDRXPH_STRING_BUF_TYPE, CONSTANT_FLAG );
+	REGISTER_LONG_CONSTANT ("NDRXPH_CARRAY", NDRXPH_CARRAY_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRXPH_UBF", NDRXPH_UBF_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRXPH_UBF32", NDRXPH_UBF32_BUF_TYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT ("NDRXPH_VIEW", NDRXPH_VIEW_BUF_TYPE, CONSTANT_FLAG);
 	
-	REGISTER_LONG_CONSTANT("NDRX_TPNOTRAN", TPNOTRAN, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPNOCHANGE", TPNOCHANGE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPNOBLOCK", TPNOBLOCK, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPNOTIME", TPNOTIME, CONSTANT_FLAG); 
-	REGISTER_LONG_CONSTANT("NDRX_TPSIGRSTRT", TPSIGRSTRT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPGETANY", TPGETANY, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPNOTRAN", TPNOTRAN, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPNOCHANGE", TPNOCHANGE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPNOBLOCK", TPNOBLOCK, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPNOTIME", TPNOTIME, CONSTANT_FLAG); 
+	REGISTER_LONG_CONSTANT("NDRXPH_TPSIGRSTRT", TPSIGRSTRT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPGETANY", TPGETANY, CONSTANT_FLAG);
 /*
 		Error return codes.  In case someone wants to check them.
 */
-	REGISTER_LONG_CONSTANT("NDRX_TPMINVAL", TPMINVAL, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEABORT", TPEABORT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEBADDESC", TPEBADDESC, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEBLOCK", TPEBLOCK, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEINVAL", TPEINVAL, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPELIMIT", TPELIMIT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPENOENT", TPENOENT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEOS", TPEOS, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEPERM", TPEPERM, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEPROTO", TPEPROTO, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPESVCERR", TPESVCERR, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPESVCFAIL", TPESVCFAIL, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPESYSTEM", TPESYSTEM, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPETIME", TPETIME, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPETRAN", TPETRAN, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPGOTSIG", TPGOTSIG, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPERMERR", TPERMERR, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEITYPE", TPEITYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEOTYPE", TPEOTYPE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPERELEASE", TPERELEASE, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEHAZARD", TPEHAZARD, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEHEURISTIC", TPEHEURISTIC, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEEVENT", TPEEVENT, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEMATCH", TPEMATCH, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEDIAGNOSTIC", TPEDIAGNOSTIC, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPEMIB", TPEMIB, CONSTANT_FLAG);
-	REGISTER_LONG_CONSTANT("NDRX_TPMAXVAL", TPMAXVAL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPMINVAL", TPMINVAL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEABORT", TPEABORT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEBADDESC", TPEBADDESC, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEBLOCK", TPEBLOCK, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEINVAL", TPEINVAL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPELIMIT", TPELIMIT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPENOENT", TPENOENT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEOS", TPEOS, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEPERM", TPEPERM, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEPROTO", TPEPROTO, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPESVCERR", TPESVCERR, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPESVCFAIL", TPESVCFAIL, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPESYSTEM", TPESYSTEM, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPETIME", TPETIME, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPETRAN", TPETRAN, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPGOTSIG", TPGOTSIG, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPERMERR", TPERMERR, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEITYPE", TPEITYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEOTYPE", TPEOTYPE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPERELEASE", TPERELEASE, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEHAZARD", TPEHAZARD, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEHEURISTIC", TPEHEURISTIC, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEEVENT", TPEEVENT, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEMATCH", TPEMATCH, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEDIAGNOSTIC", TPEDIAGNOSTIC, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPEMIB", TPEMIB, CONSTANT_FLAG);
+	REGISTER_LONG_CONSTANT("NDRXPH_TPMAXVAL", TPMAXVAL, CONSTANT_FLAG);
 
 	
 	return SUCCESS;
@@ -207,7 +207,7 @@ ZEND_MINFO_FUNCTION (endurox)
 	php_info_print_table_start();
 	php_info_print_table_header(2, "Endurox Variable", "Value");
 	
-	php_info_print_table_row (2, "PHP-Endurox Version", _php_ndrx_ver);
+	php_info_print_table_row (2, "PHP-Endurox Version", _php_ndrxph_ver);
 
 	if (getenv ("NDRXDIR") == NULL)
 		strcpy (env, "");
@@ -256,14 +256,14 @@ ZEND_MINFO_FUNCTION (endurox)
 
 	php_info_print_table_row (2, "FIELDTBLS32", env);
 
-#if NDRX_UBF
+#if NDRXPH_UBF
 	strcpy (env, "Enabled");
 #else
 	strcpy (env, "Disabled");
 #endif
 	php_info_print_table_row (2, "UBF Functions", env);
 	
-#if NDRX_UBF32
+#if NDRXPH_UBF32
 	strcpy (env, "Enabled");
 #else
 	strcpy (env, "Disabled");
@@ -308,7 +308,7 @@ ZEND_GET_MODULE(endurox)
 /*
 	Function to free the tpalloc resource buffer.
 */
-static void free_ndrx_tpalloc_buf(ndrx_tpalloc_buf_type * res)
+static void free_ndrxph_tpalloc_buf(ndrxph_tpalloc_buf_type * res)
 {	
 	tpfree (res->buf);		/* free the tpalloc buffer */
 	efree (res);			/* now free the whole structure */
@@ -336,12 +336,12 @@ static void free_ndrx_tpalloc_buf(ndrx_tpalloc_buf_type * res)
 	}
 */
 
-/* {{{ function ndrx_tpstrerror
+/* {{{ function ndrxph_tpstrerror
 	Function to return a string containing a endurox error description.
 	Function accepts one argument, tperrno.
 
 */
-ZEND_FUNCTION (ndrx_tpstrerror)
+ZEND_FUNCTION (ndrxph_tpstrerror)
 {
 	zval **arg_tperrno;
 
@@ -360,10 +360,10 @@ ZEND_FUNCTION (ndrx_tpstrerror)
 
 /* {{{ function tp_get_tperrno
 	Function to return the numeric value of tperrno.
-	This value will most likely be used to call ndrx_tpstrerror.
+	This value will most likely be used to call ndrxph_tpstrerror.
 	Function accepts no arguments.
 */
-ZEND_FUNCTION (ndrx_get_tperrno)
+ZEND_FUNCTION (ndrxph_get_tperrno)
 {
 	if (ZEND_NUM_ARGS () != 0)
 	{
@@ -375,16 +375,16 @@ ZEND_FUNCTION (ndrx_get_tperrno)
 /* }}} */
 
 
-/* {{{ function ndrx_tpfree
+/* {{{ function ndrxph_tpfree
 	Function to free a tpalloc'ed buffer.
 	Function accepts one argument, the buf resource of the buffer to free.
 	Function returns nothing.
 */
-ZEND_FUNCTION (ndrx_tpfree)
+ZEND_FUNCTION (ndrxph_tpfree)
 {
 	zval ** arg_tpalloc_res;
 
-	ndrx_tpalloc_buf_type * tp_alloc_res;
+	ndrxph_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, &arg_tpalloc_res) != SUCCESS))
@@ -394,7 +394,7 @@ ZEND_FUNCTION (ndrx_tpfree)
 
 	if (((*arg_tpalloc_res)->type != IS_RESOURCE) || ((*arg_tpalloc_res)->value.lval==0))
 	{
-		zend_error (E_WARNING, "ndrx_tpfree argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrxph_tpfree argument not a tpalloc resource");
 		RETURN_FALSE;
 	}
 
@@ -405,7 +405,7 @@ ZEND_FUNCTION (ndrx_tpfree)
 /* }}} */
 
 
-/* {{{ function ndrx_tpalloc
+/* {{{ function ndrxph_tpalloc
 	Function to tpalloc a typed buffer.
 	Function requires 3 arguments,
 		TYPE = type type of buffer they are requesting.
@@ -413,7 +413,7 @@ ZEND_FUNCTION (ndrx_tpfree)
 		SIZE = the initial size of the request.
 	Function reutrns a buffer reference number.
 */
-ZEND_FUNCTION (ndrx_tpalloc)
+ZEND_FUNCTION (ndrxph_tpalloc)
 {
 	zval ** arg_buf_type;
 	zval ** arg_buf_subtype;
@@ -434,7 +434,7 @@ ZEND_FUNCTION (ndrx_tpalloc)
 	convert_to_string_ex (arg_buf_subtype);
 	convert_to_long_ex (arg_buf_size);
 			
-	RETURN_RESOURCE (_ndrx_alloc ((*arg_buf_type)->value.lval,
+	RETURN_RESOURCE (_ndrxph_alloc ((*arg_buf_type)->value.lval,
 								 (*arg_buf_subtype)->value.str.val,
 								 (*arg_buf_size)->value.lval));
 }
@@ -442,36 +442,36 @@ ZEND_FUNCTION (ndrx_tpalloc)
 
 /*
 	This function actually does the tpalloc for both the
-	ndrx_tpalloc call and Falloc for UBFs.
+	ndrxph_tpalloc call and Falloc for UBFs.
 
 	Returns a resource (value  currently a LONG).
 */
-long _ndrx_alloc (long type, char * subtype, long size)
+long _ndrxph_alloc (long type, char * subtype, long size)
 {
 	char *	buf_ptr;
 	int is32 = 0;
-	ndrx_tpalloc_buf_type * tp_alloc_res;
+	ndrxph_tpalloc_buf_type * tp_alloc_res;
 
 /*
 		Has someone given us an invalid type 
 */
 
-	if ((type < 0) || (type >= NDRX_NUM_BUF_TYPES))
+	if ((type < 0) || (type >= NDRXPH_NUM_BUF_TYPES))
 	{
 		zend_error (E_WARNING, "Invalid buffer type");
 		return 0;
 	}
 
-#if (! NDRX_UBF)
-	if (type == NDRX_UBF_BUF_TYPE)
+#if (! NDRXPH_UBF)
+	if (type == NDRXPH_UBF_BUF_TYPE)
 	{
 		zend_error (E_ERROR, "UBF buffer support not configured.  reconfigure with --enable-endurox-ubf");
 		return 0;
 	}
 #endif
 
-#if (! NDRX_UBF32)
-	if (type == NDRX_UBF32_BUF_TYPE)
+#if (! NDRXPH_UBF32)
+	if (type == NDRXPH_UBF32_BUF_TYPE)
 	{
 		zend_error (E_ERROR, "UBF32 buffer support not configured.  reconfigure with  --enable-endurox-ubf32");
 		return 0;
@@ -482,23 +482,23 @@ long _ndrx_alloc (long type, char * subtype, long size)
 /*
 		Allocate the buffer.
 */	
-	if ((buf_ptr = (char*) tpalloc (_ndrx_type2string(type), subtype, size)) == NULL)
+	if ((buf_ptr = (char*) tpalloc (_ndrxph_type2string(type), subtype, size)) == NULL)
 	{
 		zend_error (E_WARNING, "Endurox tpalloc failed [%s]", tpstrerror (tperrno));
 		return 0;
 	}
 
 
-	if (type == NDRX_UBF_BUF_TYPE)
+	if (type == NDRXPH_UBF_BUF_TYPE)
 		is32 = FALSE;
-	else if (type == NDRX_UBF32_BUF_TYPE)
+	else if (type == NDRXPH_UBF32_BUF_TYPE)
 		is32 = TRUE;
 		
 /*
 		Now allocate the resource buffer 
 */
-	tp_alloc_res = (ndrx_tpalloc_buf_type *) emalloc (sizeof (ndrx_tpalloc_buf_type));
-	memset (tp_alloc_res, 0, sizeof (ndrx_tpalloc_buf_type));
+	tp_alloc_res = (ndrxph_tpalloc_buf_type *) emalloc (sizeof (ndrxph_tpalloc_buf_type));
+	memset (tp_alloc_res, 0, sizeof (ndrxph_tpalloc_buf_type));
 
 /*
 		Move the resource values into the res buf.
@@ -509,13 +509,13 @@ long _ndrx_alloc (long type, char * subtype, long size)
 	tp_alloc_res->type = type; 	/* set the buffer type */
 	
 	strncpy (tp_alloc_res->subtype, subtype, 
-		MIN (strlen(subtype), NDRX_TPALLOC_TYPE_LEN));
+		MIN (strlen(subtype), NDRXPH_TPALLOC_TYPE_LEN));
 
 /*
 		I cant use the RETURN_ macro because I haven't define the return_value
 		structure.
 */
-	return zend_list_insert(tp_alloc_res, ndrx_rh_alloc_buffer);
+	return zend_list_insert(tp_alloc_res, ndrxph_rh_alloc_buffer);
 }
 
 
@@ -527,13 +527,13 @@ long _ndrx_alloc (long type, char * subtype, long size)
 		Input = The provided text.
 	Function returns BOOL true or false on error.
 */
-ZEND_FUNCTION (ndrx_put_buf)
+ZEND_FUNCTION (ndrxph_put_buf)
 {
 	zval ** arg_tpalloc_res;
 	zval ** arg_buf;
 
 	long arg_length;
-	ndrx_tpalloc_buf_type * tp_alloc_res;
+	ndrxph_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 2) || 
 		(zend_get_parameters_ex(2, &arg_tpalloc_res,
@@ -550,11 +550,11 @@ ZEND_FUNCTION (ndrx_put_buf)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 
 /*
 		We use a memcpy here for the future hopes of being able to
@@ -590,16 +590,16 @@ ZEND_FUNCTION (ndrx_put_buf)
 /* }}} */
 
 
-/* {{{ function ndrx_get_buf
+/* {{{ function ndrxph_get_buf
 	Function to return a string equivalent to the 
 	reference buffer provided.
 	Function requires 1 argument, the buffer reference number.
 */
-ZEND_FUNCTION (ndrx_get_buf)
+ZEND_FUNCTION (ndrxph_get_buf)
 {
 	zval ** arg_tpalloc_res;
 
-	ndrx_tpalloc_buf_type * tp_alloc_res;
+	ndrxph_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 1) || 
 		(zend_get_parameters_ex(1, &arg_tpalloc_res) != SUCCESS))
@@ -610,7 +610,7 @@ ZEND_FUNCTION (ndrx_get_buf)
 /*
 	if (((*arg_tpalloc_res)->type != IS_RESOURCE) || ((*arg_tpalloc_res)->value.lval==0))
 	{
-		zend_error (E_WARNING, "ndrx_get_buf argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrxph_get_buf argument not a tpalloc resource");
 		RETURN_EMPTY_STRING ();
 	}
 */
@@ -621,11 +621,11 @@ ZEND_FUNCTION (ndrx_get_buf)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 
 	
 	RETURN_STRINGL (tp_alloc_res->buf, tp_alloc_res->size,  1);  /* binary safe copy */	
@@ -634,7 +634,7 @@ ZEND_FUNCTION (ndrx_get_buf)
 
 
 
-/* {{{ function ndrx_tpcall
+/* {{{ function ndrxph_tpcall
 	Function to submit via tpcall the endurox request.
 	Requires 4 arguments:
 		String containing the service to call.
@@ -644,7 +644,7 @@ ZEND_FUNCTION (ndrx_get_buf)
 	Function returns a 0 or an error condition in tperrno.
 */
 		
-ZEND_FUNCTION (ndrx_tpcall)
+ZEND_FUNCTION (ndrxph_tpcall)
 {
 	zval ** arg_service;
 	zval ** arg_tpalloc_res_in;
@@ -653,9 +653,9 @@ ZEND_FUNCTION (ndrx_tpcall)
 	
 	int tpcall_return;
 
-	ndrx_tpalloc_buf_type * tp_alloc_res_in;
-	ndrx_tpalloc_buf_type * tp_alloc_res_out;
-	ndrx_tpalloc_buf_type temp_alloc_buf;		/* not a pointer */
+	ndrxph_tpalloc_buf_type * tp_alloc_res_in;
+	ndrxph_tpalloc_buf_type * tp_alloc_res_out;
+	ndrxph_tpalloc_buf_type temp_alloc_buf;		/* not a pointer */
 	
 	
 	
@@ -672,7 +672,7 @@ ZEND_FUNCTION (ndrx_tpcall)
 /*
 	if (((*arg_tpalloc_res_in)->type != IS_RESOURCE) || ((*arg_tpalloc_res_in)->value.lval==0))
 	{
-		zend_error (E_WARNING, "ndrx_tpcall argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrxph_tpcall argument not a tpalloc resource");
 		RETURN_FALSE;
 	}
 */
@@ -686,20 +686,20 @@ ZEND_FUNCTION (ndrx_tpcall)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res_in, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_tpalloc_res_in, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res_out, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_tpalloc_res_out, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 
 /*
 	We need to copy the output buf to see if the call to tpcall made any changes.
@@ -730,7 +730,7 @@ ZEND_FUNCTION (ndrx_tpcall)
 /* }}} */
 
 
-/* {{{  function ndrx_tpacall
+/* {{{  function ndrxph_tpacall
 	Function to submit via tpacall the endurox request.
 	Requires 3 arguments:
 		String containing the service to call.
@@ -738,13 +738,13 @@ ZEND_FUNCTION (ndrx_tpcall)
 		Flags.
 	Function returns cd reference # or an error condition in tperrno.
 */
-ZEND_FUNCTION (ndrx_tpacall)
+ZEND_FUNCTION (ndrxph_tpacall)
 {
 	zval ** arg_service;
 	zval ** arg_tpalloc_res;
 	zval ** arg_flags;
 
-	ndrx_tpalloc_buf_type * tp_alloc_res;
+	ndrxph_tpalloc_buf_type * tp_alloc_res;
 	
 	if((ZEND_NUM_ARGS() != 3) || 
 		(zend_get_parameters_ex(3,
@@ -758,7 +758,7 @@ ZEND_FUNCTION (ndrx_tpacall)
 /*
 	if (((*arg_tpalloc_res)->type != IS_RESOURCE) || ((*arg_tpalloc_res)->value.lval==0))
 	{
-		zend_error (E_WARNING, "ndrx_tpacall argument not a tpalloc resource");
+		zend_error (E_WARNING, "ndrxph_tpacall argument not a tpalloc resource");
 		RETURN_FALSE;
 	}
 */
@@ -772,11 +772,11 @@ ZEND_FUNCTION (ndrx_tpacall)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 
 	RETURN_LONG (tpacall ((*arg_service)->value.str.val,
 				  tp_alloc_res->buf,
@@ -788,7 +788,7 @@ ZEND_FUNCTION (ndrx_tpacall)
 
 
 
-/* {{{  function ndrx_tpgetreply
+/* {{{  function ndrxph_tpgetreply
 	Function to retrieve the results from a previous tpacall
 	Requires 3 arguments:
 		cd reference number returned by tpacall
@@ -796,13 +796,13 @@ ZEND_FUNCTION (ndrx_tpacall)
 		Flags.
 	Function returns service return value (tpreturn) or an error code
 */
-ZEND_FUNCTION (ndrx_tpgetrply)
+ZEND_FUNCTION (ndrxph_tpgetrply)
 {
 	zval ** arg_tpacall_cd_ref;
 	zval ** arg_tpalloc_res;
 	zval ** arg_flags;
 
-	ndrx_tpalloc_buf_type * tp_alloc_res;
+	ndrxph_tpalloc_buf_type * tp_alloc_res;
 	long ret_val;
 	int cd;
 	
@@ -834,11 +834,11 @@ ZEND_FUNCTION (ndrx_tpgetrply)
 
 	ZEND_FETCH_RESOURCE(
 						tp_alloc_res, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_tpalloc_res, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 
 	cd = (*arg_tpacall_cd_ref)->value.lval;
 	ret_val = tpgetrply (&cd, &tp_alloc_res->buf, &tp_alloc_res->size, (*arg_flags)->value.lval);
@@ -852,12 +852,12 @@ ZEND_FUNCTION (ndrx_tpgetrply)
 
 
 
-/* {{{  function ndrx_tx_close
+/* {{{  function ndrxph_tx_close
 	Function closes current endurox connection.
 	No arguments.
 	No return value.
 */
-ZEND_FUNCTION (ndrx_tpclose)
+ZEND_FUNCTION (ndrxph_tpclose)
 {
 	if (ZEND_NUM_ARGS () != 0)
 	{
@@ -871,12 +871,12 @@ ZEND_FUNCTION (ndrx_tpclose)
 
 
 
-/* {{{  function ndrx_tpterm
+/* {{{  function ndrxph_tpterm
 	Function closes current endurox connection.
 	No arguments.
 	No return value.
 */
-ZEND_FUNCTION (ndrx_tpterm)
+ZEND_FUNCTION (ndrxph_tpterm)
 {
 	if (ZEND_NUM_ARGS () != 0)
 	{
@@ -889,7 +889,7 @@ ZEND_FUNCTION (ndrx_tpterm)
 
 
 
-/* {{{  function ndrx_tpinit
+/* {{{  function ndrxph_tpinit
 	Function opens a ndrx connection and populates connection fields
 	4 or 5 arguments:
 		username
@@ -899,7 +899,7 @@ ZEND_FUNCTION (ndrx_tpterm)
 		(optional) data -  user password for Endurox Security level(USER_AUTH,ACL)
 	Return TRUE FALSE.
 */
-ZEND_FUNCTION (ndrx_tpinit)
+ZEND_FUNCTION (ndrxph_tpinit)
 {
 	zval ** arg_username;
 	zval ** arg_clientname;
@@ -984,13 +984,13 @@ ZEND_FUNCTION (ndrx_tpinit)
 
 
 
-/* {{{ function ndrx_tpabort
+/* {{{ function ndrxph_tpabort
 	function to call the tpabort ndrx function
 	
 	function takes 0 args
 	function returns long.
 */
-ZEND_FUNCTION (ndrx_tpabort)
+ZEND_FUNCTION (ndrxph_tpabort)
 {
 	if(ZEND_NUM_ARGS() != 0) 
 	{
@@ -1003,13 +1003,13 @@ ZEND_FUNCTION (ndrx_tpabort)
 
 
 
-/* {{{ function ndrx_tpcommit
+/* {{{ function ndrxph_tpcommit
 	function to call the tpcommit ndrx function
 	
 	function takes 0 args
 	function returns long.
 */
-ZEND_FUNCTION (ndrx_tpcommit)
+ZEND_FUNCTION (ndrxph_tpcommit)
 {
 	if(ZEND_NUM_ARGS() != 0) 
 	{
@@ -1022,13 +1022,13 @@ ZEND_FUNCTION (ndrx_tpcommit)
 
 
 
-/* {{{ function ndrx_tpbegin
+/* {{{ function ndrxph_tpbegin
 	function to call the tpbegin ndrx function
 
 	function takes 1 args, the timeout, must not be 0.
 	function returns long.
 */
-ZEND_FUNCTION (ndrx_tpbegin)
+ZEND_FUNCTION (ndrxph_tpbegin)
 {
 	zval ** arg_timeout;
 
@@ -1043,7 +1043,7 @@ ZEND_FUNCTION (ndrx_tpbegin)
 	if ((*arg_timeout)->value.lval == 0)
 	{
 		zend_error (E_WARNING, 
-			"ndrx_commit:  timeout argument cannot be zero,  using 30.");
+			"ndrxph_commit:  timeout argument cannot be zero,  using 30.");
 		(*arg_timeout)->value.lval = 30;
 	}
 	

@@ -26,12 +26,12 @@
 #if HAVE_ENDUROX
 
 /* True globals, no need for thread safety */
-extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
+extern int ndrxph_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
 
 
-char * _ndrx_type2string (long type)
+char * _ndrxph_type2string (long type)
 {
-	static char * buf_types [NDRX_NUM_BUF_TYPES] =
+	static char * buf_types [NDRXPH_NUM_BUF_TYPES] =
 		{"STRING", "CARRAY", "UBF", "UBF32", "VIEW" };
 		
 	return buf_types[type];
@@ -40,17 +40,17 @@ char * _ndrx_type2string (long type)
 /*
 	We got to using this construct so often, I made it a function.
 */
-int _ndrx_is_ubf_type (int type)
+int _ndrxph_is_ubf_type (int type)
 {
 	int ret_val;
 	
 	switch (type)
 	{
-		case NDRX_UBF_BUF_TYPE:
+		case NDRXPH_UBF_BUF_TYPE:
 			ret_val = FALSE;
 			break;
 		
-		case NDRX_UBF32_BUF_TYPE:
+		case NDRXPH_UBF32_BUF_TYPE:
 			ret_val = TRUE;
 			break;
 			

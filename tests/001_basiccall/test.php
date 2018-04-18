@@ -1,23 +1,23 @@
 <?
 
-$buf = ndrx_tpalloc (NDRX_UBF, NULL, 1024);
+$buf = ndrxph_tpalloc (NDRXPH_UBF, NULL, 1024);
 
 
-if (0>ndrx_badd ($buf, "T_STRING_FLD", "HELLO WORLD", 0))
+if (0>ndrxph_badd ($buf, "T_STRING_FLD", "HELLO WORLD", 0))
 {
         print("Failed to add filed!\n");
 }
 
 
-if (0>ndrx_tpcall ("UNIXINFO", $buf, $buf, 0))
+if (0>ndrxph_tpcall ("UNIXINFO", $buf, $buf, 0))
 {
-        print("call failed UNIXINFO: ".ndrx_tpstrerror(ndrx_get_tperrno())."\n");
+        print("call failed UNIXINFO: ".ndrxph_tpstrerror(ndrxph_get_tperrno())."\n");
 }
 
 /* for output see: /tmp/php_ndrx.out */
-ndrx_bfprintf($buf);
+ndrxph_bfprintf($buf);
 
-$arr = ndrx_ubf2array ($buf, 0);
+$arr = ndrxph_ubf2array ($buf, 0);
 
 print_r($arr);
 

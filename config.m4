@@ -1,7 +1,7 @@
 dnl $Id: config.m4,v 1.4 2001/07/24 03:08:55 bfoddy Exp $
 
-ndrx_config_ubf_flag="0"
-ndrx_config_ubf32_flag="0"
+ndrxph_config_ubf_flag="0"
+ndrxph_config_ubf32_flag="0"
 
 AC_MSG_CHECKING(for Endurox support)
 AC_ARG_WITH(endurox,
@@ -23,14 +23,14 @@ AC_ARG_WITH(endurox,
     fi
 
 
-	    AC_DEFINE(NDRX_UBF32, 1, [ ])
+	    AC_DEFINE(NDRXPH_UBF32, 1, [ ])
 	    AC_MSG_RESULT(yes)
-		ndrx_config_ubf32_flag="1"
+		ndrxph_config_ubf32_flag="1"
 
 
-	    AC_DEFINE(NDRX_UBF, 1, [ ])
+	    AC_DEFINE(NDRXPH_UBF, 1, [ ])
 	    AC_MSG_RESULT(yes)
-		ndrx_config_ubf_flag="1"
+		ndrxph_config_ubf_flag="1"
 
 	
 	PHP_ADD_INCLUDE($ENDUROX_INCDIR)

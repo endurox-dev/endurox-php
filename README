@@ -163,7 +163,7 @@ BUILDING.
 
 INSTALLING / TESTING
 
-1.	Create a file ndrx_phpinfo.php in this directory with the contents of
+1.	Create a file ndrxph_phpinfo.php in this directory with the contents of
 	<?php
 		phpinfo ();
 	?>

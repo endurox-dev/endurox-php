@@ -28,7 +28,7 @@ BUILDING as a DL (Sorry, not a very automated build process yet.)
 	compiled with debug=0, thread-safety=0 module API=20001214 PHP compiled
 	with debug=1, thread-safety=0 module API=20001214 
 	These options need to match in 
-	/home/brian/dev/www/ndrx_phpinfo.php on line 2
+	/home/brian/dev/www/ndrxph_phpinfo.php on line 2
 
 3.	Configure PHP5 according to the instructions for
 	that package.  You don't need to actually make
@@ -72,7 +72,7 @@ INSTALLING / TESTING
 1.	Copy php_endurox.so into a directory visible by the web server,
 	make sure it has read/execute permission set for the web server id
 	(755 should be fine).
-2.	Create a file ndrx_phpinfo.php in this directory with the contents of
+2.	Create a file ndrxph_phpinfo.php in this directory with the contents of
 	<?php
 		dl ("./php_endurox.so");
 		phpinfo ();

@@ -21,10 +21,10 @@
 #include "php_endurox.h"
 
 #if HAVE_ENDUROX
-#if (NDRX_UBF32 || NDRX_UBF)
+#if (NDRXPH_UBF32 || NDRXPH_UBF)
 
 /* True globals, no need for thread safety */
-extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
+extern int ndrxph_rh_alloc_buffer;  /* tpalloc buffer resource type resource handle*/
 
 
 
@@ -32,7 +32,7 @@ extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handl
 	ZEND_FUNCTION declarations located in php_endurox.h
 */
 
-/* {{{ function ndrx_arrary2ubf
+/* {{{ function ndrxph_arrary2ubf
 	Function takes 2 arguments:
 		1.  The destination UBF reference number 
 		2.  an array argument (possibly 2 dimensional)
@@ -45,14 +45,14 @@ extern int ndrx_rh_alloc_buffer;  /* tpalloc buffer resource type resource handl
 	
 	Returns TRUE/FALSE.
 */
-ZEND_FUNCTION (ndrx_array2ubf)
+ZEND_FUNCTION (ndrxph_array2ubf)
 {
 	zval ** arg_buf_ref;
 	zval ** arg_src_array;
 
 	int is32;
 	
-	ndrx_tpalloc_buf_type * ubf_buf_res;
+	ndrxph_tpalloc_buf_type * ubf_buf_res;
 	HashTable * primary_ht;
 	HashTable * secondary_ht;
 	zval **     primary_data;
@@ -79,11 +79,11 @@ ZEND_FUNCTION (ndrx_array2ubf)
 
 	ZEND_FETCH_RESOURCE(
 						ubf_buf_res, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_buf_ref, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 /*
 	Ok the plan of action...
 	Loop through the array element by element.
@@ -114,11 +114,11 @@ ZEND_FUNCTION (ndrx_array2ubf)
 	zend_hash_internal_pointer_reset(*ht)  -- resets array pointer to start
 */
 
-	if (ubf_buf_res->type == NDRX_UBF_BUF_TYPE)
+	if (ubf_buf_res->type == NDRXPH_UBF_BUF_TYPE)
 	{
 		is32 = FALSE;
 	}
-	else if (ubf_buf_res->type == NDRX_UBF32_BUF_TYPE)
+	else if (ubf_buf_res->type == NDRXPH_UBF32_BUF_TYPE)
 	{
 		is32 = TRUE;
 	}
@@ -138,7 +138,7 @@ ZEND_FUNCTION (ndrx_array2ubf)
 /*
 			First get the primary key value (could be int or string).
 */
-		if ((primary_key = _ndrx_get_ubfarray_key (primary_ht, is32)) == -1)
+		if ((primary_key = _ndrxph_get_ubfarray_key (primary_ht, is32)) == -1)
 		{
 			RETURN_FALSE;
 		}
@@ -161,7 +161,7 @@ ZEND_FUNCTION (ndrx_array2ubf)
 
 /*				zend_printf ("Inside zend_hash_get_cur_data array %d<br>", secondary_key);		*/
 
-				if ( ! _ndrx_ubf_add (ubf_buf_res, secondary_data, primary_key, secondary_key))
+				if ( ! _ndrxph_ubf_add (ubf_buf_res, secondary_data, primary_key, secondary_key))
 				{
 					/* need more error handling here... 
 					   if we change the buffer, remember to write it back to the resource*/
@@ -175,7 +175,7 @@ ZEND_FUNCTION (ndrx_array2ubf)
 		}
 		else		/* its a normal value of some type, add it*/
 		{
-			if ( ! _ndrx_ubf_add (ubf_buf_res, primary_data, primary_key, -1))
+			if ( ! _ndrxph_ubf_add (ubf_buf_res, primary_data, primary_key, -1))
 			{
 					/* need more error handling here...  
 					   if we change the buffer, remember to write it back to the resource*/
@@ -197,7 +197,7 @@ ZEND_FUNCTION (ndrx_array2ubf)
 	This function will take a hash pointer and a buffer type, and
 	return the type of the current key array.
 */
-long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
+long _ndrxph_get_ubfarray_key (HashTable * ht, int is32)
 {
 	long ret_val = 0;
 	char * str_index;
@@ -226,7 +226,7 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 
 
 /*
-	This function takes an long key (BFLDID), a pointer to a ndrx_tpalloc_buf_type,
+	This function takes an long key (BFLDID), a pointer to a ndrxph_tpalloc_buf_type,
 	and a zval ** and inserts the data into the buffer by calling Fchg(32).
 
 	returns TRUE/FALSE.
@@ -248,7 +248,7 @@ long _ndrx_get_ubfarray_key (HashTable * ht, int is32)
 		#define BFLD_CARRAY      6        character array 
   
 */
-long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid, BFLDOCC occ32)
+long _ndrxph_ubf_add (ndrxph_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid, BFLDOCC occ32)
 {
 /*
 		This is a function pointer, its name F_add does not imply it points to
@@ -264,7 +264,7 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid,
 	double double_data;
 	
 	int ret_val;
-	int  is32 = ((buffer->type == NDRX_UBF32_BUF_TYPE) ? TRUE : FALSE);	
+	int  is32 = ((buffer->type == NDRXPH_UBF32_BUF_TYPE) ? TRUE : FALSE);	
 
 /*
 		First they passed us a bfldid, find out what type it is.
@@ -344,7 +344,7 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid,
 
 
 
-/* {{{ function ndrx_ubf2array
+/* {{{ function ndrxph_ubf2array
 	Function takes 2 arguments:
 		1.  The source UBF reference number 
 		2.  A flag to indicate whether the primary index should be int or string
@@ -370,7 +370,7 @@ long _ndrx_ubf_add (ndrx_tpalloc_buf_type * buffer, zval ** data, BFLDID bfldid,
 	6.  On to the next value.
 	7.  Return the array ht at the end.
 */
-ZEND_FUNCTION (ndrx_ubf2array)
+ZEND_FUNCTION (ndrxph_ubf2array)
 {
 	zval ** arg_ubf_ref;
 	zval ** arg_index_flag;
@@ -386,7 +386,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 	long array_key;     /* either the fieldid or occ for a 2-d */
 	char value[256];	/* a temp holding area */
 	char * copy_val;	/* a pointer to value usually, but not if too short */
-	ndrx_tpalloc_buf_type * ubf_buf_res;
+	ndrxph_tpalloc_buf_type * ubf_buf_res;
 	long fnext_ret;
 	zval *new_data;	/* a pointer to each new data element as allocated */
 	zval *d2_array;	/* pointer to an array, needed it its a multiple occurrence */
@@ -417,17 +417,17 @@ ZEND_FUNCTION (ndrx_ubf2array)
 
 	ZEND_FETCH_RESOURCE(
 						ubf_buf_res, 
-						ndrx_tpalloc_buf_type *, 
+						ndrxph_tpalloc_buf_type *, 
 						arg_ubf_ref, 
 						-1, 
 						"Endurox tpalloc buffer", 
-						ndrx_rh_alloc_buffer);
+						ndrxph_rh_alloc_buffer);
 
 /*
 	we just retrieved the UBF buffer, what type was it?
 	And set the function pointers we will need later on...
 */
-	if ((is32 = _ndrx_is_ubf_type (ubf_buf_res->type)) == -1)
+	if ((is32 = _ndrxph_is_ubf_type (ubf_buf_res->type)) == -1)
 		RETURN_NULL ();
 
 	
@@ -546,7 +546,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 
 
 				/*Update the return hash table with the UBF info */
-				if (_ndrx_update_ubf_zend_hash (
+				if (_ndrxph_update_ubf_zend_hash (
 						HASH_OF (return_value), 
 						fieldid32,
 						&d2_array, 
@@ -618,7 +618,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 			  The conditional assignment overrides the use Bfname flag if
 			  we are in the multiple occurrence loop
 			*/
-		if (_ndrx_update_ubf_zend_hash (
+		if (_ndrxph_update_ubf_zend_hash (
 				array_ht, 
 				array_key, 
 				&new_data, 
@@ -632,7 +632,7 @@ ZEND_FUNCTION (ndrx_ubf2array)
 }
 
 
-long _ndrx_update_ubf_zend_hash (HashTable *ht, BFLDID fieldid32, zval ** data, int flag)
+long _ndrxph_update_ubf_zend_hash (HashTable *ht, BFLDID fieldid32, zval ** data, int flag)
 {
 	char * (*f_name) (long);	/*define a function pointer */
 	char * name;
